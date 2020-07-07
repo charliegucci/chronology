@@ -6,7 +6,7 @@ import { authenticate, isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-const Signin = () => {
+const Signin = ({ history }) => {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -37,7 +37,10 @@ const Signin = () => {
             password: '',
             buttonText: 'Done'
           });
-          toast(`Hello ${response.data.user.name}, Welcome back!`);
+          //   toast(`Hello ${response.data.user.name}, Welcome back!`);
+          isAuth() && isAuth().role === 'admin'
+            ? history.push('/admin')
+            : history.push('/private');
         });
       })
       .catch((error) => {

@@ -38,9 +38,21 @@ const Layout = ({ children, match, history }) => {
           </li>
         </Fragment>
       )}
-      {isAuth() && (
+      {isAuth() && isAuth().role === 'admin' && (
         <li className='nav-item'>
-          <span className='nav-link'>{isAuth().name}</span>
+          <Link to='/admin' className=' nav-link' style={isActive('/admin')}>
+            {isAuth().name}
+          </Link>
+        </li>
+      )}
+      {isAuth() && isAuth().role === 'subscriber' && (
+        <li className='nav-link'>
+          <Link
+            to='/private'
+            className=' nav-link'
+            style={isActive('/private')}>
+            {isAuth().name}
+          </Link>
         </li>
       )}
       {isAuth() && (
