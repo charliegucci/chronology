@@ -46,7 +46,7 @@ const Layout = ({ children, match, history }) => {
         </li>
       )}
       {isAuth() && isAuth().role === 'subscriber' && (
-        <li className='nav-link'>
+        <li className='nav-item'>
           <Link
             to='/private'
             className=' nav-link'
