@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import axios from 'axios';
+import { authenticate, isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-const Signin = () => {
+const Signin = ({ history }) => {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -28,14 +29,19 @@ const Signin = () => {
     })
       .then((response) => {
         console.log('SIGNIN SUCCESS', response);
-        setValues({
-          ...values,
-          name: '',
-          email: '',
-          password: '',
-          buttonText: 'Done'
+        authenticate(response, () => {
+          setValues({
+            ...values,
+            name: '',
+            email: '',
+            password: '',
+            buttonText: 'Done'
+          });
+          //   toast(`Hello ${response.data.user.name}, Welcome back!`);
+          isAuth() && isAuth().role === 'admin'
+            ? history.push('/admin')
+            : history.push('/private');
         });
-        toast(`Hello ${response.data.user.name}, Welcome back!`);
       })
       .catch((error) => {
         console.log('SIGNIN ERROR', error.response.data);
@@ -75,9 +81,12 @@ const Signin = () => {
   return (
     <Layout>
       <div className='col-md-6 offset-md-3'>
-        <ToastContainer position='top-center' />
+        <ToastContainer position='bottom-right' />
+        {isAuth() ? <Redirect to='/' /> : null}
         <h1 className='p-5 text-center'>Signin</h1>
         {signinForm()}
+        <br />
+        <Link to='/auth/password/forgot'>Forgot Password?</Link>
       </div>
     </Layout>
   );
