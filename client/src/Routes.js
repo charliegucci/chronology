@@ -15,7 +15,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact component={App} />
+        <Route path='/' exact component={Signin} />
         <Route path='/signup' exact component={Signup} />
         <Route path='/signin' exact component={Signin} />
         <Route path='/auth/password/forgot' exact component={ForgotPw} />
