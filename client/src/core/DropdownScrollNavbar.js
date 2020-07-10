@@ -59,12 +59,12 @@ function DropdownScrollNavbar() {
               caret
               tag='a'
               data-toggle='dropdown'
-              href='#pablo'
+              href='#'
               id='navbarDropdown'
               onClick={(e) => e.preventDefault()}>
-              <span className='button-bar'></span>
-              <span className='button-bar'></span>
-              <span className='button-bar'></span>
+              <span>
+                <i className='now-ui-icons ui-1_settings-gear-63'></i>
+              </span>
             </DropdownToggle>
             <DropdownMenu aria-labelledby='navbarDropdown'>
               <DropdownItem header>Dropdown header</DropdownItem>
@@ -92,7 +92,7 @@ function DropdownScrollNavbar() {
               Chronology
             </NavbarBrand>
             {/* <UncontrolledTooltip target='navbar-brand'>
-              Designed by Invision. Coded by Creative Tim
+              Designed by Chronology
             </UncontrolledTooltip> */}
             <button
               onClick={() => {
@@ -117,7 +117,7 @@ function DropdownScrollNavbar() {
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
-                  <i className='now-ui-icons design_app'></i>
+                  <i className='now-ui-icons tech_watch-time'></i>
                   <p>TimeSheet</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
@@ -146,7 +146,7 @@ function DropdownScrollNavbar() {
                   onClick={(e) => e.preventDefault()}>
                   <i
                     aria-hidden={true}
-                    className='now-ui-icons files_paper'></i>
+                    className='now-ui-icons ui-1_calendar-60'></i>
                   <p>SCHEDULE</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
@@ -195,7 +195,7 @@ function DropdownScrollNavbar() {
                   onClick={(e) => e.preventDefault()}>
                   <i
                     aria-hidden={true}
-                    className='now-ui-icons design_image'></i>
+                    className='now-ui-icons ui-2_settings-90'></i>
                   <p>PARTS</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
@@ -254,7 +254,7 @@ function DropdownScrollNavbar() {
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
-                  <i className='now-ui-icons design_app'></i>
+                  <i className='now-ui-icons design_bullet-list-67'></i>
                   <p>TASK</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
@@ -282,8 +282,8 @@ function DropdownScrollNavbar() {
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
-                  <i className='now-ui-icons design_app'></i>
-                  <p>REGISTER</p>
+                  <i className='now-ui-icons files_single-copy-04'></i>
+                  <p>DATA REGISTER</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem to='/' tag={Link}>
@@ -310,7 +310,7 @@ function DropdownScrollNavbar() {
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
-                  <i className='now-ui-icons design_app'></i>
+                  <i className='now-ui-icons business_chart-bar-32'></i>
                   <p>CHARTS</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>

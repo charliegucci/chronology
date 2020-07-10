@@ -115,7 +115,7 @@ const Signin = ({ history }) => {
                         }>
                         <InputGroupAddon addonType='prepend'>
                           <InputGroupText>
-                            <i className='now-ui-icons users_circle-08'></i>
+                            <i className='now-ui-icons ui-1_email-85'></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -133,7 +133,7 @@ const Signin = ({ history }) => {
                         }>
                         <InputGroupAddon addonType='prepend'>
                           <InputGroupText>
-                            <i className='now-ui-icons text_caps-small'></i>
+                            <i className='now-ui-icons objects_key-25'></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
