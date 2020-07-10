@@ -113,7 +113,7 @@ function DropdownScrollNavbar() {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
+                  href='#'
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -123,15 +123,15 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem to='/' tag={Link}>
                     <i className='now-ui-icons design_image'></i>
-                    Presentation
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/index' tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
-                    All components
+                    Action
                   </DropdownItem>
                   <DropdownItem href='#' target='_blank'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
-                    Documentation
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -152,35 +152,35 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
                   <DropdownItem to='/sections#headers' tag={Link}>
                     <i className='now-ui-icons shopping_box'></i>
-                    Headers
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#features' tag={Link}>
                     <i className='now-ui-icons ui-2_settings-90'></i>
-                    Features
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#blogs' tag={Link}>
                     <i className='now-ui-icons text_align-left'></i>
-                    Blogs
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#teams' tag={Link}>
                     <i className='now-ui-icons sport_user-run'></i>
-                    Teams
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#projects' tag={Link}>
                     <i className='now-ui-icons education_paper'></i>
-                    Projects
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#pricing' tag={Link}>
                     <i className='now-ui-icons business_money-coins'></i>
-                    Pricing
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#testimonials' tag={Link}>
                     <i className='now-ui-icons ui-2_chat-round'></i>
-                    Testimonials
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/sections#contact-us' tag={Link}>
                     <i className='now-ui-icons tech_mobile'></i>
-                    Contact Us
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -201,47 +201,47 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
                   <DropdownItem tag={Link} to='/about-us'>
                     <i className='now-ui-icons business_bulb-63'></i>
-                    About-us
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/blog-post'>
                     <i className='now-ui-icons text_align-left'></i>
-                    Blog Post
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/blog-posts'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
-                    Blog Posts
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/contact-us'>
                     <i className='now-ui-icons location_pin'></i>
-                    Contact Us
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/landing-page'>
                     <i className='now-ui-icons education_paper'></i>
-                    Landing Page
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/login-page'>
                     <i className='now-ui-icons users_circle-08'></i>
-                    Login Page
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/pricing'>
                     <i className='now-ui-icons business_money-coins'></i>
-                    Pricing
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/e-commerce'>
                     <i className='now-ui-icons shopping_shop'></i>
-                    Ecommerce Page
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/product-page'>
                     <i className='now-ui-icons shopping_bag-16'></i>
-                    Product Page
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/profile-page'>
                     <i className='now-ui-icons users_single-02'></i>
-                    Profile Page
+                    Action
                   </DropdownItem>
                   <DropdownItem tag={Link} to='/sign-up'>
                     <i className='now-ui-icons tech_mobile'></i>
-                    Signup Page
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -260,15 +260,15 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem to='/' tag={Link}>
                     <i className='now-ui-icons design_image'></i>
-                    Presentation
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/index' tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
-                    All components
+                    Action
                   </DropdownItem>
                   <DropdownItem href='#' target='_blank'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
-                    Documentation
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -288,15 +288,15 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem to='/' tag={Link}>
                     <i className='now-ui-icons design_image'></i>
-                    Presentation
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/index' tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
-                    All components
+                    Action
                   </DropdownItem>
                   <DropdownItem href='#' target='_blank'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
-                    Documentation
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -316,15 +316,15 @@ function DropdownScrollNavbar() {
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem to='/' tag={Link}>
                     <i className='now-ui-icons design_image'></i>
-                    Presentation
+                    Action
                   </DropdownItem>
                   <DropdownItem to='/index' tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
-                    All components
+                    Action
                   </DropdownItem>
                   <DropdownItem href='#' target='_blank'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
-                    Documentation
+                    Action
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
