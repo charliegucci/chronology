@@ -11,7 +11,7 @@ Please click [here](https://github.com/charliegucci/chronology) <br/>
 Url : https://github.com/charliegucci/chronology <br/>
 
 <hr>
-
+ 
 ## Table of Contents
 
 - [Description of the website](#Description-of-the-website)
@@ -33,9 +33,13 @@ Url : https://github.com/charliegucci/chronology <br/>
 
 Time tracking is necessary and provides a crucial insight on business or organisation. It helps employees record the progress of their work and for the company, they will be able to know which is best for productivity, to highlight which projects at work and taking too much employee time. It also provides managers to decide the risk versus reward of spending time on each project. Time Tracking also increase the accountability which is a major component of a team success. It ensures that each member of your team feels the importance and invaluable of the project that they undertake. It also provides transparency to the company. Mostly, managers allocate work for their employees to complete but they often know very little about the work progress. With time tracking, they will be able to know how long they are taking to get the work done and highlights which other tasks are being neglected. Time tracking also improves scheduling and employees morale. It can actually reinforce feelings of trust and respect in your employees that can improve their performance and overall productivity.
 
-### Functionality / features
+### Functionality and features
 
 ### Target Audience
+
+---
+
+Our target audience is between mid to large enterprise who has decent amount of employees. Small business who wants to keep track and records of time sheet eventhough number of personnel were not huge.
 
 ### Tech Stack
 
@@ -59,6 +63,10 @@ Time tracking is necessary and provides a crucial insight on business or organis
 ## Data Flow Diagram
 
 ## Application Architecture Diagram
+
+---
+
+![arch](docs/arch-diagram.jpeg)
 
 ## User Stories
 
