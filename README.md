@@ -76,25 +76,30 @@ Our target audience is between mid to large enterprise who has decent amount of 
 
 ---
 
-| User                    | Description                                                                                                                      |
-| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| All Users               | must to be able to select Work Breakdown Structures so they can identify worked completed during the work day                    |
-| All Users               | must be able to enter relevant hours accrued by Work Breakdown Structures so that they can allocate the hours to the correct WBS |
-| All Users               | must be able to add WBS and accrued hours to list of daily accrued task                                                          |
-| All Users               | must be able to view total accrued hours per day                                                                                 |
-| All Users               | must be able to view total accrued hours per week                                                                                |
-| All Users               | must be able to select time and a half                                                                                           |
-| All Users               | must be able to select double time                                                                                               |
-| All Users               | must be able to auto calculate CRIB                                                                                              |
-| All Users               | must be able to authenticate own timesheet                                                                                       |
-| Level 2 and 3 Users     | must be able to authenticate subordinate timesheet                                                                               |
-| Level 2 and 3 Users     | must be able to reject subordinate timesheet                                                                                     |
-| All Users               | should be able to see their metadata                                                                                             |
-| All Users               | must be able to see their weekly metadata                                                                                        |
-| Level 4 and Admin Users | must be able to see aggregation information                                                                                      |
-| All Users               | must be able to login and logout based on their privileges                                                                       |
-| Admin Users             | must be able to perform admin task                                                                                               |
-| Level 4 and Admin Users | must be able to see Chart based on aggregation                                                                                   |
+| Data Flow Process | Function                        | User                       | Action                                                                                  | Result                                                                                           |
+| :---------------- | :------------------------------ | :------------------------- | :-------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| 1.1.1             | User Login                      | As a Non-Admin User        | I want to be able to log into Chronology                                                | So that I can enter the application.                                                             |
+| 1.1.2             | Change Password                 | As a Non-Admin User        | I want to be able to change my password                                                 | So that I can take security precautions or recover a forgotten password.                         |
+| 1.1.3             | Create New User                 | As a Non-Admin User        | I want be able to create a new user                                                     | So that I can become a user of chronology.                                                       |
+| 1.2.1             | Status of Log in                | As a Non-Admin User        | I want be able to receive my status of log in                                           | So that I’m aware of my log in status.                                                           |
+| 1.2.2             | Status of Change of Password    | As a Non-Admin User        | I want be able to receive my status of change of password                               | So that I’m aware of my change of password status.                                               |
+| 1.2.3             | Status of Create New User       | As a Non-Admin User        | I want be able to receive my status of creating a new user                              | So that I’m aware of creation of new user status.                                                |
+| 2.1.1             | Select WBS                      | As a Non-Admin User        | I want to be able to select the correct WBS                                             | So that I can identify the type of completed in my workday.                                      |
+| 2.1.2             | Hours                           | As a Non-Admin User        | I want to be able to select the correct hours (normal, 1.5, 2.5, crib)                  | So that I can allocate hours against the corresponding WBS.                                      |
+| 2.1.3             | Authentication                  | As a Non-Admin User        | I want to be able to authenticate my timesheet                                          | So that my supervisor and my manager and I can verify my timesheet.                              |
+| 2.1.4             | User Entry Information          | As a Non-Admin User        | I want to my user entry information entered automatically                               | So that the correct user information is entered into the database.                               |
+| 2.2.1             | Notify User of Success          | As a Non-Admin User        | I want be able to receive a notification of a successfully of authenticated timesheet   | So that I know if my timesheet is successfully authenticated.                                    |
+| 2.2.2             | Notify User of Failure          | As a Non-Admin User        | I want be able to receive a notification of a unsuccessfully of authenticated timesheet | So that I know if my timesheet is unsuccessfully authenticated.                                  |
+| 3.1.1             | Supervisor/Manager Rejection    | As a Supervisor or Manager | I want to be able to reject the timesheets of subordinates                              | So that the subordinate can modify the timesheet to the correct information.                     |
+| 3.1.2             | User Rejection Information      | As a Supervisor or Manager | I want my user information and my subordinates user information entered automatically   | So that the correct user information is entered into the database.                               |
+| 3.2.1             | Notify User of Rejection        | As a Supervisor or Manager | I want to be able to send rejection information to the subordinate                      | So that the subordinate can modify the timesheet to the correct information as soon as possible. |
+| 3.2.2             | User Authentication Information | As a Supervisor or Manager | I want my user information and my subordinates user information entered automatically   | So that the correct user information is entered into the database.                               |
+| 3.2.2             | Notify User of Authentication   | As a Supervisor or Manager | I want notification of authentication of a timesheet                                    | So that I’m aware of the status of authentication.                                               |
+| 4.1.1             | Chart Parameters                | As a Manager               | I want to be able to change my chart parameters                                         | So that I can view the required chart information.                                               |
+| 4.1.2             | TableParameters                 | As a Manager               | I want to be able to change my table parameters                                         | So that I can view the required table information.                                               |
+| 4.2.1             | Display Chart                   | As a Manager               | I want to be able to view my chart                                                      | So that I can make better business decisions.                                                    |
+| 4.2.2             | Display Table                   | As a Manager               | I want to be able to view my table                                                      | So that I can make better business decisions.                                                    |
+| Null              | Null                            | As an Admin User           | I want to be able to perfrom administrative tasks                                       | So that the application performs as required.                                                    |
 
 ## Wireframes for multiple standard screen sizes created using industry standard software
 
@@ -135,3 +140,4 @@ Our target audience is between mid to large enterprise who has decent amount of 
 
 ![trello](docs/trello1.png) <br/>
 ![trello](docs/trello2.png) <br/>
+![trello](docs/trello3.png) <br/>
