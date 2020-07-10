@@ -62,6 +62,10 @@ Our target audience is between mid to large enterprise who has decent amount of 
 
 ## Data Flow Diagram
 
+---
+
+![data](docs/data-diagram.jpeg)
+
 ## Application Architecture Diagram
 
 ---
