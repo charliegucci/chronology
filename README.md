@@ -16,7 +16,7 @@ Url : https://github.com/charliegucci/chronology <br/>
 
 - [Description of the website](#Description-of-the-website)
   - [Purpose](#Purpose)
-  - [Functionality/features](#Functionality-/-features)
+  - [Functionality and features](#Functionality-and-features)
   - [Target Audience](#Target-Audience)
   - [Tech Stack](#Tech-Stack)
 - [Data Flow Diagram](#Data-Flow-Diagram)
@@ -38,6 +38,23 @@ Time tracking is necessary and provides a crucial insight on business or organis
 ### Target Audience
 
 ### Tech Stack
+
+---
+
+| Tech Stack                                       | Description                                                                                                                                                          |
+| :----------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Mongo](docs/mongodb.png)                       | document database with the scalability and flexibility that you want with the querying and indexing that you need                                                    |
+| ![Express](docs/expressjs.png)                   | web framework that let's you structure a web application to handle multiple different http requests at a specific url                                                |
+| ![React](docs/react.png)                         | an open-source JavaScript library for building user interfaces                                                                                                       |
+| ![Node](docs/nodejs.png)                         | a JavaScript runtime built on Chrome's V8 JavaScript engine                                                                                                          |
+| ![SendGrid](docs/sendgd.png)                     | Delivering your transactional and marketing emails through the cloud-based email delivery platform.                                                                  |
+| ![ReactStrap](docs/reactstrap.png)               | easy to use React Bootstrap 4 components compatible with React 16+                                                                                                   |
+| ![Mongoose](docs/mongoose.png)                   | an object data modeling (ODM) library that provides a rigorous modeling environment for your data                                                                    |
+| ![jwt](docs/jwt.png)                             | a compact URL-safe means of representing claims to be transferred between two parties                                                                                |
+| ![heroku](docs/heroku.png)                       | a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud                                                 |
+| ![express-validator](docs/express-validator.png) | set of express.js middlewares that wraps validator.js validator and sanitizer functions                                                                              |
+| ![cors](docs/cors.png)                           | a mechanism that uses additional HTTP headers to tell browsers to give a web application running at one origin, access to selected resources from a different origin |
+| ![axios](docs/axios.png)                         | Promise based HTTP client for the browser and node.js                                                                                                                |
 
 ## Data Flow Diagram
 
