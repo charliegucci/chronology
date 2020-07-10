@@ -63,7 +63,7 @@ function DropdownScrollNavbar() {
               id='navbarDropdown'
               onClick={(e) => e.preventDefault()}>
               <span>
-                <i className='now-ui-icons ui-1_settings-gear-63'></i>
+                <i className='now-ui-icons loader_gear spin'></i>
               </span>
             </DropdownToggle>
             <DropdownMenu aria-labelledby='navbarDropdown'>

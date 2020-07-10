@@ -35,7 +35,7 @@ const Signin = ({ history }) => {
     password: ''
   });
 
-  const { email, password, buttonText } = values;
+  const { email, password } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
