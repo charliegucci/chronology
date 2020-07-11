@@ -139,7 +139,6 @@ const Private = ({ history }) => {
   return (
     <div className='page-header header-filter'>
       <ToastContainer position='bottom-right' />
-      <Logo />
       <DropdownScrollNavbar />
       <div
         className='page-header-image'

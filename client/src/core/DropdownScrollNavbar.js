@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout } from '../auth/helpers';
+import Logo from '../core/Logo';
 
 // reactstrap components
 import {
@@ -56,6 +57,58 @@ const DropdownScrollNavbar = ({ history }) => {
       ) : null}
       <Navbar className={'fixed-top' + navbarColor} color='white' expand='lg'>
         <Container>
+          <UncontrolledDropdown className='button-dropdown'>
+            <DropdownToggle
+              caret
+              tag='a'
+              data-toggle='dropdown'
+              href='#pablo'
+              id='navbarDropdown'
+              onClick={(e) => e.preventDefault()}>
+              <span className='button-bar'></span>
+              <span className='button-bar'></span>
+              <span className='button-bar'></span>
+            </DropdownToggle>
+            <DropdownMenu aria-labelledby='navbarDropdown'>
+              <DropdownItem header>Dropdown header</DropdownItem>
+              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+                Action
+              </DropdownItem>
+              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+                Another action
+              </DropdownItem>
+              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+                Something else here
+              </DropdownItem>
+              <DropdownItem divider></DropdownItem>
+              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+                Separated link
+              </DropdownItem>
+              <DropdownItem divider></DropdownItem>
+              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+                One more separated link
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+          <div className='navbar-translate'>
+            <NavbarBrand to='/' tag={Link} id='navbar-brand'>
+              Chronology
+            </NavbarBrand>
+            <UncontrolledTooltip target='navbar-brand'>
+              Designed by Invision. Coded by Creative Tim
+            </UncontrolledTooltip>
+            <button
+              onClick={() => {
+                document.documentElement.classList.toggle('nav-open');
+                setCollapseOpen(!collapseOpen);
+              }}
+              aria-expanded={collapseOpen}
+              className='navbar-toggler'>
+              <span className='navbar-toggler-bar top-bar'></span>
+              <span className='navbar-toggler-bar middle-bar'></span>
+              <span className='navbar-toggler-bar bottom-bar'></span>
+            </button>
+          </div>
           <Collapse isOpen={collapseOpen} navbar>
             <Nav className='ml-auto' id='ceva' navbar>
               <UncontrolledDropdown nav>
