@@ -88,8 +88,6 @@ const Signup = () => {
     <>
       <ToastContainer position='bottom-right' />
       {isAuth() ? <Redirect to='/private' /> : null}
-      {/* <DropdownScrollNavbar /> */}
-      <Logo />
 
       <div className='page-header header-filter'>
         <div
@@ -104,11 +102,7 @@ const Signup = () => {
                 <Card className='card-login card-plain'>
                   <Form action='' className='form' method=''>
                     <CardHeader className='text-center'>
-                      <div className='logo-container'>
-                        <img
-                          alt='...'
-                          src={require('../img/now-logo.png')}></img>
-                      </div>
+                      <Logo />
                     </CardHeader>
                     <CardBody>
                       <InputGroup

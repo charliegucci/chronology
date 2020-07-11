@@ -5,16 +5,17 @@ const Logo = () => {
   const [navbarColor, setnavbarColor] = useState(' navbar-transparent');
 
   return (
-    <Navbar className={'fixed-top' + navbarColor} color='white' expand='lg'>
+    <div className='text-center '>
       <span>
         <i className='now-ui-icons loader_gear spin'>
           {' '}
           <i className='now-ui-icons loader_gear spin'> </i>
         </i>
       </span>
-
-      <span> Chronology</span>
-    </Navbar>
+      <div style={{ paddingTop: '1rem' }}>
+        <h5>CHRONOLOGY</h5>
+      </div>
+    </div>
   );
 };
 
