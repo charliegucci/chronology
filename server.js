@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 
@@ -26,25 +27,22 @@ const userRoutes = require('./routes/user');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.use(cors())
-if ((process.env.NODE_ENV = 'development')) {
-  app.use(cors({ origin: `http://localhost:3000` }));
-}
+app.use(cors());
 
 //middlewares
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 
-const port = process.env.PORT || 8000;
-
 //serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
 }
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-  console.log(`API is running at port ${port} - ${process.env.NODE_ENV}`);
+  console.log(`API is running at port ${port}`);
 });
