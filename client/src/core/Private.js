@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import axios from 'axios';
+import Logo from '../core/Logo';
+import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+// reactstrap components
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Container,
+  Row,
+  Col
+} from 'reactstrap';
 
 const Private = ({ history }) => {
   const [values, setValues] = useState({
@@ -124,15 +137,16 @@ const Private = ({ history }) => {
   );
 
   return (
-    <Layout>
-      <div className='col-md-6 offset-md-3'>
-        <ToastContainer position='bottom-right' />
-
-        <h1 className='pt-5 text-center'>Private</h1>
-        <p className='lead text-center'>Profile Update</p>
-        {updateForm()}
-      </div>
-    </Layout>
+    <div className='page-header header-filter'>
+      <ToastContainer position='bottom-right' />
+      <Logo />
+      <DropdownScrollNavbar />
+      <div
+        className='page-header-image'
+        style={{
+          backgroundColor: '#1E1D2D'
+        }}></div>
+    </div>
   );
 };
 

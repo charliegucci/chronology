@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { signout } from '../auth/helpers';
+
 // reactstrap components
 import {
   Button,
@@ -16,7 +18,7 @@ import {
   UncontrolledTooltip
 } from 'reactstrap';
 
-function DropdownScrollNavbar() {
+const DropdownScrollNavbar = ({ history }) => {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
   const [buyButtonColor, setBuyButtonColor] = useState('neutral');
@@ -147,47 +149,47 @@ function DropdownScrollNavbar() {
                   <p>PARTS</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
-                  <DropdownItem tag={Link} to='/about-us'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons business_bulb-63'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/blog-post'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons text_align-left'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/blog-posts'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/contact-us'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons location_pin'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/landing-page'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons education_paper'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/login-page'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons users_circle-08'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/pricing'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons business_money-coins'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/e-commerce'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons shopping_shop'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/product-page'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons shopping_bag-16'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/profile-page'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons users_single-02'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/sign-up'>
+                  <DropdownItem tag={Link} to='/'>
                     <i className='now-ui-icons tech_mobile'></i>
                     Action
                   </DropdownItem>
@@ -277,12 +279,27 @@ function DropdownScrollNavbar() {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav></UncontrolledDropdown>
+              <UncontrolledDropdown nav></UncontrolledDropdown>
+              <DropdownToggle
+                color='default'
+                data-toggle='dropdown'
+                href='#pablo'
+                id='navbarDropdownMenuLink1'
+                nav
+                onClick={() => {
+                  signout(() => {
+                    history.push('/');
+                  });
+                }}>
+                <i className='now-ui-icons design_app'></i>
+                <p>Logout</p>
+              </DropdownToggle>
             </Nav>
           </Collapse>
         </Container>
       </Navbar>
     </>
   );
-}
+};
 
-export default DropdownScrollNavbar;
+export default withRouter(DropdownScrollNavbar);
