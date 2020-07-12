@@ -68,7 +68,7 @@ The Chronology application will aim provide simple and intuitive functionality f
 ---
 ### Target Audience
 
-The target audience for Chronology is aimed at mid to large scale enterprises who require an integrated and systematic timesheet application for day-to-day operations.
+The target audience for Chronology is aimed at mid to large scale enterprises who require an integrated and systematic time tracking application for day-to-day operations.
 
 ---
 ### Tech Stack
