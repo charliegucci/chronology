@@ -171,3 +171,4 @@ The target audience for Chronology is aimed at mid to large scale enterprises wh
 ![trello](docs/trello1.png) <br/>
 ![trello](docs/trello2.png) <br/>
 ![trello](docs/trello3.png) <br/>
+![trello](docs/trello4.png) <br/>
