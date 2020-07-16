@@ -33,11 +33,11 @@ import Footer from '../core/Footer';
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
-    email: '',
+    employee_id: '',
     password: ''
   });
 
-  const { email, password } = values;
+  const { employee_id, password } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -48,15 +48,14 @@ const Signin = ({ history }) => {
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signin`,
-      data: { email, password }
+      data: { employee_id, password }
     })
       .then((response) => {
         console.log('SIGNIN SUCCESS', response);
         authenticate(response, () => {
           setValues({
             ...values,
-            name: '',
-            email: '',
+            employee_id: '',
             password: ''
           });
           //   toast(`Hello ${response.data.user.name}, Welcome back!`);
@@ -118,12 +117,12 @@ const Signin = ({ history }) => {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          placeholder='Email'
-                          type='email'
+                          placeholder='Employee Id'
+                          type='text'
                           onFocus={() => setFirstFocus(true)}
                           onBlur={() => setFirstFocus(false)}
-                          onChange={handleChange('email')}
-                          value={email}></Input>
+                          onChange={handleChange('employee_id')}
+                          value={employee_id}></Input>
                       </InputGroup>
                       <InputGroup
                         className={

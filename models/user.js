@@ -4,18 +4,83 @@ const crypto = require('crypto');
 // User Schema
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    employee_id: {
       type: String,
       trim: true,
-      required: true,
-      max: 32
+      required: true
     },
-    email: {
+    first_name: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    last_name: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    work_email: {
       type: String,
       trim: true,
       required: true,
       unique: true,
       lowercase: true
+    },
+    work_phone: {
+      type: Number,
+      trim: true,
+      required: true
+    },
+    work_address: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    personal_email: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: true
+    },
+    personal_phone: {
+      type: Number,
+      trim: true,
+      required: true
+    },
+    personal_address: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    company: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    section: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    job_title: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    auth_level: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    superior_employee_id: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    dob: {
+      type: String,
+      trim: true,
+      required: true
     },
     hashed_password: {
       type: String,
