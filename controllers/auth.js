@@ -87,29 +87,29 @@ exports.accountActivation = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-  const { email, password } = req.body;
+  const { employee_id, password } = req.body;
   //check if user exist
-  User.findOne({ email }).exec((err, user) => {
+  User.findOne({ employee_id }).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        error: 'Email does not exist. Please signup.'
+        error: 'Employee ID does not exist. Please signup.'
       });
     }
     // authenticate
     if (!user.authenticate(password)) {
       return res.status(400).json({
-        error: 'Email or password do not match.'
+        error: 'Employee Id or password do not match.'
       });
     }
     // generate a token and send to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d'
     });
-    const { _id, name, email, role } = user;
+    const { _id, name, email, role, employee_id } = user;
 
     return res.json({
       token,
-      user: { _id, name, email, role }
+      user: { _id, name, email, role, employee_id }
     });
   });
 };

@@ -9,7 +9,7 @@ exports.userSignupValidator = [
 ];
 
 exports.userSigninValidator = [
-  check('email').isEmail().withMessage('Must be a valid email address'),
+  check('employee_id').not().isEmpty().withMessage('Employee Id is Required'),
   check('password')
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long')
