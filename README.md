@@ -16,7 +16,7 @@ Url : https://github.com/charliegucci/chronology <br/>
 
 - [Description of the website](#Description-of-the-website)
   - [Purpose](#Purpose)
-  - [Functionality and features](#Functionality-and-features)
+  - [Features and Functionality](#Features-and-Functionality)
   - [Target Audience](#Target-Audience)
   - [Tech Stack](#Tech-Stack)
 - [Data Flow Diagram](#Data-Flow-Diagram)
@@ -46,31 +46,32 @@ Chronology will have the following features included in the initial release to p
 7. Authenticate and reject subordinate time track
 8. Allow managers to view aggregated information about subordinate time tracking through tables and charts
 
-The Chronology application will aim provide simple and intuitive functionality for the input, management and visualisation of time tracking data.  The features listed above will function as follows:
-
+The Chronology application will aim provide simple and intuitive functionality for the input, management and visualisation of time tracking data. The features listed above will function as follows:
 
 1.  A user with the intention to log in to the Chronology application will be required to enter a username and password. Once the user has enter the application they will be routed to the user profile page where they are given information on their current and previous successful log ins, as well as other user specific information.
 
-2. If a user has either forgotten their password, has attempted to log in 5 times without success or requires a password change for any other reason, the user will be directed to the change password page and will allowed to change their password securely. Once the user has successfully changed their password, they will be notified of their success and change of password information will then be recorded for security.
+2.  If a user has either forgotten their password, has attempted to log in 5 times without success or requires a password change for any other reason, the user will be directed to the change password page and will allowed to change their password securely. Once the user has successfully changed their password, they will be notified of their success and change of password information will then be recorded for security.
 
-3. On creation of a new user, the user will be required to input their user information into the new user displayed page.  Once all of the information is in required fields and the user has submitted, the user's superior will then be required to approve the new user via an email link.  The user will then be notified of the successful submission and be able access the application.
+3.  On creation of a new user, the user will be required to input their user information into the new user displayed page. Once all of the information is in required fields and the user has submitted, the user's superior will then be required to approve the new user via an email link. The user will then be notified of the successful submission and be able access the application.
 
-4. A user will need to be able to allocate and record the hours they have accrued during the work day.  A WBS (Work Breakdown Structure) code will be provided through an interface for the user to select the correct WBS corresponding with the time the user has allocated to an individual task.  
+4.  A user will need to be able to allocate and record the hours they have accrued during the work day. A WBS (Work Breakdown Structure) code will be provided through an interface for the user to select the correct WBS corresponding with the time the user has allocated to an individual task.
 
-5. On selection of a WBS, the user will then be required to input the hours the have accrued for that specific WBS code.  They will also have the option to select if the task was accrued at some multiplying factor such as 1.5 (time and a half) or 2.5 (double time and a half).  The user will then need to select the day to which the WBS and hour combination occurred (ie. Monday).  As this process takes place, the application will update the current aggregation of hours for daily and weekly totals for the user to view.
+5.  On selection of a WBS, the user will then be required to input the hours the have accrued for that specific WBS code. They will also have the option to select if the task was accrued at some multiplying factor such as 1.5 (time and a half) or 2.5 (double time and a half). The user will then need to select the day to which the WBS and hour combination occurred (ie. Monday). As this process takes place, the application will update the current aggregation of hours for daily and weekly totals for the user to view.
 
-6. Once the user has complete the input of WBS and hour combined data for the week, the user will then have the option to submit.  On submission, the users supervisor will then be able to review, reject or authentic the users time track.  
+6.  Once the user has complete the input of WBS and hour combined data for the week, the user will then have the option to submit. On submission, the users supervisor will then be able to review, reject or authentic the users time track.
 
-7. If the superior decided to reject the time track, the user will then be required to modify and re-submit, following a similar process to the example above.  The superior will have the option to provide comments to the user on the required modifications.  On authentication, the user will be notified of the superiors authentication.  The authentication will then be passed to the next level of authentication for review, reject or authentication if required.
+7.  If the superior decided to reject the time track, the user will then be required to modify and re-submit, following a similar process to the example above. The superior will have the option to provide comments to the user on the required modifications. On authentication, the user will be notified of the superiors authentication. The authentication will then be passed to the next level of authentication for review, reject or authentication if required.
 
-8. To make effective management decisions, a manager will be able to view a variety of charts and tables of aggregated information related to the organisations time track.  The frames of reference for the charting information can be changed by the manager as required.  The business may also decide to make this information available to subordinate which can be modified at the managers discretion.
+8.  To make effective management decisions, a manager will be able to view a variety of charts and tables of aggregated information related to the organisations time track. The frames of reference for the charting information can be changed by the manager as required. The business may also decide to make this information available to subordinate which can be modified at the managers discretion.
 
 ---
+
 ### Target Audience
 
 The target audience for Chronology is aimed at mid to large scale enterprises who require an integrated and systematic time tracking application for day-to-day operations.
 
 ---
+
 ### Tech Stack
 
 ---
