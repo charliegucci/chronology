@@ -33,11 +33,11 @@ import Footer from '../core/Footer';
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
-    employee_id: '',
+    employeeId: '',
     password: ''
   });
 
-  const { employee_id, password } = values;
+  const { employeeId, password } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -48,14 +48,14 @@ const Signin = ({ history }) => {
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signin`,
-      data: { employee_id, password }
+      data: { employeeId, password }
     })
       .then((response) => {
         console.log('SIGNIN SUCCESS', response);
         authenticate(response, () => {
           setValues({
             ...values,
-            employee_id: '',
+            employeeId: '',
             password: ''
           });
           //   toast(`Hello ${response.data.user.name}, Welcome back!`);
@@ -65,8 +65,7 @@ const Signin = ({ history }) => {
         });
       })
       .catch((error) => {
-        console.log('SIGNIN ERROR', error.response.data);
-        setValues({ ...values, buttonText: 'Submit' });
+        console.log('SIGNIN ERROR', error);
         toast(error.response.data.error);
       });
   };
@@ -113,7 +112,7 @@ const Signin = ({ history }) => {
                         }>
                         <InputGroupAddon addonType='prepend'>
                           <InputGroupText>
-                            <i className='now-ui-icons ui-1_email-85'></i>
+                            <i className='now-ui-icons business_badge'></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -121,8 +120,8 @@ const Signin = ({ history }) => {
                           type='text'
                           onFocus={() => setFirstFocus(true)}
                           onBlur={() => setFirstFocus(false)}
-                          onChange={handleChange('employee_id')}
-                          value={employee_id}></Input>
+                          onChange={handleChange('employeeId')}
+                          value={employeeId}></Input>
                       </InputGroup>
                       <InputGroup
                         className={

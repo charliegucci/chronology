@@ -6,24 +6,58 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const _ = require('lodash');
 
 exports.signup = (req, res) => {
-  const { name, email, password } = req.body;
+  const {
+    employeeId,
+    workEmail,
+    firstName,
+    lastName,
+    password,
+    workPhone,
+    workAddress,
+    personalEmail,
+    personalPhone,
+    personalAddress,
+    company,
+    section,
+    jobTitle,
+    authLevel,
+    superiorEmployeeId,
+    dob
+  } = req.body;
 
-  User.findOne({ email }).exec((err, user) => {
+  User.findOne({ employeeId }).exec((err, user) => {
     if (user) {
       return res.status(400).json({
-        error: 'Email is taken'
+        error: 'Employee ID is already registered'
       });
     }
 
     const token = jwt.sign(
-      { name, email, password },
+      {
+        employeeId,
+        workEmail,
+        firstName,
+        lastName,
+        password,
+        workPhone,
+        workAddress,
+        personalEmail,
+        personalPhone,
+        personalAddress,
+        company,
+        section,
+        jobTitle,
+        authLevel,
+        superiorEmployeeId,
+        dob
+      },
       process.env.JWT_ACCOUNT_ACTIVATION,
       { expiresIn: '10m' }
     );
 
     const emailData = {
       from: process.env.EMAIL_TO,
-      to: email,
+      to: workEmail,
       subject: `Account activation link`,
       html: `
                 <h1>Please use the following link to activate your account</h1>
@@ -39,7 +73,7 @@ exports.signup = (req, res) => {
       .then((sent) => {
         // console.log('SIGNUP EMAIL SENT', sent);
         return res.json({
-          message: `Email has been sent to ${email}. Follow the instruction to activate your account`
+          message: `Email has been sent to ${workEmail}. Follow the instruction to activate your account`
         });
       })
       .catch((err) => {
@@ -65,11 +99,45 @@ exports.accountActivation = (req, res) => {
           error: 'Link already expired, Signup again'
         });
       }
-      const { name, email, password } = jwt.decode(token);
-      const user = new User({ name, email, password });
+      const {
+        employeeId,
+        workEmail,
+        firstName,
+        lastName,
+        password,
+        workPhone,
+        workAddress,
+        personalEmail,
+        personalPhone,
+        personalAddress,
+        company,
+        section,
+        jobTitle,
+        authLevel,
+        superiorEmployeeId,
+        dob
+      } = jwt.decode(token);
+      const user = new User({
+        employeeId,
+        workEmail,
+        firstName,
+        lastName,
+        password,
+        workPhone,
+        workAddress,
+        personalEmail,
+        personalPhone,
+        personalAddress,
+        company,
+        section,
+        jobTitle,
+        authLevel,
+        superiorEmployeeId,
+        dob
+      });
       user.save((err, user) => {
         if (err) {
-          //   console.log('SAVE USER IN ACCOUNT ACTIVATION ERROR', err);
+          console.log('SAVE USER IN ACCOUNT ACTIVATION ERROR', err);
           return res.status(401).json({
             error: 'Error saving user in db. Try Signup again'
           });
@@ -87,9 +155,10 @@ exports.accountActivation = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-  const { employee_id, password } = req.body;
+  const { employeeId, password } = req.body;
+
   //check if user exist
-  User.findOne({ employee_id }).exec((err, user) => {
+  User.findOne({ employeeId }).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
         error: 'Employee ID does not exist. Please signup.'
@@ -105,11 +174,47 @@ exports.signin = (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d'
     });
-    const { _id, name, email, role, employee_id } = user;
+    const {
+      _id,
+      role,
+      employeeId,
+      workEmail,
+      firstName,
+      lastName,
+      workPhone,
+      workAddress,
+      personalEmail,
+      personalPhone,
+      personalAddress,
+      company,
+      section,
+      jobTitle,
+      authLevel,
+      superiorEmployeeId,
+      dob
+    } = user;
 
     return res.json({
       token,
-      user: { _id, name, email, role, employee_id }
+      user: {
+        _id,
+        role,
+        employeeId,
+        workEmail,
+        firstName,
+        lastName,
+        workPhone,
+        workAddress,
+        personalEmail,
+        personalPhone,
+        personalAddress,
+        company,
+        section,
+        jobTitle,
+        authLevel,
+        superiorEmployeeId,
+        dob
+      }
     });
   });
 };
@@ -137,9 +242,9 @@ exports.adminMiddleware = (req, res, next) => {
 };
 
 exports.forgotPassword = (req, res) => {
-  const { email } = req.body;
+  const { workEmail } = req.body;
 
-  User.findOne({ email }, (err, user) => {
+  User.findOne({ workEmail }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
         error: 'Email does not exist'
@@ -147,7 +252,7 @@ exports.forgotPassword = (req, res) => {
     }
 
     const token = jwt.sign(
-      { _id: user._id, name: user.name },
+      { _id: user._id, workEmail: user.workEmail },
       process.env.JWT_RESET_PASSWORD,
       {
         expiresIn: '10m'
@@ -156,7 +261,7 @@ exports.forgotPassword = (req, res) => {
 
     const emailData = {
       from: process.env.EMAIL_TO,
-      to: email,
+      to: workEmail,
       subject: `Password Reset link`,
       html: `
                 <h1>Please use the following link to reset your account</h1>
@@ -178,7 +283,7 @@ exports.forgotPassword = (req, res) => {
           .then((sent) => {
             // console.log('SIGNUP EMAIL SENT', sent);
             return res.json({
-              message: `Email has been sent to ${email}. Follow the instruction to reset your email`
+              message: `Email has been sent to ${workEmail}. Follow the instruction to reset your email`
             });
           })
           .catch((err) => {

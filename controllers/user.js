@@ -15,7 +15,21 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const { name, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    password,
+    workPhone,
+    workAddress,
+    personalEmail,
+    personalPhone,
+    personalAddress,
+    company,
+    section,
+    jobTitle,
+    superiorEmployeeId,
+    dob
+  } = req.body;
 
   User.findOne({ _id: req.user._id }, (err, user) => {
     if (err || !user) {
@@ -23,12 +37,19 @@ exports.update = (req, res) => {
         error: 'User not found'
       });
     }
-    if (!name) {
+    if (!firstName) {
       return res.status(400).json({
-        error: 'Name is Required'
+        error: 'First Name is Required'
       });
     } else {
-      user.name = name;
+      user.firstName = firstName;
+    }
+    if (!lastName) {
+      return res.status(400).json({
+        error: 'Last Name is Required'
+      });
+    } else {
+      user.lastName = lastName;
     }
     if (password) {
       if (password.length < 6) {
@@ -38,6 +59,79 @@ exports.update = (req, res) => {
       } else {
         user.password = password;
       }
+    }
+    if (!workPhone) {
+      return res.status(400).json({
+        error: 'Work Phone is Required'
+      });
+    } else {
+      user.workPhone = workPhone;
+    }
+    if (!workAddress) {
+      return res.status(400).json({
+        error: 'Work Address is Required'
+      });
+    } else {
+      user.workAddress = workAddress;
+    }
+    if (!personalEmail) {
+      return res.status(400).json({
+        error: 'Personal Email is Required'
+      });
+    } else {
+      user.personalEmail = personalEmail;
+    }
+
+    if (!personalPhone) {
+      return res.status(400).json({
+        error: 'Personal Phone is Required'
+      });
+    } else {
+      user.personalPhone = personalPhone;
+    }
+    if (!personalAddress) {
+      return res.status(400).json({
+        error: 'Personal Address is Required'
+      });
+    } else {
+      user.personalAddress = personalAddress;
+    }
+
+    if (!company) {
+      return res.status(400).json({
+        error: 'Company is Required'
+      });
+    } else {
+      user.company = company;
+    }
+    if (!section) {
+      return res.status(400).json({
+        error: 'Section is Required'
+      });
+    } else {
+      user.section = section;
+    }
+
+    if (!jobTitle) {
+      return res.status(400).json({
+        error: 'Job Title is Required'
+      });
+    } else {
+      user.jobTitle = jobTitle;
+    }
+    if (!superiorEmployeeId) {
+      return res.status(400).json({
+        error: 'Superior Employee ID is Required'
+      });
+    } else {
+      user.superiorEmployeeId = superiorEmployeeId;
+    }
+    if (!dob) {
+      return res.status(400).json({
+        error: 'Date of Birth is Required'
+      });
+    } else {
+      user.dob = dob;
     }
     user.save((err, updatedUser) => {
       if (err) {

@@ -95,7 +95,7 @@ const DropdownScrollNavbar = ({ history }) => {
               Chronology
             </NavbarBrand>
             <UncontrolledTooltip target='navbar-brand'>
-              Designed by Invision. Coded by Creative Tim
+              Designed by Chronology. Coded by Jeb & Wil
             </UncontrolledTooltip>
             <button
               onClick={() => {

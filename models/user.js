@@ -4,50 +4,50 @@ const crypto = require('crypto');
 // User Schema
 const userSchema = new mongoose.Schema(
   {
-    employee_id: {
+    employeeId: {
       type: String,
       trim: true,
       required: true
     },
-    first_name: {
+    firstName: {
       type: String,
       trim: true,
       required: true
     },
-    last_name: {
+    lastName: {
       type: String,
       trim: true,
       required: true
     },
-    work_email: {
+    workEmail: {
       type: String,
       trim: true,
       required: true,
       unique: true,
       lowercase: true
     },
-    work_phone: {
+    workPhone: {
       type: Number,
       trim: true,
       required: true
     },
-    work_address: {
+    workAddress: {
       type: String,
       trim: true,
       required: true
     },
-    personal_email: {
+    personalEmail: {
       type: String,
       trim: true,
       unique: true,
       required: true
     },
-    personal_phone: {
+    personalPhone: {
       type: Number,
       trim: true,
       required: true
     },
-    personal_address: {
+    personalAddress: {
       type: String,
       trim: true,
       required: true
@@ -62,17 +62,17 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true
     },
-    job_title: {
+    jobTitle: {
       type: String,
       trim: true,
       required: true
     },
-    auth_level: {
+    authLevel: {
       type: String,
       trim: true,
       required: true
     },
-    superior_employee_id: {
+    superiorEmployeeId: {
       type: String,
       trim: true,
       required: true

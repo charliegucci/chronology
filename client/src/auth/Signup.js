@@ -22,7 +22,9 @@ import {
   Container,
   Col,
   Row,
-  Navbar
+  Navbar,
+  FormGroup,
+  FormText
 } from 'reactstrap';
 
 // core components
@@ -31,13 +33,42 @@ import Footer from '../core/Footer';
 
 const Signup = () => {
   const [values, setValues] = useState({
-    name: '',
-    email: '',
-    password: ''
-    // buttonText: 'Submit'
+    employeeId: '',
+    workEmail: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    workPhone: '',
+    workAddress: '',
+    personalEmail: '',
+    personalPhone: '',
+    personalAddress: '',
+    company: '',
+    section: '',
+    jobTitle: '',
+    authLevel: '',
+    superiorEmployeeId: '',
+    dob: ''
   });
 
-  const { name, email, password, buttonText } = values;
+  const {
+    employeeId,
+    workEmail,
+    firstName,
+    lastName,
+    password,
+    workPhone,
+    workAddress,
+    personalEmail,
+    personalPhone,
+    personalAddress,
+    company,
+    section,
+    jobTitle,
+    authLevel,
+    superiorEmployeeId,
+    dob
+  } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -45,31 +76,73 @@ const Signup = () => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, buttonText: 'Loading...' });
+    setValues({ ...values });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signup`,
-      data: { name, email, password }
+      data: {
+        employeeId,
+        workEmail,
+        firstName,
+        lastName,
+        password,
+        workPhone,
+        workAddress,
+        personalEmail,
+        personalPhone,
+        personalAddress,
+        company,
+        section,
+        jobTitle,
+        authLevel,
+        superiorEmployeeId,
+        dob
+      }
     })
       .then((response) => {
         console.log('SIGNUP SUCCESS', response);
         setValues({
           ...values,
-          name: '',
-          email: '',
+          employeeId: '',
+          workEmail: '',
+          firstName: '',
+          lastName: '',
           password: '',
-          buttonText: 'Done'
+          workPhone: '',
+          workAddress: '',
+          personalEmail: '',
+          personalPhone: '',
+          personalAddress: '',
+          company: '',
+          section: '',
+          jobTitle: '',
+          authLevel: '',
+          superiorEmployeeId: '',
+          dob: ''
         });
         toast(response.data.message);
       })
       .catch((error) => {
         console.log('SIGNUP ERROR', error.response.data);
-        setValues({ ...values, buttonText: 'Submit' });
+        setValues({ ...values });
         toast(error.response.data.error);
       });
   };
   const [firstFocus, setFirstFocus] = useState(false);
   const [secondFocus, setSecondFocus] = useState(false);
+  const [thirdFocus, setThirdFocus] = useState(false);
+  const [fourthFocus, setFourthFocus] = useState(false);
+  const [fifthFocus, setFifthFocus] = useState(false);
+  const [sixthFocus, setSixthFocus] = useState(false);
+  const [seventhFocus, setSeventhFocus] = useState(false);
+  const [eightFocus, setEightFocus] = useState(false);
+  const [ninethFocus, setNinethFocus] = useState(false);
+  const [tenthFocus, setTenthFocus] = useState(false);
+  const [eleventhFocus, setEleventhFocus] = useState(false);
+  const [twelvethFocus, setTwelvethFocus] = useState(false);
+  const [thirteenthFocus, setThirteenthFocus] = useState(false);
+  const [fourteenthFocus, setFourteenthFocus] = useState(false);
+  const [fifteenthFocus, setFifteenthFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
   const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
   useEffect(() => {
@@ -97,14 +170,15 @@ const Signup = () => {
           }}></div>
         <div className='content'>
           <Container>
-            <Row>
-              <Col className='ml-auto mr-auto' md='5'>
-                <Card className='card-login card-plain'>
-                  <Form action='' className='form' method=''>
-                    <CardHeader className='text-center'>
-                      <Logo />
-                    </CardHeader>
-                    <CardBody>
+            <Logo />
+            <Card className='card-login card-plain'>
+              <Form action='' className='form' method=''>
+                <CardHeader className='text-center'>
+                  Register Account
+                </CardHeader>
+                <CardBody>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-6'>
                       <InputGroup
                         className={
                           'no-border input-lg' +
@@ -112,39 +186,23 @@ const Signup = () => {
                         }>
                         <InputGroupAddon addonType='prepend'>
                           <InputGroupText>
-                            <i className='now-ui-icons users_single-02'></i>
+                            <i className='now-ui-icons business_badge'></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          placeholder='Full Name'
+                          placeholder='Employee ID'
                           type='text'
                           onFocus={() => setFirstFocus(true)}
                           onBlur={() => setFirstFocus(false)}
-                          onChange={handleChange('name')}
-                          value={name}></Input>
+                          onChange={handleChange('employeeId')}
+                          value={employeeId}></Input>
                       </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-6'>
                       <InputGroup
                         className={
                           'no-border input-lg' +
                           (secondFocus ? ' input-group-focus' : '')
-                        }>
-                        <InputGroupAddon addonType='prepend'>
-                          <InputGroupText>
-                            <i className='now-ui-icons ui-1_email-85'></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          placeholder='Email'
-                          type='email'
-                          onFocus={() => setSecondFocus(true)}
-                          onBlur={() => setSecondFocus(false)}
-                          onChange={handleChange('email')}
-                          value={email}></Input>
-                      </InputGroup>
-                      <InputGroup
-                        className={
-                          'no-border input-lg' +
-                          (lastFocus ? ' input-group-focus' : '')
                         }>
                         <InputGroupAddon addonType='prepend'>
                           <InputGroupText>
@@ -154,31 +212,322 @@ const Signup = () => {
                         <Input
                           placeholder='Password'
                           type='password'
-                          onFocus={() => setLastFocus(true)}
-                          onBlur={() => setLastFocus(false)}
+                          onFocus={() => setSecondFocus(true)}
+                          onBlur={() => setSecondFocus(false)}
                           onChange={handleChange('password')}
                           value={password}></Input>
                       </InputGroup>
-                    </CardBody>
-                    <CardFooter className='text-center'>
-                      <Button
-                        block
-                        className='btn-round'
-                        color='info'
-                        onClick={clickSubmit}
-                        size='lg'>
-                        Register
-                      </Button>
-                    </CardFooter>
-                    <div className='pull-left'>
-                      <h6>
-                        <Link to='/signin'>Already Registered?</Link>
-                      </h6>
-                    </div>
-                  </Form>
-                </Card>
-              </Col>
-            </Row>
+                    </FormGroup>
+                  </div>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-6'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (thirdFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons users_single-02'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='First Name'
+                          type='text'
+                          onFocus={() => setThirdFocus(true)}
+                          onBlur={() => setThirdFocus(false)}
+                          onChange={handleChange('firstName')}
+                          value={firstName}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-6'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (fourthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons users_single-02'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Last Name'
+                          type='text'
+                          onFocus={() => setFourthFocus(true)}
+                          onBlur={() => setFourthFocus(false)}
+                          onChange={handleChange('lastName')}
+                          value={lastName}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                  </div>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (fifthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons ui-1_email-85'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Work Email'
+                          type='text'
+                          onFocus={() => setFifthFocus(true)}
+                          onBlur={() => setFifthFocus(false)}
+                          onChange={handleChange('workEmail')}
+                          value={workEmail}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (sixthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons tech_mobile'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Work Phone'
+                          type='number'
+                          onFocus={() => setSixthFocus(true)}
+                          onBlur={() => setSixthFocus(false)}
+                          onChange={handleChange('workPhone')}
+                          value={workPhone}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (seventhFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons ui-1_email-85'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Personal Email'
+                          type='email'
+                          onFocus={() => setSeventhFocus(true)}
+                          onBlur={() => setSeventhFocus(false)}
+                          onChange={handleChange('personalEmail')}
+                          value={personalEmail}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                  </div>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-6'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (eightFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons location_pin'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Personal Phone'
+                          type='number'
+                          onFocus={() => setEightFocus(true)}
+                          onBlur={() => setEightFocus(false)}
+                          onChange={handleChange('personalPhone')}
+                          value={personalPhone}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-6'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (ninethFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons location_pin'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Work Address'
+                          type='text'
+                          onFocus={() => setNinethFocus(true)}
+                          onBlur={() => setNinethFocus(false)}
+                          onChange={handleChange('workAddress')}
+                          value={workAddress}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                  </div>
+                  <FormGroup>
+                    <InputGroup
+                      className={
+                        'no-border input-lg' +
+                        (tenthFocus ? ' input-group-focus' : '')
+                      }>
+                      <InputGroupAddon addonType='prepend'>
+                        <InputGroupText>
+                          <i className='now-ui-icons location_map-big'></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder='Home Address'
+                        type='text'
+                        onFocus={() => setTenthFocus(true)}
+                        onBlur={() => setTenthFocus(false)}
+                        onChange={handleChange('personalAddress')}
+                        value={personalAddress}></Input>
+                    </InputGroup>
+                  </FormGroup>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (eleventhFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons business_bank'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Company'
+                          type='text'
+                          onFocus={() => setEleventhFocus(true)}
+                          onBlur={() => setEleventhFocus(false)}
+                          onChange={handleChange('company')}
+                          value={company}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (twelvethFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons design_vector'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Section'
+                          type='text'
+                          onFocus={() => setTwelvethFocus(true)}
+                          onBlur={() => setTwelvethFocus(false)}
+                          onChange={handleChange('section')}
+                          value={section}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (thirteenthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons travel_info'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Job Title'
+                          type='text'
+                          onFocus={() => setThirteenthFocus(true)}
+                          onBlur={() => setThirteenthFocus(false)}
+                          onChange={handleChange('jobTitle')}
+                          value={jobTitle}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                  </div>
+                  <div className='form-row'>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (fourteenthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons ui-1_lock-circle-open'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Authority Level'
+                          type='text'
+                          onFocus={() => setFourteenthFocus(true)}
+                          onBlur={() => setFourteenthFocus(false)}
+                          onChange={handleChange('authLevel')}
+                          value={authLevel}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (fifteenthFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons business_badge'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Superior Employee ID'
+                          type='number'
+                          onFocus={() => setFifteenthFocus(true)}
+                          onBlur={() => setFifteenthFocus(false)}
+                          onChange={handleChange('superiorEmployeeId')}
+                          value={superiorEmployeeId}></Input>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup className='col-md-4'>
+                      <InputGroup
+                        className={
+                          'no-border input-lg' +
+                          (lastFocus ? ' input-group-focus' : '')
+                        }>
+                        <InputGroupAddon addonType='prepend'>
+                          <InputGroupText>
+                            <i className='now-ui-icons ui-1_calendar-60'></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder='Date of Birth'
+                          type='date'
+                          onFocus={() => setLastFocus(true)}
+                          onBlur={() => setLastFocus(false)}
+                          onChange={handleChange('dob')}
+                          value={dob}></Input>
+                      </InputGroup>
+                      <FormText color='default'>Date of Birth</FormText>
+                    </FormGroup>
+                  </div>
+                </CardBody>
+                <CardFooter className='text-center'>
+                  <Button
+                    block
+                    className='btn-round'
+                    color='info'
+                    onClick={clickSubmit}
+                    size='lg'>
+                    Register
+                  </Button>
+                </CardFooter>
+                <div className='pull-left'>
+                  <h6>
+                    <Link to='/signin'>Already Registered?</Link>
+                  </h6>
+                </div>
+              </Form>
+            </Card>
           </Container>
         </div>
         <Footer />
