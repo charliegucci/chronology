@@ -1,27 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
+import Logo from '../core/Logo';
+
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Container,
+  Col,
+  Row,
+  Navbar
+} from 'reactstrap';
+import Footer from '../core/Footer';
 
 const Activate = ({ match }) => {
   const [values, setValues] = useState({
-    name: '',
+    firstName: '',
     token: '',
-    show: true
+    show: false
   });
 
   useEffect(() => {
     let token = match.params.token;
-    let { name } = jwt.decode(token);
+    let { firstName } = jwt.decode(token);
 
     if (token) {
-      setValues({ ...values, name, token });
+      setValues({ ...values, firstName, token });
     }
   }, []);
 
-  const { name, token, show } = values;
+  const { firstName, token, show } = values;
 
   const clickSubmit = (event) => {
     event.preventDefault();
@@ -34,7 +53,7 @@ const Activate = ({ match }) => {
         console.log('ACCOUNT ACTIVATION SUCCESS', response);
         setValues({
           ...values,
-          show: false
+          show: true
         });
         toast(response.data.message);
       })
@@ -43,23 +62,62 @@ const Activate = ({ match }) => {
         toast(error.response.data.error);
       });
   };
+  const [firstFocus, setFirstFocus] = useState(false);
+  useEffect(() => {
+    document.body.classList.add('login-page');
+    // document.body.classList.add('sidebar-collapse');
+    document.documentElement.classList.remove('nav-open');
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    return function cleanup() {
+      document.body.classList.remove('login-page');
+      // document.body.classList.remove('sidebar-collapse');
+    };
+  }, []);
 
   const activationLink = () => (
     <div className='text-center'>
-      <h1 className='p-5 '>Hello {name} , Please activate your account</h1>
-      <button className='btn btn-outline-primary' onClick={clickSubmit}>
-        Activate Account
-      </button>
+      <h4>Hello {firstName} , Please activate your account</h4>
+
+      {show ? (
+        <Link to='/'>Back to Login</Link>
+      ) : (
+        <Button
+          block
+          className='btn-round'
+          color='info'
+          onClick={clickSubmit}
+          size='sm'>
+          Activate Account
+        </Button>
+      )}
     </div>
   );
 
+  // return (
+  //   <div className='col-md-6 offset-md-3'>
+  //     <ToastContainer position='bottom-right' />
+  //     {activationLink()}
+  //   </div>
+  // );
   return (
-    <Layout>
-      <div className='col-md-6 offset-md-3'>
-        <ToastContainer position='bottom-right' />
-        {activationLink()}
+    <>
+      <ToastContainer position='bottom-right' />
+      <div className='page-header header-filter'>
+        <div
+          className='page-header-image'
+          style={{
+            backgroundColor: '#1E1D2D'
+          }}></div>
+
+        <div className='content-center' style={{ width: '20rem' }}>
+          <Container>
+            <Row>{activationLink()}</Row>
+          </Container>
+        </div>
+        <Footer />
       </div>
-    </Layout>
+    </>
   );
 };
 

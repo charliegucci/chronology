@@ -28,12 +28,9 @@ import {
 import Footer from '../core/Footer';
 
 const ForgotPw = ({ history }) => {
-  const [values, setValues] = useState({
-    email: '',
-    buttonText: 'Request Password Reset'
-  });
+  const [values, setValues] = useState({ workEmail: '' });
 
-  const { email, buttonText } = values;
+  const { workEmail } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -41,21 +38,21 @@ const ForgotPw = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, buttonText: 'Loading...' });
+    setValues({ ...values });
     axios({
       method: 'PUT',
       url: `${process.env.REACT_APP_API}/forgot-password`,
-      data: { email }
+      data: { workEmail }
     })
       .then((response) => {
         console.log('FORGOT PW REQUEST SUCCESS', response);
         toast(response.data.message);
-        setValues({ ...values, buttonText: 'Submitted' });
+        setValues({ ...values });
       })
       .catch((error) => {
         console.log('FORGOT PW ERROR', error.response.data);
         toast(error.response.data.error);
-        setValues({ ...values, buttonText: 'Request Password Reset' });
+        setValues({ ...values });
       });
   };
   const [firstFocus, setFirstFocus] = useState(false);
@@ -102,12 +99,12 @@ const ForgotPw = ({ history }) => {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          placeholder='Email'
+                          placeholder='Work Email'
                           type='email'
                           onFocus={() => setFirstFocus(true)}
                           onBlur={() => setFirstFocus(false)}
-                          onChange={handleChange('email')}
-                          value={email}></Input>
+                          onChange={handleChange('workEmail')}
+                          value={workEmail}></Input>
                       </InputGroup>
                     </CardBody>
                     <CardFooter className='text-center'>
