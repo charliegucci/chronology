@@ -94,7 +94,7 @@ exports.accountActivation = (req, res) => {
       decoded
     ) {
       if (err) {
-        // console.log('JWT VERIFY IN ACCOUNT ACTIVATION ERROR', err);
+        console.log('JWT VERIFY IN ACCOUNT ACTIVATION ERROR', err);
         return res.status(401).json({
           error: 'Link already expired, Signup again'
         });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout } from '../auth/helpers';
 import Logo from '../core/Logo';
@@ -23,7 +23,7 @@ const DropdownScrollNavbar = ({ history }) => {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
   const [buyButtonColor, setBuyButtonColor] = useState('neutral');
-  React.useEffect(() => {
+  useEffect(() => {
     const updateNavbarColor = () => {
       if (
         document.documentElement.scrollTop > 499 ||
@@ -62,7 +62,6 @@ const DropdownScrollNavbar = ({ history }) => {
               caret
               tag='a'
               data-toggle='dropdown'
-              href='#pablo'
               id='navbarDropdown'
               onClick={(e) => e.preventDefault()}>
               <span className='button-bar'></span>
@@ -71,29 +70,27 @@ const DropdownScrollNavbar = ({ history }) => {
             </DropdownToggle>
             <DropdownMenu aria-labelledby='navbarDropdown'>
               <DropdownItem header>Dropdown header</DropdownItem>
-              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
                 Action
               </DropdownItem>
-              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
                 Another action
               </DropdownItem>
-              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
                 Something else here
               </DropdownItem>
               <DropdownItem divider></DropdownItem>
-              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
                 Separated link
               </DropdownItem>
               <DropdownItem divider></DropdownItem>
-              <DropdownItem href='#pablo' onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
                 One more separated link
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <div className='navbar-translate'>
-            <NavbarBrand to='/' tag={Link} id='navbar-brand'>
-              Chronology
-            </NavbarBrand>
+            <NavbarBrand id='navbar-brand'>Chronology</NavbarBrand>
             <UncontrolledTooltip target='navbar-brand'>
               Designed by Chronology. Coded by Jeb & Wil
             </UncontrolledTooltip>
@@ -116,7 +113,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#'
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -124,7 +120,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>TimeSheet</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
-                  <DropdownItem to='/' tag={Link}>
+                  <DropdownItem>
                     <i className='now-ui-icons design_image'></i>
                     Action
                   </DropdownItem>
@@ -132,7 +128,7 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons business_chart-pie-36'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem href='#' target='_blank'>
+                  <DropdownItem>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
@@ -143,7 +139,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
                   id='navbarDropdownMenuLink'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -153,35 +148,35 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>SCHEDULE</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
-                  <DropdownItem to='/sections#headers' tag={Link}>
+                  <DropdownItem>
                     <i className='now-ui-icons shopping_box'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#features' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons ui-2_settings-90'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#blogs' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons text_align-left'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#teams' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons sport_user-run'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#projects' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons education_paper'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#pricing' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_money-coins'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#testimonials' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons ui-2_chat-round'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/sections#contact-us' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons tech_mobile'></i>
                     Action
                   </DropdownItem>
@@ -192,7 +187,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
                   id='navbarDropdownMenuLink'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -202,47 +196,47 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>PARTS</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_bulb-63'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons text_align-left'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons location_pin'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons education_paper'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons users_circle-08'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_money-coins'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons shopping_shop'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons shopping_bag-16'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons users_single-02'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem tag={Link} to='/'>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons tech_mobile'></i>
                     Action
                   </DropdownItem>
@@ -253,7 +247,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -261,15 +254,15 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>TASK</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
-                  <DropdownItem to='/' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/index' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem href='#' target='_blank'>
+                  <DropdownItem>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
@@ -281,7 +274,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -289,15 +281,15 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>DATA REGISTER</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
-                  <DropdownItem to='/' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/index' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem href='#' target='_blank'>
+                  <DropdownItem target='_blank'>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
@@ -309,7 +301,6 @@ const DropdownScrollNavbar = ({ history }) => {
                   caret
                   color='default'
                   data-toggle='dropdown'
-                  href='#pablo'
                   id='navbarDropdownMenuLink1'
                   nav
                   onClick={(e) => e.preventDefault()}>
@@ -317,15 +308,15 @@ const DropdownScrollNavbar = ({ history }) => {
                   <p>CHARTS</p>
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
-                  <DropdownItem to='/' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem to='/index' tag={Link}>
+                  <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_chart-pie-36'></i>
                     Action
                   </DropdownItem>
-                  <DropdownItem href='#' target='_blank'>
+                  <DropdownItem>
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
@@ -336,7 +327,6 @@ const DropdownScrollNavbar = ({ history }) => {
               <DropdownToggle
                 color='default'
                 data-toggle='dropdown'
-                href='#pablo'
                 id='navbarDropdownMenuLink1'
                 nav
                 onClick={() => {

@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import Logo from '../core/Logo';
+import ImageUpload from '../core/ImageUpload';
 import axios from 'axios';
 import { isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../assets/scss/now-ui-kit.scss';
+import defaultImage from '../img/image_placeholder.jpg';
+import defaultAvatar from '../img/placeholder.jpg';
 // reactstrap components
 import {
   Button,
@@ -31,7 +35,7 @@ import {
 // import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
 
-const Signup = () => {
+const Signup = (props) => {
   const [values, setValues] = useState({
     employeeId: '',
     workEmail: '',
