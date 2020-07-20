@@ -22,7 +22,8 @@ import {
   InputGroupAddon,
   Input,
   InputGroupText,
-  FormGroup
+  FormGroup,
+  Badge
 } from 'reactstrap';
 
 const Private = ({ history }) => {
@@ -43,7 +44,8 @@ const Private = ({ history }) => {
     jobTitle: '',
     authLevel: '',
     superiorEmployeeId: '',
-    dob: ''
+    dob: '',
+    success: false
   });
   const {
     role,
@@ -62,7 +64,8 @@ const Private = ({ history }) => {
     jobTitle,
     authLevel,
     superiorEmployeeId,
-    dob
+    dob,
+    success
   } = values;
 
   const token = getCookie('token');
@@ -132,7 +135,7 @@ const Private = ({ history }) => {
   };
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value, success: false });
   };
 
   const clickSubmit = (event) => {
@@ -159,7 +162,7 @@ const Private = ({ history }) => {
       .then((response) => {
         console.log('UPDATE SUCCESS', response);
         updateUser(response, () => {
-          setValues({ ...values });
+          setValues({ ...values, success: true });
           toast('Profile Updated Successfully');
         });
       })
@@ -194,6 +197,11 @@ const Private = ({ history }) => {
             <Col md='5'>
               <h3 className='title'>
                 {firstName} {lastName}
+                <h6 className='description'>
+                  <span>
+                    <Badge color='info'>Level 1</Badge>
+                  </span>
+                </h6>
               </h3>
               <h5 className='info-title'>Authority Level:</h5>{' '}
               <h6 className='description'>{authLevel}</h6>
@@ -422,14 +430,28 @@ const Private = ({ history }) => {
                       </Col>
                     </Row>
                     <Col md='12'>
-                      <Button
-                        block
-                        className='btn-round  '
-                        color='info'
-                        type='submit'
-                        onClick={clickSubmit}>
-                        Update
-                      </Button>
+                      {success ? (
+                        <Button
+                          block
+                          className='btn-round  '
+                          color='info'
+                          type='submit'
+                          onClick={clickSubmit}>
+                          Done{' '}
+                          <i
+                            className='now-ui-icons ui-1_check'
+                            style={{ color: '#39ff14' }}></i>
+                        </Button>
+                      ) : (
+                        <Button
+                          block
+                          className='btn-round  '
+                          color='info'
+                          type='submit'
+                          onClick={clickSubmit}>
+                          Update{' '}
+                        </Button>
+                      )}
                     </Col>
                   </CardBody>
                 </Form>

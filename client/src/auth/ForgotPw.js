@@ -28,12 +28,12 @@ import {
 import Footer from '../core/Footer';
 
 const ForgotPw = ({ history }) => {
-  const [values, setValues] = useState({ workEmail: '' });
+  const [values, setValues] = useState({ workEmail: '', success: false });
 
-  const { workEmail } = values;
+  const { workEmail, success } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value, success: false });
   };
 
   const clickSubmit = (event) => {
@@ -47,7 +47,7 @@ const ForgotPw = ({ history }) => {
       .then((response) => {
         console.log('FORGOT PW REQUEST SUCCESS', response);
         toast(response.data.message);
-        setValues({ ...values });
+        setValues({ ...values, success: true, workEmail: '' });
       })
       .catch((error) => {
         console.log('FORGOT PW ERROR', error.response.data);
@@ -107,26 +107,32 @@ const ForgotPw = ({ history }) => {
                           value={workEmail}></Input>
                       </InputGroup>
                     </CardBody>
-                    <CardFooter className='text-center'>
-                      <Button
-                        block
-                        className='btn-round'
-                        color='info'
-                        onClick={clickSubmit}
-                        size='lg'>
-                        Request Password Reset
-                      </Button>
-                    </CardFooter>
-                    <div className='pull-left'>
-                      <h6>
-                        <Link to='/signup'>Create Account</Link>
-                      </h6>
-                    </div>
-                    <div className='pull-right'>
-                      <h6>
-                        <Link to='/signin'>Already Registered?</Link>
-                      </h6>
-                    </div>
+                    {success ? (
+                      <Link style={{ color: '#D55209' }} to='/'>
+                        Back to Login
+                      </Link>
+                    ) : (
+                      <CardFooter className='text-center'>
+                        <Button
+                          block
+                          className='btn-round'
+                          color='info'
+                          onClick={clickSubmit}
+                          size='lg'>
+                          Request Password Reset
+                        </Button>
+                        <div className='pull-left'>
+                          <h6>
+                            <Link to='/signup'>Create Account</Link>
+                          </h6>
+                        </div>
+                        <div className='pull-right'>
+                          <h6>
+                            <Link to='/signin'>Already Registered?</Link>
+                          </h6>
+                        </div>
+                      </CardFooter>
+                    )}
                   </Form>
                 </Card>
               </Col>
