@@ -35,7 +35,7 @@ import {
 // import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
 
-const Signup = (props) => {
+const Signup = ({ history }) => {
   const [values, setValues] = useState({
     employeeId: '',
     workEmail: '',
@@ -52,7 +52,8 @@ const Signup = (props) => {
     jobTitle: '',
     authLevel: '',
     superiorEmployeeId: '',
-    dob: ''
+    dob: '',
+    success: false
   });
 
   const {
@@ -71,11 +72,12 @@ const Signup = (props) => {
     jobTitle,
     authLevel,
     superiorEmployeeId,
-    dob
+    dob,
+    success
   } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value, success: false });
   };
 
   const clickSubmit = (event) => {
@@ -122,7 +124,8 @@ const Signup = (props) => {
           jobTitle: '',
           authLevel: '',
           superiorEmployeeId: '',
-          dob: ''
+          dob: '',
+          success: true
         });
         toast(response.data.message);
       })
@@ -516,13 +519,19 @@ const Signup = (props) => {
                   </div>
                 </CardBody>
                 <Col>
-                  <Button
-                    className='btn-round pull-center'
-                    color='info'
-                    onClick={clickSubmit}
-                    size='lg'>
-                    Register
-                  </Button>
+                  {success ? (
+                    <Link style={{ color: '#D55209' }} to='/'>
+                      Back to Login
+                    </Link>
+                  ) : (
+                    <Button
+                      className='btn-round pull-center'
+                      color='info'
+                      onClick={clickSubmit}
+                      size='lg'>
+                      Register
+                    </Button>
+                  )}
                 </Col>
                 <div className='pull-left'>
                   <h6>
