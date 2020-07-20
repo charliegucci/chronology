@@ -60,20 +60,20 @@ exports.update = (req, res) => {
         user.password = password;
       }
     }
-    if (!workPhone) {
-      return res.status(400).json({
-        error: 'Work Phone is Required'
-      });
-    } else {
-      user.workPhone = workPhone;
-    }
-    if (!workAddress) {
-      return res.status(400).json({
-        error: 'Work Address is Required'
-      });
-    } else {
-      user.workAddress = workAddress;
-    }
+    // if (!workPhone) {
+    //   return res.status(400).json({
+    //     error: 'Work Phone is Required'
+    //   });
+    // } else {
+    //   user.workPhone = workPhone;
+    // }
+    // if (!workAddress) {
+    //   return res.status(400).json({
+    //     error: 'Work Address is Required'
+    //   });
+    // } else {
+    //   user.workAddress = workAddress;
+    // }
     if (!personalEmail) {
       return res.status(400).json({
         error: 'Personal Email is Required'
@@ -112,20 +112,20 @@ exports.update = (req, res) => {
       user.section = section;
     }
 
-    if (!jobTitle) {
-      return res.status(400).json({
-        error: 'Job Title is Required'
-      });
-    } else {
-      user.jobTitle = jobTitle;
-    }
-    if (!superiorEmployeeId) {
-      return res.status(400).json({
-        error: 'Superior Employee ID is Required'
-      });
-    } else {
-      user.superiorEmployeeId = superiorEmployeeId;
-    }
+    // if (!jobTitle) {
+    //   return res.status(400).json({
+    //     error: 'Job Title is Required'
+    //   });
+    // } else {
+    //   user.jobTitle = jobTitle;
+    // }
+    // if (!superiorEmployeeId) {
+    //   return res.status(400).json({
+    //     error: 'Superior Employee ID is Required'
+    //   });
+    // } else {
+    //   user.superiorEmployeeId = superiorEmployeeId;
+    // }
     if (!dob) {
       return res.status(400).json({
         error: 'Date of Birth is Required'
