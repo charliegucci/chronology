@@ -515,16 +515,15 @@ const Signup = (props) => {
                     </FormGroup>
                   </div>
                 </CardBody>
-                <CardFooter className='text-center'>
+                <Col>
                   <Button
-                    block
-                    className='btn-round'
+                    className='btn-round pull-center'
                     color='info'
                     onClick={clickSubmit}
                     size='lg'>
                     Register
                   </Button>
-                </CardFooter>
+                </Col>
                 <div className='pull-left'>
                   <h6>
                     <Link to='/signin'>Already Registered?</Link>
