@@ -34,10 +34,11 @@ import Footer from '../core/Footer';
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
     employeeId: '',
-    password: ''
+    password: '',
+    loading: false
   });
 
-  const { employeeId, password } = values;
+  const { employeeId, password, loading } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -45,6 +46,7 @@ const Signin = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
+    setValues({ ...values, loading: true });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signin`,
@@ -56,7 +58,8 @@ const Signin = ({ history }) => {
           setValues({
             ...values,
             employeeId: '',
-            password: ''
+            password: '',
+            loading: false
           });
           console.log(isAuth().role);
           toast(`Hello ${response.data.user.firstName}, Welcome back!`);
@@ -66,6 +69,7 @@ const Signin = ({ history }) => {
         });
       })
       .catch((error) => {
+        setValues({ ...values, loading: false });
         console.log('SIGNIN ERROR', error);
         toast(error.response.data.error);
       });
@@ -152,7 +156,11 @@ const Signin = ({ history }) => {
                         color='info'
                         onClick={clickSubmit}
                         size='lg'>
-                        Log in
+                        {loading ? (
+                          <i className='now-ui-icons loader_gear spin'></i>
+                        ) : (
+                          <span>Log in</span>
+                        )}
                       </Button>
                     </CardFooter>
                     <div className='pull-left'>

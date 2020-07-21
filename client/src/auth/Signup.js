@@ -53,7 +53,8 @@ const Signup = ({ history }) => {
     authLevel: '',
     superiorEmployeeId: '',
     dob: '',
-    success: false
+    success: false,
+    loading: false
   });
 
   const {
@@ -73,7 +74,8 @@ const Signup = ({ history }) => {
     authLevel,
     superiorEmployeeId,
     dob,
-    success
+    success,
+    loading
   } = values;
 
   const handleChange = (name) => (event) => {
@@ -82,7 +84,7 @@ const Signup = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signup`,
@@ -125,13 +127,14 @@ const Signup = ({ history }) => {
           authLevel: '',
           superiorEmployeeId: '',
           dob: '',
-          success: true
+          success: true,
+          loading: false
         });
         toast(response.data.message);
       })
       .catch((error) => {
         console.log('SIGNUP ERROR', error.response.data);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
@@ -533,7 +536,11 @@ const Signup = ({ history }) => {
                       color='info'
                       onClick={clickSubmit}
                       size='lg'>
-                      Register
+                      {loading ? (
+                        <i className='now-ui-icons loader_gear spin'> </i>
+                      ) : (
+                        <span>Register</span>
+                      )}
                     </Button>
                   )}
                 </Col>

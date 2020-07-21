@@ -31,7 +31,8 @@ const ResetPw = ({ match }) => {
     firstName: '',
     token: '',
     newPassword: '',
-    success: false
+    success: false,
+    loading: false
   });
   const [firstFocus, setFirstFocus] = useState(false);
   useEffect(() => {
@@ -54,7 +55,7 @@ const ResetPw = ({ match }) => {
     }
   }, []);
 
-  const { firstName, token, newPassword, success } = values;
+  const { firstName, token, newPassword, success, loading } = values;
 
   const handleChange = (event) => {
     setValues({ ...values, newPassword: event.target.value });
@@ -62,7 +63,7 @@ const ResetPw = ({ match }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'PUT',
       url: `${process.env.REACT_APP_API}/reset-password`,
@@ -70,36 +71,15 @@ const ResetPw = ({ match }) => {
     })
       .then((response) => {
         console.log('RESET PW SUCCESS', response);
-        setValues({ ...values, success: true });
+        setValues({ ...values, success: true, loading: false });
         toast(response.data.message);
       })
       .catch((error) => {
         console.log('FORGOT PW ERROR', error.response.data);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
-
-  // const passwordResetForm = () => (
-  //   <form>
-  //     <div className='form-group'>
-  //       <label className='text-muted'>Create New Password</label>
-  //       <input
-  //         onChange={handleChange}
-  //         value={newPassword}
-  //         type='password'
-  //         className='form-control'
-  //         placeholder='Type new password min. 6 characters'
-  //         required
-  //       />
-  //     </div>
-  //     <div>
-  //       <button className='btn btn-primary' onClick={clickSubmit}>
-  //         {buttonText}
-  //       </button>
-  //     </div>
-  //   </form>
-  // );
 
   return (
     <>
@@ -151,7 +131,11 @@ const ResetPw = ({ match }) => {
                           color='info'
                           onClick={clickSubmit}
                           size='lg'>
-                          Change Password
+                          {loading ? (
+                            <i className='now-ui-icons loader_gear spin'> </i>
+                          ) : (
+                            <span>Change Password</span>
+                          )}
                         </Button>
                       )}
                     </CardFooter>
@@ -164,16 +148,6 @@ const ResetPw = ({ match }) => {
         <Footer />
       </div>
     </>
-
-    // <Layout>
-    //   <div className='col-md-6 offset-md-3'>
-    //     <ToastContainer position='bottom-right' />
-    //     <h1 className='p-5 text-center'>
-    //       Hello {firstName}, Enter you new password
-    //     </h1>
-    //     {/* {passwordResetForm()} */}
-    //   </div>
-    // </Layout>
   );
 };
 
