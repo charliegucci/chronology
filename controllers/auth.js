@@ -224,16 +224,16 @@ exports.requireSignin = expressJwt({
   algorithms: ['HS256']
 });
 
-exports.adminMiddleware = (req, res, next) => {
+exports.level2Middleware = (req, res, next) => {
   User.findById({ _id: req.user._id }).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
         error: 'User not found'
       });
     }
-    if (user.role !== 'admin') {
+    if (user.role !== 'Level2') {
       return res.status(400).json({
-        error: 'Admin access only. Access denied'
+        error: 'Level 2 access only. Access denied'
       });
     }
     req.profile = user;

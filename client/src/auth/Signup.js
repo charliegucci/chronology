@@ -167,7 +167,7 @@ const Signup = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/private' /> : null}
+      {isAuth() ? <Redirect to='/level1' /> : null}
 
       <div className='page-header header-filter'>
         <div
