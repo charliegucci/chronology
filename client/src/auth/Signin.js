@@ -58,10 +58,11 @@ const Signin = ({ history }) => {
             employeeId: '',
             password: ''
           });
-          //   toast(`Hello ${response.data.user.name}, Welcome back!`);
-          isAuth() && isAuth().role === 'admin'
-            ? history.push('/admin')
-            : history.push('/private');
+          console.log(isAuth().role);
+          toast(`Hello ${response.data.user.firstName}, Welcome back!`);
+          isAuth() && isAuth().role === 'Level2'
+            ? history.push('/level2')
+            : history.push('/level1');
         });
       })
       .catch((error) => {
@@ -87,7 +88,7 @@ const Signin = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/private' /> : null}
+      {isAuth() ? <Redirect to='/level1' /> : null}
 
       <div className='page-header header-filter'>
         <div

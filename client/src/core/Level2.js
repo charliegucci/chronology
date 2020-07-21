@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import axios from 'axios';
 import Logo from '../core/Logo';
-import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers';
+import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-// reactstrap components
+
 import {
   Button,
   Card,
@@ -26,7 +25,7 @@ import {
   Badge
 } from 'reactstrap';
 
-const Private = ({ history }) => {
+const Level2 = ({ history }) => {
   const [values, setValues] = useState({
     role: '',
     employeeId: '',
@@ -103,6 +102,7 @@ const Private = ({ history }) => {
           superiorEmployeeId,
           dob
         } = response.data;
+
         setValues({
           ...values,
           role,
@@ -143,7 +143,7 @@ const Private = ({ history }) => {
     setValues({ ...values });
     axios({
       method: 'PUT',
-      url: `${process.env.REACT_APP_API}/user/update`,
+      url: `${process.env.REACT_APP_API}/level2/update`,
       headers: {
         Authorization: `Bearer ${token}`
       },
@@ -199,12 +199,10 @@ const Private = ({ history }) => {
                 {firstName} {lastName}
                 <h6 className='description'>
                   <span>
-                    <Badge color='info'>Level 1</Badge>
+                    <Badge color='info'>{role}</Badge>
                   </span>
                 </h6>
               </h3>
-              <h5 className='info-title'>Authority Level:</h5>{' '}
-              <h6 className='description'>{authLevel}</h6>
               <h5 className='info-title'>Job Title:</h5>{' '}
               <h6 className='description'>{jobTitle}</h6>
               <h5 className='info-title'>Employee Id:</h5>{' '}
@@ -464,4 +462,4 @@ const Private = ({ history }) => {
   );
 };
 
-export default Private;
+export default Level2;
