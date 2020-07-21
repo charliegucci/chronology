@@ -82,7 +82,9 @@ const ForgotPw = ({ history }) => {
           <Container>
             <Row>
               <Col className='ml-auto mr-auto' md='5'>
-                <Card className='card-login card-plain'>
+                <Card
+                  className='card-login card-plain'
+                  style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
                   <Form action='' className='form' method=''>
                     <CardHeader className='text-center'>
                       <Logo />

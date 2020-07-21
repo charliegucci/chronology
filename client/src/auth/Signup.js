@@ -179,7 +179,11 @@ const Signup = ({ history }) => {
           <Container>
             <Logo />
             <Card className='card-login card-plain'>
-              <Form action='' className='form' method=''>
+              <Form
+                action=''
+                className='form'
+                method=''
+                style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
                 <CardHeader className='text-center'>
                   Register Account
                 </CardHeader>

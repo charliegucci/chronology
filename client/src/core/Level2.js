@@ -194,7 +194,9 @@ const Level2 = ({ history }) => {
         }}>
         <Container>
           <Row>
-            <Col md='5'>
+            <Col
+              md='5'
+              style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
               <h3 className='title'>
                 {firstName} {lastName}
                 <h6 className='description'>
@@ -203,22 +205,34 @@ const Level2 = ({ history }) => {
                   </span>
                 </h6>
               </h3>
-              <h5 className='info-title'>Job Title:</h5>{' '}
+              <h5 className='info-title'>
+                <strong>Job Title:</strong>
+              </h5>{' '}
               <h6 className='description'>{jobTitle}</h6>
-              <h5 className='info-title'>Employee Id:</h5>{' '}
+              <h5 className='info-title'>
+                <strong>Employee ID:</strong>
+              </h5>{' '}
               <h6 className='description'>{employeeId}</h6>
-              <h5 className='info-title'>Work Email: </h5>
+              <h5 className='info-title'>
+                <strong>Work Email:</strong>
+              </h5>
               <h6 className='description'>{workEmail}</h6>
-              <h5 className='info-title'>Section: </h5>
+              <h5 className='info-title'>
+                <strong>Section:</strong>
+              </h5>
               <h6 className='description'>{section}</h6>
-              <h5 className='info-title'>Superiors ID: </h5>
+              <h5 className='info-title'>
+                <strong>Superior ID:</strong>
+              </h5>
               <h6 className='description'>{superiorEmployeeId}</h6>
               <div className='info info-horizontal'>
                 <div className='icon icon-info'>
                   <i className='now-ui-icons location_pin'></i>
                 </div>
                 <div className='description'>
-                  <h4 className='info-title'>Work Address:</h4>
+                  <h4 className='info-title'>
+                    <strong>Work Address:</strong>
+                  </h4>
                   <p className='description'>
                     65-75 Pandanus Ave, <br></br>
                     Brisbane Airport QLD <br></br>
@@ -231,7 +245,9 @@ const Level2 = ({ history }) => {
                   <i className='now-ui-icons tech_mobile'></i>
                 </div>
                 <div className='description'>
-                  <h4 className='info-title'>Contacts</h4>
+                  <h4 className='info-title'>
+                    <strong>Contact:</strong>
+                  </h4>
                   <p className='description'>
                     {workPhone} <br></br>
                     {personalPhone}
@@ -242,7 +258,9 @@ const Level2 = ({ history }) => {
               </div>
             </Col>
             <Col className='ml-auto mr-auto' md='5'>
-              <Card className='card-contact card-raised'>
+              <Card
+                className='card-contact card-raised'
+                style={{ backgroundColor: '#dcdcdc' }}>
                 <Form id='contact-form1' method='post' role='form'>
                   <CardHeader className='text-center'>
                     <CardTitle tag='h4'>Details</CardTitle>
@@ -250,12 +268,11 @@ const Level2 = ({ history }) => {
                   <CardBody>
                     <Row>
                       <Col className='pr-2' md='6'>
-                        <label>First name</label>
+                        <label>
+                          <strong>First name</strong>
+                        </label>
                         <InputGroup
                           className={first1Focus ? 'input-group-focus' : ''}>
-                          <InputGroupAddon addonType='prepend'>
-                            <InputGroupText></InputGroupText>
-                          </InputGroupAddon>
                           <Input
                             aria-label='First Name...'
                             autoComplete='given-name'
@@ -269,12 +286,11 @@ const Level2 = ({ history }) => {
                       </Col>
                       <Col className='pl-2' md='6'>
                         <FormGroup>
-                          <label>Last name</label>
+                          <label>
+                            <strong>Last name</strong>
+                          </label>
                           <InputGroup
                             className={last1Focus ? 'input-group-focus' : ''}>
-                            <InputGroupAddon addonType='prepend'>
-                              <InputGroupText></InputGroupText>
-                            </InputGroupAddon>
                             <Input
                               aria-label='Last Name...'
                               autoComplete='family-name'
@@ -290,12 +306,11 @@ const Level2 = ({ history }) => {
                     </Row>
                     <Row>
                       <Col className='pr-2' md='6'>
-                        <label>Password</label>
+                        <label>
+                          <strong>Password</strong>
+                        </label>
                         <InputGroup
                           className={passwordFocus ? 'input-group-focus' : ''}>
-                          <InputGroupAddon addonType='prepend'>
-                            <InputGroupText></InputGroupText>
-                          </InputGroupAddon>
                           <Input
                             aria-label='Password...'
                             autoComplete='password'
@@ -309,12 +324,11 @@ const Level2 = ({ history }) => {
                       </Col>
                       <Col className='pl-2' md='6'>
                         <FormGroup>
-                          <label>Company</label>
+                          <label>
+                            <strong>Company</strong>
+                          </label>
                           <InputGroup
                             className={companyFocus ? 'input-group-focus' : ''}>
-                            <InputGroupAddon addonType='prepend'>
-                              <InputGroupText></InputGroupText>
-                            </InputGroupAddon>
                             <Input
                               aria-label='Company...'
                               autoComplete='company'
@@ -330,12 +344,11 @@ const Level2 = ({ history }) => {
                     </Row>
                     <Row>
                       <Col className='pr-2' md='6'>
-                        <label>Personal Email</label>
+                        <label>
+                          <strong>Personal Email</strong>
+                        </label>
                         <InputGroup
                           className={perEmailFocus ? 'input-group-focus' : ''}>
-                          <InputGroupAddon addonType='prepend'>
-                            <InputGroupText></InputGroupText>
-                          </InputGroupAddon>
                           <Input
                             aria-label='Personal Email...'
                             autoComplete='personal-email'
@@ -349,14 +362,13 @@ const Level2 = ({ history }) => {
                       </Col>
                       <Col className='pl-2' md='6'>
                         <FormGroup>
-                          <label>Personal Phone</label>
+                          <label>
+                            <strong>Personal Phone</strong>
+                          </label>
                           <InputGroup
                             className={
                               perPhoneFocus ? 'input-group-focus' : ''
                             }>
-                            <InputGroupAddon addonType='prepend'>
-                              <InputGroupText></InputGroupText>
-                            </InputGroupAddon>
                             <Input
                               aria-label='Personal Phone...'
                               autoComplete='personal-phone'
@@ -371,12 +383,11 @@ const Level2 = ({ history }) => {
                       </Col>
                     </Row>
                     <FormGroup>
-                      <label>Home Address</label>
+                      <label>
+                        <strong>Home Address</strong>
+                      </label>
                       <InputGroup
                         className={perAddressFocus ? 'input-group-focus' : ''}>
-                        <InputGroupAddon addonType='prepend'>
-                          <InputGroupText></InputGroupText>
-                        </InputGroupAddon>
                         <Input
                           autoComplete='home address'
                           placeholder='Home Address here...'
@@ -389,12 +400,11 @@ const Level2 = ({ history }) => {
                     </FormGroup>
                     <Row>
                       <Col className='pr-2' md='6'>
-                        <label>Section</label>
+                        <label>
+                          <strong>Section</strong>
+                        </label>
                         <InputGroup
                           className={sectionFocus ? 'input-group-focus' : ''}>
-                          <InputGroupAddon addonType='prepend'>
-                            <InputGroupText></InputGroupText>
-                          </InputGroupAddon>
                           <Input
                             aria-label='Section...'
                             autoComplete='section'
@@ -408,12 +418,11 @@ const Level2 = ({ history }) => {
                       </Col>
                       <Col className='pl-2' md='6'>
                         <FormGroup>
-                          <label>Date of Birth</label>
+                          <label>
+                            <strong>Date of Birth</strong>
+                          </label>
                           <InputGroup
                             className={dobFocus ? 'input-group-focus' : ''}>
-                            <InputGroupAddon addonType='prepend'>
-                              <InputGroupText></InputGroupText>
-                            </InputGroupAddon>
                             <Input
                               aria-label='Date of Birth...'
                               autoComplete='dob'
