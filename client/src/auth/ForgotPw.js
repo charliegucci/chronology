@@ -28,9 +28,13 @@ import {
 import Footer from '../core/Footer';
 
 const ForgotPw = ({ history }) => {
-  const [values, setValues] = useState({ workEmail: '', success: false });
+  const [values, setValues] = useState({
+    workEmail: '',
+    success: false,
+    loading: false
+  });
 
-  const { workEmail, success } = values;
+  const { workEmail, success, loading } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value, success: false });
@@ -38,7 +42,7 @@ const ForgotPw = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'PUT',
       url: `${process.env.REACT_APP_API}/forgot-password`,
@@ -47,12 +51,12 @@ const ForgotPw = ({ history }) => {
       .then((response) => {
         console.log('FORGOT PW REQUEST SUCCESS', response);
         toast(response.data.message);
-        setValues({ ...values, success: true, workEmail: '' });
+        setValues({ ...values, success: true, workEmail: '', loading: false });
       })
       .catch((error) => {
         console.log('FORGOT PW ERROR', error.response.data);
         toast(error.response.data.error);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
       });
   };
   const [firstFocus, setFirstFocus] = useState(false);
@@ -121,7 +125,11 @@ const ForgotPw = ({ history }) => {
                           color='info'
                           onClick={clickSubmit}
                           size='lg'>
-                          Request Password Reset
+                          {loading ? (
+                            <i className='now-ui-icons loader_gear spin'> </i>
+                          ) : (
+                            <span>Reset Password</span>
+                          )}
                         </Button>
                         <div className='pull-left'>
                           <h6>

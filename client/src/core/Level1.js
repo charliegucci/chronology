@@ -44,7 +44,8 @@ const Level1 = ({ history }) => {
     authLevel: '',
     superiorEmployeeId: '',
     dob: '',
-    success: false
+    success: false,
+    loading: false
   });
   const {
     role,
@@ -64,7 +65,8 @@ const Level1 = ({ history }) => {
     authLevel,
     superiorEmployeeId,
     dob,
-    success
+    success,
+    loading
   } = values;
 
   const token = getCookie('token');
@@ -74,6 +76,7 @@ const Level1 = ({ history }) => {
   }, []);
 
   const loadProfile = () => {
+    setValues({ ...values, loading: true });
     axios({
       method: 'GET',
       url: `${process.env.REACT_APP_API}/user/${isAuth()._id}`,
@@ -121,10 +124,12 @@ const Level1 = ({ history }) => {
           jobTitle,
           authLevel,
           superiorEmployeeId,
-          dob
+          dob,
+          loading: false
         });
       })
       .catch((error) => {
+        setValues({ ...values, loading: false });
         console.log('PROFILE UPDATE ERROR', error);
         if (error.response.status === 401) {
           signout(() => {
@@ -140,7 +145,7 @@ const Level1 = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'PUT',
       url: `${process.env.REACT_APP_API}/user/update`,
@@ -162,13 +167,13 @@ const Level1 = ({ history }) => {
       .then((response) => {
         console.log('UPDATE SUCCESS', response);
         updateUser(response, () => {
-          setValues({ ...values, success: true });
+          setValues({ ...values, success: true, loading: false });
           toast('Profile Updated Successfully');
         });
       })
       .catch((error) => {
         console.log('UPDATE ERROR', error.response.data.error);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
@@ -467,7 +472,11 @@ const Level1 = ({ history }) => {
                             color='info'
                             type='submit'
                             onClick={clickSubmit}>
-                            Update{' '}
+                            {loading ? (
+                              <i className='now-ui-icons loader_gear spin'> </i>
+                            ) : (
+                              <span>Update</span>
+                            )}
                           </Button>
                         )}
                       </Col>

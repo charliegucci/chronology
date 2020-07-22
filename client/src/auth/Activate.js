@@ -28,7 +28,8 @@ const Activate = ({ match }) => {
   const [values, setValues] = useState({
     firstName: '',
     token: '',
-    show: false
+    show: false,
+    loading: false
   });
 
   useEffect(() => {
@@ -40,10 +41,11 @@ const Activate = ({ match }) => {
     }
   }, []);
 
-  const { firstName, token, show } = values;
+  const { firstName, token, show, loading } = values;
 
   const clickSubmit = (event) => {
     event.preventDefault();
+    setValues({ ...values, loading: true });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/account-activation`,
@@ -53,12 +55,14 @@ const Activate = ({ match }) => {
         console.log('ACCOUNT ACTIVATION SUCCESS', response);
         setValues({
           ...values,
-          show: true
+          show: true,
+          loading: false
         });
         toast(response.data.message);
       })
       .catch((error) => {
         console.log('ACCOUNT ACTIVATION ERROR', error.response.data.error);
+        setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
@@ -78,7 +82,6 @@ const Activate = ({ match }) => {
   const activationLink = () => (
     <div className='text-center'>
       <h4>Hello {firstName} , Please activate your account</h4>
-
       {show ? (
         <Link to='/'>Back to Login</Link>
       ) : (
@@ -88,18 +91,16 @@ const Activate = ({ match }) => {
           color='info'
           onClick={clickSubmit}
           size='sm'>
-          Activate Account
+          {loading ? (
+            <i className='now-ui-icons loader_gear spin'> </i>
+          ) : (
+            <span>Activate Account</span>
+          )}
         </Button>
       )}
     </div>
   );
 
-  // return (
-  //   <div className='col-md-6 offset-md-3'>
-  //     <ToastContainer position='bottom-right' />
-  //     {activationLink()}
-  //   </div>
-  // );
   return (
     <>
       <ToastContainer position='bottom-right' />
