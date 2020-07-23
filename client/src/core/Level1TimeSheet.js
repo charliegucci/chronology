@@ -173,19 +173,47 @@ const Level1TimeSheet = (req, res) => {
                   <Table responsive striped>
                     <thead>
                       <tr>
-                        <th className='text-center'>Mon</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Mon</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Tue</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Tue</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Wed</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Wed</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Thu</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Thu</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Fri</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Fri</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Sat</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Sat</strong>
+                          </h6>
+                        </th>
                         <th className='text-left'></th>
-                        <th className='text-center'>Sun</th>
+                        <th className='text-center'>
+                          <h6 className='text-muted'>
+                            <strong>Sun</strong>
+                          </h6>
+                        </th>
                         <th className='text-right'></th>
                       </tr>
                     </thead>
