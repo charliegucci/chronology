@@ -69,31 +69,47 @@ const DropdownScrollNavbar = ({ history }) => {
               <span className='button-bar'></span>
             </DropdownToggle>
             <DropdownMenu aria-labelledby='navbarDropdown'>
-              <DropdownItem header>Dropdown header</DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Action
+              <DropdownItem header>Menu</DropdownItem>
+              <DropdownItem divider></DropdownItem>
+              <DropdownItem onClick={() => history.push('/level1')}>
+                Profile
               </DropdownItem>
               <DropdownItem onClick={(e) => e.preventDefault()}>
-                Another action
+                TimeSheet
               </DropdownItem>
               <DropdownItem onClick={(e) => e.preventDefault()}>
-                Something else here
+                Schedule
+              </DropdownItem>
+              {/* <DropdownItem divider></DropdownItem> */}
+              <DropdownItem onClick={(e) => e.preventDefault()}>
+                Parts
+              </DropdownItem>
+              {/* <DropdownItem divider></DropdownItem> */}
+              <DropdownItem onClick={(e) => e.preventDefault()}>
+                Task
+              </DropdownItem>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
+                Data Register
+              </DropdownItem>
+              <DropdownItem onClick={(e) => e.preventDefault()}>
+                Charts
               </DropdownItem>
               <DropdownItem divider></DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Separated link
-              </DropdownItem>
-              <DropdownItem divider></DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                One more separated link
+              <DropdownItem
+                onClick={() => {
+                  signout(() => {
+                    history.push('/');
+                  });
+                }}>
+                Log out
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <div className='navbar-translate'>
             <NavbarBrand id='navbar-brand'>Chronology</NavbarBrand>
-            <UncontrolledTooltip target='navbar-brand'>
+            {/* <UncontrolledTooltip target='navbar-brand'>
               Designed by Chronology. Coded by Jeb & Wil
-            </UncontrolledTooltip>
+            </UncontrolledTooltip> */}
             <button
               onClick={() => {
                 document.documentElement.classList.toggle('nav-open');
@@ -110,16 +126,18 @@ const DropdownScrollNavbar = ({ history }) => {
             <Nav className='ml-auto' id='ceva' navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
                   nav
-                  onClick={(e) => e.preventDefault()}>
+                  to='/level1/timesheet'
+                  tag={Link}
+                  onClick={() => history.push('/level1/timesheet')}>
                   <i className='now-ui-icons tech_watch-time'></i>
                   <p>TimeSheet</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem>
                     <i className='now-ui-icons design_image'></i>
                     Action
@@ -132,11 +150,11 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink'
@@ -147,7 +165,7 @@ const DropdownScrollNavbar = ({ history }) => {
                     className='now-ui-icons ui-1_calendar-60'></i>
                   <p>SCHEDULE</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
                   <DropdownItem>
                     <i className='now-ui-icons shopping_box'></i>
                     Action
@@ -180,11 +198,11 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons tech_mobile'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink'
@@ -195,7 +213,7 @@ const DropdownScrollNavbar = ({ history }) => {
                     className='now-ui-icons ui-2_settings-90'></i>
                   <p>PARTS</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink' right>
                   <DropdownItem tag={Link}>
                     <i className='now-ui-icons business_bulb-63'></i>
                     Action
@@ -240,11 +258,11 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons tech_mobile'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -253,7 +271,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <i className='now-ui-icons design_bullet-list-67'></i>
                   <p>TASK</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
@@ -266,12 +284,12 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav></UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -280,7 +298,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <i className='now-ui-icons files_single-copy-04'></i>
                   <p>DATA REGISTER</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
@@ -293,12 +311,12 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav></UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  caret
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -307,7 +325,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <i className='now-ui-icons business_chart-bar-32'></i>
                   <p>CHARTS</p>
                 </DropdownToggle>
-                <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
+                {/* <DropdownMenu aria-labelledby='navbarDropdownMenuLink1' right>
                   <DropdownItem tag={Link}>
                     <i className='now-ui-icons design_image'></i>
                     Action
@@ -320,7 +338,7 @@ const DropdownScrollNavbar = ({ history }) => {
                     <i className='now-ui-icons design_bullet-list-67'></i>
                     Action
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
               <UncontrolledDropdown nav></UncontrolledDropdown>
               <UncontrolledDropdown nav></UncontrolledDropdown>

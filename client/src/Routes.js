@@ -10,6 +10,7 @@ import Level1Route from './auth/Level1Route';
 import Level2Route from './auth/Level2Route';
 import ForgotPw from './auth/ForgotPw';
 import ResetPw from './auth/ResetPw';
+import Level1TimeSheet from './core/Level1TimeSheet';
 
 const Routes = () => {
   return (
@@ -22,6 +23,11 @@ const Routes = () => {
         <Route path='/auth/password/reset/:token' exact component={ResetPw} />
         <Route path='/auth/activate/:token' exact component={Activate} />
         <Level1Route path='/level1' exact component={Level1} />
+        <Level1Route
+          path='/level1/timesheet'
+          exact
+          component={Level1TimeSheet}
+        />
         <Level2Route path='/level2' exact component={Level2} />
       </Switch>
     </BrowserRouter>

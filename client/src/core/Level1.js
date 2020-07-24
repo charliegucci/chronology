@@ -4,7 +4,7 @@ import Logo from '../core/Logo';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+// import 'react-toastify/dist/ReactToastify.min.css';
 // reactstrap components
 import {
   Button,
