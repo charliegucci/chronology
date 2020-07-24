@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuth } from './helpers';
 
-const AdminRoute = ({ component: Component, ...rest }) => (
+const Level1Route = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isAuth() && isAuth().role === 'admin' ? (
+      isAuth() ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -19,4 +19,4 @@ const AdminRoute = ({ component: Component, ...rest }) => (
     }></Route>
 );
 
-export default AdminRoute;
+export default Level1Route;

@@ -35,7 +35,7 @@ import {
 // import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
 
-const Signup = (props) => {
+const Signup = ({ history }) => {
   const [values, setValues] = useState({
     employeeId: '',
     workEmail: '',
@@ -52,7 +52,9 @@ const Signup = (props) => {
     jobTitle: '',
     authLevel: '',
     superiorEmployeeId: '',
-    dob: ''
+    dob: '',
+    success: false,
+    loading: false
   });
 
   const {
@@ -71,16 +73,18 @@ const Signup = (props) => {
     jobTitle,
     authLevel,
     superiorEmployeeId,
-    dob
+    dob,
+    success,
+    loading
   } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value, success: false });
   };
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signup`,
@@ -122,13 +126,15 @@ const Signup = (props) => {
           jobTitle: '',
           authLevel: '',
           superiorEmployeeId: '',
-          dob: ''
+          dob: '',
+          success: true,
+          loading: false
         });
         toast(response.data.message);
       })
       .catch((error) => {
         console.log('SIGNUP ERROR', error.response.data);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
@@ -164,7 +170,7 @@ const Signup = (props) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/private' /> : null}
+      {isAuth() ? <Redirect to='/level1' /> : null}
 
       <div className='page-header header-filter'>
         <div
@@ -176,7 +182,11 @@ const Signup = (props) => {
           <Container>
             <Logo />
             <Card className='card-login card-plain'>
-              <Form action='' className='form' method=''>
+              <Form
+                action=''
+                className='form'
+                method=''
+                style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
                 <CardHeader className='text-center'>
                   Register Account
                 </CardHeader>
@@ -515,16 +525,25 @@ const Signup = (props) => {
                     </FormGroup>
                   </div>
                 </CardBody>
-                <CardFooter className='text-center'>
-                  <Button
-                    block
-                    className='btn-round'
-                    color='info'
-                    onClick={clickSubmit}
-                    size='lg'>
-                    Register
-                  </Button>
-                </CardFooter>
+                <Col>
+                  {success ? (
+                    <Link style={{ color: '#D55209' }} to='/'>
+                      Back to Login
+                    </Link>
+                  ) : (
+                    <Button
+                      className='btn-round pull-center'
+                      color='info'
+                      onClick={clickSubmit}
+                      size='lg'>
+                      {loading ? (
+                        <i className='now-ui-icons loader_gear spin'> </i>
+                      ) : (
+                        <span>Register</span>
+                      )}
+                    </Button>
+                  )}
+                </Col>
                 <div className='pull-left'>
                   <h6>
                     <Link to='/signin'>Already Registered?</Link>

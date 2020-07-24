@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuth } from './helpers';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const Level2Route = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isAuth() ? (
+      isAuth() && isAuth().role === 'Level2' ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -19,4 +19,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     }></Route>
 );
 
-export default PrivateRoute;
+export default Level2Route;

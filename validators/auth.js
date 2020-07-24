@@ -1,7 +1,12 @@
 const { check } = require('express-validator');
 
 exports.userSignupValidator = [
-  check('employeeId').not().isEmpty().withMessage('Employee Id is Required'),
+  check('employeeId')
+    .not()
+    .isEmpty()
+    .withMessage('Employee Id is Required')
+    .matches(/\d{6}/)
+    .withMessage('Invalid Employee Id'),
   check('password')
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long'),

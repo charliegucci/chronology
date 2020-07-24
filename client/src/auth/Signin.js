@@ -34,10 +34,11 @@ import Footer from '../core/Footer';
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
     employeeId: '',
-    password: ''
+    password: '',
+    loading: false
   });
 
-  const { employeeId, password } = values;
+  const { employeeId, password, loading } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -45,6 +46,7 @@ const Signin = ({ history }) => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
+    setValues({ ...values, loading: true });
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/signin`,
@@ -56,15 +58,18 @@ const Signin = ({ history }) => {
           setValues({
             ...values,
             employeeId: '',
-            password: ''
+            password: '',
+            loading: false
           });
-          //   toast(`Hello ${response.data.user.name}, Welcome back!`);
-          isAuth() && isAuth().role === 'admin'
-            ? history.push('/admin')
-            : history.push('/private');
+          console.log(isAuth().role);
+          toast(`Hello ${response.data.user.firstName}, Welcome back!`);
+          isAuth() && isAuth().role === 'Level2'
+            ? history.push('/level2')
+            : history.push('/level1');
         });
       })
       .catch((error) => {
+        setValues({ ...values, loading: false });
         console.log('SIGNIN ERROR', error);
         toast(error.response.data.error);
       });
@@ -87,7 +92,7 @@ const Signin = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/private' /> : null}
+      {isAuth() ? <Redirect to='/level1' /> : null}
 
       <div className='page-header header-filter'>
         <div
@@ -99,7 +104,9 @@ const Signin = ({ history }) => {
           <Container>
             <Row>
               <Col className='ml-auto mr-auto' md='5'>
-                <Card className='card-login card-plain'>
+                <Card
+                  className='card-login card-plain '
+                  style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
                   <Form action='' className='form' method=''>
                     <CardHeader className='text-center'>
                       <Logo />
@@ -149,7 +156,11 @@ const Signin = ({ history }) => {
                         color='info'
                         onClick={clickSubmit}
                         size='lg'>
-                        Log in
+                        {loading ? (
+                          <i className='now-ui-icons loader_gear spin'></i>
+                        ) : (
+                          <span>Log in</span>
+                        )}
                       </Button>
                     </CardFooter>
                     <div className='pull-left'>

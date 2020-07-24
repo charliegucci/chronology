@@ -28,17 +28,21 @@ import {
 import Footer from '../core/Footer';
 
 const ForgotPw = ({ history }) => {
-  const [values, setValues] = useState({ workEmail: '' });
+  const [values, setValues] = useState({
+    workEmail: '',
+    success: false,
+    loading: false
+  });
 
-  const { workEmail } = values;
+  const { workEmail, success, loading } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value, success: false });
   };
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values });
+    setValues({ ...values, loading: true });
     axios({
       method: 'PUT',
       url: `${process.env.REACT_APP_API}/forgot-password`,
@@ -47,12 +51,12 @@ const ForgotPw = ({ history }) => {
       .then((response) => {
         console.log('FORGOT PW REQUEST SUCCESS', response);
         toast(response.data.message);
-        setValues({ ...values });
+        setValues({ ...values, success: true, workEmail: '', loading: false });
       })
       .catch((error) => {
         console.log('FORGOT PW ERROR', error.response.data);
         toast(error.response.data.error);
-        setValues({ ...values });
+        setValues({ ...values, loading: false });
       });
   };
   const [firstFocus, setFirstFocus] = useState(false);
@@ -71,7 +75,7 @@ const ForgotPw = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/private' /> : null}
+      {isAuth() ? <Redirect to='/level1' /> : null}
       <div className='page-header header-filter'>
         <div
           className='page-header-image'
@@ -82,7 +86,9 @@ const ForgotPw = ({ history }) => {
           <Container>
             <Row>
               <Col className='ml-auto mr-auto' md='5'>
-                <Card className='card-login card-plain'>
+                <Card
+                  className='card-login card-plain'
+                  style={{ backgroundColor: '#14131d', padding: '1.5rem' }}>
                   <Form action='' className='form' method=''>
                     <CardHeader className='text-center'>
                       <Logo />
@@ -107,26 +113,36 @@ const ForgotPw = ({ history }) => {
                           value={workEmail}></Input>
                       </InputGroup>
                     </CardBody>
-                    <CardFooter className='text-center'>
-                      <Button
-                        block
-                        className='btn-round'
-                        color='info'
-                        onClick={clickSubmit}
-                        size='lg'>
-                        Request Password Reset
-                      </Button>
-                    </CardFooter>
-                    <div className='pull-left'>
-                      <h6>
-                        <Link to='/signup'>Create Account</Link>
-                      </h6>
-                    </div>
-                    <div className='pull-right'>
-                      <h6>
-                        <Link to='/signin'>Already Registered?</Link>
-                      </h6>
-                    </div>
+                    {success ? (
+                      <Link style={{ color: '#D55209' }} to='/'>
+                        Back to Login
+                      </Link>
+                    ) : (
+                      <CardFooter className='text-center'>
+                        <Button
+                          block
+                          className='btn-round'
+                          color='info'
+                          onClick={clickSubmit}
+                          size='lg'>
+                          {loading ? (
+                            <i className='now-ui-icons loader_gear spin'> </i>
+                          ) : (
+                            <span>Reset Password</span>
+                          )}
+                        </Button>
+                        <div className='pull-left'>
+                          <h6>
+                            <Link to='/signup'>Create Account</Link>
+                          </h6>
+                        </div>
+                        <div className='pull-right'>
+                          <h6>
+                            <Link to='/signin'>Already Registered?</Link>
+                          </h6>
+                        </div>
+                      </CardFooter>
+                    )}
                   </Form>
                 </Card>
               </Col>
