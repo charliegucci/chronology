@@ -22,6 +22,7 @@ mongoose
 //import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const wbsRoutes = require('./routes/wbs');
 
 // app middlewares
 app.use(morgan('dev'));
@@ -32,6 +33,7 @@ app.use(cors());
 //middlewares
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api', wbsRoutes);
 
 //serve static assets in production
 if (process.env.NODE_ENV === 'production') {
