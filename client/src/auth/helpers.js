@@ -53,6 +53,19 @@ export const isAuth = () => {
   }
 };
 
+export const isWBS = () => {
+  if (window !== 'undefined') {
+    const cookieChecked = getCookie('token');
+    if (cookieChecked) {
+      if (localStorage.getItem('wbs')) {
+        return JSON.parse(localStorage.getItem('wbs'));
+      } else {
+        return false;
+      }
+    }
+  }
+};
+
 export const signout = (next) => {
   removeCookie('token');
   removeLocalStorage('user');
