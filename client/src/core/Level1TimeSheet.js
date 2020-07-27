@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Logo from '../core/Logo';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
+import Footer from '../core/Footer';
 import {
   isAuth,
   getCookie,
@@ -34,24 +35,58 @@ import {
   Label,
   Modal,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  ListGroup,
+  ListGroupItem
 } from 'reactstrap';
 
 const Level1TimeSheet = (req, res) => {
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
   const [level3Modal, setLevel3Modal] = useState(false);
+  const [weeklyWbs, setWeeklyWbs] = useState({
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: []
+  });
+
+  const del = (arr, idx, day) => {
+    let arr_output = [];
+    arr.map((v, i) => {
+      if (i != idx) {
+        arr_output.push(v);
+      }
+    });
+    setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
+  };
+  // arr.splice(arr.indexOf(item), 1)
   const [values, setValues] = useState({
     code: '',
     title: '',
     level: '',
-    wbs: [],
     level1Wbs: '',
     level2Wbs: '',
-    level3Wbs: ''
+    level3Wbs: '',
+    hours: '',
+    type: 'Normal',
+    fullWbsCode: '',
+    fullWbsTitle: ''
   });
 
-  const { wbs, level1Wbs, level2Wbs, level3Wbs } = values;
+  const {
+    level1Wbs,
+    level2Wbs,
+    level3Wbs,
+    hours,
+    type,
+    fullWbsCode,
+    fullWbsTitle
+  } = values;
+
   useEffect(() => {
     loadWbs();
   }, []);
@@ -62,11 +97,10 @@ const Level1TimeSheet = (req, res) => {
       url: `${process.env.REACT_APP_API}/wbs`
     })
       .then((response) => {
-        setValues({ wbs: [...values.wbs, response.data] });
         setLocalStorage('wbs', response.data);
-        console.log(
-          response.data.map((i) => console.log(i.code, '-', i.title))
-        );
+        response.data.map((i) => {
+          console.log(i.code, '-', i.title);
+        });
       })
       .catch((error) => {
         console.log('Error in Loading WBS', error);
@@ -80,11 +114,20 @@ const Level1TimeSheet = (req, res) => {
     setLevel3Modal(false);
   };
 
+  useEffect(() => {
+    setValues({
+      ...values,
+      fullWbsCode: getFullWBSCode(level1Wbs, level2Wbs, level3Wbs),
+      fullWbsTitle: getFullWBSTitle(level1Wbs, level2Wbs, level3Wbs)
+    });
+  }, [values.level3Wbs]);
+
   const listLevel1 = () => {
     let arr = [];
-    isWBS().map((item, idx) => arr.push(`${item.code}-${item.title}`));
-
-    return arr.sort();
+    if (isWBS()) {
+      isWBS().map((item, idx) => arr.push(`${item.code}-${item.title}`));
+      return arr.sort();
+    }
   };
 
   const listLevel2 = (code) => {
@@ -97,8 +140,6 @@ const Level1TimeSheet = (req, res) => {
           });
         }
       });
-
-      console.log('this one:', arr);
 
       return arr.sort();
     }
@@ -129,12 +170,11 @@ const Level1TimeSheet = (req, res) => {
       });
     }
 
-    console.log('array 2: ', arr2);
-
     return arr2.sort();
   };
   const getFullWBSCode = (level1, level2, level3) => {
     if (level1 && level2 && level3) {
+      console.log('am i working');
       return `${level1.split('-')[0]}.${level2.split('-')[0]}.${
         level3.split('-')[0]
       }`;
@@ -148,10 +188,18 @@ const Level1TimeSheet = (req, res) => {
       }`;
     }
   };
+  const updateWeek = (day) => {
+    let wbs = weeklyWbs[day];
+    wbs.push(values);
+    setWeeklyWbs({ ...weeklyWbs, [day]: wbs });
+  };
 
   return (
     <>
-      <div className='cd-section' id='contact-us'>
+      <div
+        className='cd-section'
+        id='contact-us'
+        onClick={() => console.log(weeklyWbs)}>
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -181,14 +229,19 @@ const Level1TimeSheet = (req, res) => {
                   className='rounded img-raised text-center'
                   src={require('../img/boy.png')}
                   style={{ paddingBottom: '1rem' }}></img>
+                <div style={{ margin: '2rem' }}>
+                  <Input
+                    className='font-weight-bolder text-center'
+                    id='inputPassword4'
+                    type='select'
+                    name='type'>
+                    <option selected=''>Arrangement</option>
+                    <option>5/day week</option>
+                    <option>4/day week</option>
+                    <option>flexible</option>
+                  </Input>
+                </div>
 
-                <h6 className='info-title'>
-                  <strong>Arrangement:</strong>
-                </h6>
-
-                <h6 className='info-title'>
-                  <strong>Team:</strong>
-                </h6>
                 <Button
                   className='btn-round pull-center'
                   color='info'
@@ -213,12 +266,14 @@ const Level1TimeSheet = (req, res) => {
                   </Button>
                   <Modal
                     isOpen={levelModal}
-                    className='modal-sm'
+                    className='modal-sm '
                     modalClassName='bd-example-modal-sm'
                     // onClick={() => setLevel1Modal(false)}
                   >
                     <div className='modal-header'>
-                      <h4 className='modal-title' id='mySmallModalLabel'>
+                      <h4
+                        className='modal-title justify-content-center'
+                        id='mySmallModalLabel'>
                         Level 1 WBS
                       </h4>
                       <button
@@ -237,15 +292,18 @@ const Level1TimeSheet = (req, res) => {
                         type='select'
                         onChange={handleChange('level1Wbs')}>
                         <option selected=''>Please Choose</option>
-                        {listLevel1().map((item, idx) => (
-                          <option key={idx}>{item}</option>
-                        ))}
+                        {isWBS() &&
+                          listLevel1().map((item, idx) => (
+                            <option key={idx}>{item}</option>
+                          ))}
+                        {console.log('level1wbs:', level1Wbs)}
                       </Input>
                     </ModalBody>
                   </Modal>
                   <FormGroup className='mx-sm-auto'>
                     <label className='sr-only' htmlFor='inputPassword2'></label>
                     <Input
+                      className='font-weight-bolder'
                       disabled
                       id='inputPassword2'
                       placeholder='WBS Level 1'
@@ -299,6 +357,7 @@ const Level1TimeSheet = (req, res) => {
                   <FormGroup className='mx-sm-auto'>
                     <label className='sr-only' htmlFor='inputPassword2'></label>
                     <Input
+                      className='font-weight-bolder'
                       disabled
                       value={level2Wbs}
                       id='inputPassword2'
@@ -339,6 +398,7 @@ const Level1TimeSheet = (req, res) => {
                         id='inputState'
                         type='select'
                         onChange={handleChange('level3Wbs')}>
+                        {console.log('level3wbs:', level3Wbs)}
                         <option selected=''>Please Choose</option>
                         {level1Wbs &&
                           level2Wbs &&
@@ -352,6 +412,7 @@ const Level1TimeSheet = (req, res) => {
                   <FormGroup className='mx-sm-auto'>
                     <label className='sr-only' htmlFor='inputPassword2'></label>
                     <Input
+                      className='font-weight-bolder'
                       value={level3Wbs}
                       disabled
                       id='inputPassword2'
@@ -363,16 +424,23 @@ const Level1TimeSheet = (req, res) => {
                 <Form style={{ paddingTop: '2rem' }}>
                   <div className='form-row'>
                     <FormGroup className='col-md-4'>
+                      {console.log('fullWbsCode:', fullWbsCode)}
                       <Input
-                        value={getFullWBSCode(level1Wbs, level2Wbs, level3Wbs)}
+                        className='font-weight-bolder'
+                        value={fullWbsCode}
+                        onChange={handleChange('fullWbsCode')}
                         disabled
+                        name='fullWbsCode'
                         id='inputEmail4'
                         placeholder='Full WBS Code'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-4'>
+                      {console.log('fullWbsTitle:', fullWbsTitle)}
                       <Input
-                        value={getFullWBSTitle(level1Wbs, level2Wbs, level3Wbs)}
+                        className='font-weight-bolder'
+                        value={fullWbsTitle}
+                        name='fullWbsTitle'
                         disabled
                         id='inputEmail4'
                         placeholder='Full WBS Title'
@@ -380,12 +448,22 @@ const Level1TimeSheet = (req, res) => {
                     </FormGroup>
                     <FormGroup className='col-md-2'>
                       <Input
+                        className='font-weight-bolder'
                         id='inputPassword4'
                         placeholder='Hours'
-                        type='number'></Input>
+                        name='hours'
+                        type='number'
+                        value={hours}
+                        onChange={handleChange('hours')}></Input>
                     </FormGroup>
                     <FormGroup className='col-md-2'>
-                      <Input id='inputState' type='select'>
+                      <Input
+                        className='font-weight-bolder'
+                        id='inputPassword4'
+                        type='select'
+                        name='type'
+                        value={type}
+                        onChange={handleChange('type')}>
                         <option selected=''>Type</option>
                         <option>Normal</option>
                         <option>1.5x</option>
@@ -397,399 +475,271 @@ const Level1TimeSheet = (req, res) => {
               </Col>
             </Row>
           </Container>
-          <Container style={{ paddingTop: '1.5rem' }}>
+
+          <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
             <Row>
               <Card
-                className='card-plain'
+                className='text-center'
                 style={{
+                  width: '9.3rem',
+                  margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
-                <CardHeader>
-                  <CardTitle tag='h4'></CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Table responsive striped>
-                    <thead>
-                      <tr>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Mon</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Tue</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Wed</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Thu</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Fri</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Sat</strong>
-                          </h6>
-                        </th>
-                        <th className='text-left'></th>
-                        <th className='text-center'>
-                          <h6 className='text-muted'>
-                            <strong>Sun</strong>
-                          </h6>
-                        </th>
-                        <th className='text-right'></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className='text-left'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-right'></td>
-                        <td className='text-right'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className='text-left'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-right'></td>
-                        <td className='text-right'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className='text-left'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-right'></td>
-                        <td className='text-right'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className='text-left'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-right'></td>
-                        <td className='text-right'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className='text-left'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-center'></td>
-                        <td className='text-left'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                        <td className='text-right'></td>
-                        <td className='text-right'>
-                          <FormGroup check>
-                            <Label check>
-                              <Input defaultChecked type='checkbox'></Input>
-                              <span className='form-check-sign'></span>
-                            </Label>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='danger'
+                    onClick={() => updateWeek('sunday')}>
+                    Sunday
+                  </Button>
+                  {weeklyWbs.sunday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong> {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong> {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() => del(weeklyWbs.sunday, index, 'sunday')}>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='info'
+                    onClick={() => updateWeek('monday')}>
+                    Monday
+                  </Button>
+                  {weeklyWbs.monday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong> {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong> {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() => del(weeklyWbs.monday, index, 'monday')}>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='info'
+                    onClick={() => updateWeek('tuesday')}>
+                    Tuesday
+                  </Button>
+                  {weeklyWbs.tuesday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong> {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong> {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() =>
+                          del(weeklyWbs.tuesday, index, 'tuesday')
+                        }>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='info'
+                    onClick={() => updateWeek('wednesday')}>
+                    Wednesday
+                  </Button>
+                  {weeklyWbs.wednesday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong>: {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong>: {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() =>
+                          del(weeklyWbs.wednesday, index, 'wednesday')
+                        }>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='info'
+                    onClick={() => updateWeek('thursday')}>
+                    Thursday
+                  </Button>
+                  {weeklyWbs.thursday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong> {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong> {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() =>
+                          del(weeklyWbs.thursday, index, 'thursday')
+                        }>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='info'
+                    onClick={() => updateWeek('friday')}>
+                    Friday
+                  </Button>
+                  {weeklyWbs.friday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong>
+                        {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong>
+                        {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() => del(weeklyWbs.friday, index, 'friday')}>
+                        x
+                      </button>
+                    </>
+                  ))}
+                </CardBody>
+              </Card>
+              <Card
+                className='text-center'
+                style={{
+                  width: '9.3rem',
+                  margin: '.5em',
+                  backgroundColor: '#14131d'
+                }}>
+                <CardBody style={{ backgroundColor: '#14131d' }}>
+                  <Button
+                    className='btn-link'
+                    color='danger'
+                    onClick={() => updateWeek('saturday')}>
+                    Saturday
+                  </Button>
+                  {weeklyWbs.saturday.map((val, index) => (
+                    <>
+                      <h6 className='text-muted'>
+                        <strong>Code:</strong> {val.fullWbsCode}
+                      </h6>
+                      <h6 className='text-muted'>
+                        <strong>Title:</strong> {val.fullWbsTitle}
+                      </h6>
+                      <button
+                        style={{ background: '#14131d' }}
+                        className='btn-icon btn-neutral'
+                        color='danger'
+                        size='sm'
+                        type='button'
+                        onClick={() =>
+                          del(weeklyWbs.saturday, index, 'saturday')
+                        }>
+                        x
+                      </button>
+                    </>
+                  ))}
                 </CardBody>
               </Card>
             </Row>
           </Container>
         </div>
+        <Footer />
       </div>
     </>
   );
 };
+
 export default Level1TimeSheet;
