@@ -7,16 +7,6 @@ exports.readWbs = (req, res) => {
         error: 'Cant Read WBS'
       });
     }
-    res.json(
-      data
-      // .map((item) => {
-      //   if (item.code === '03') {
-      //     return item.sub;
-      //   }
-
-      //   //   return `${item.code} - ${item.title}`;
-      // })
-      // .sort()
-    );
+    res.json(data);
   });
 };

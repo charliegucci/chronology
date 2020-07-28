@@ -71,7 +71,7 @@ const DropdownScrollNavbar = ({ history }) => {
             <DropdownMenu aria-labelledby='navbarDropdown'>
               <DropdownItem header>Menu</DropdownItem>
               <DropdownItem divider></DropdownItem>
-              <DropdownItem onClick={() => history.push('/level1')}>
+              <DropdownItem onClick={() => history.push('/profile')}>
                 Profile
               </DropdownItem>
               <DropdownItem onClick={(e) => e.preventDefault()}>
@@ -131,9 +131,9 @@ const DropdownScrollNavbar = ({ history }) => {
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
                   nav
-                  to='/level1/timesheet'
+                  to='/user/timesheet'
                   tag={Link}
-                  onClick={() => history.push('/level1/timesheet')}>
+                  onClick={() => history.push('/user/timesheet')}>
                   <i className='now-ui-icons tech_watch-time'></i>
                   <p>TimeSheet</p>
                 </DropdownToggle>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Logo from '../core/Logo';
+import Moment from 'moment';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
+import { ToastContainer, toast } from 'react-toastify';
 import {
   isAuth,
   getCookie,
@@ -11,9 +13,6 @@ import {
   setLocalStorage,
   isWBS
 } from '../auth/helpers';
-import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.min.css';
-// reactstrap components
 import {
   Button,
   Card,
@@ -40,11 +39,13 @@ import {
   ListGroupItem
 } from 'reactstrap';
 
-const Level1TimeSheet = (req, res) => {
+const TimeSheet = (req, res) => {
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
   const [level3Modal, setLevel3Modal] = useState(false);
+  const [weeklyHours, setWeeklyHours] = useState([]);
   const [weeklyWbs, setWeeklyWbs] = useState({
+    employeeId: isAuth().employeeId,
     monday: [],
     tuesday: [],
     wednesday: [],
@@ -54,16 +55,6 @@ const Level1TimeSheet = (req, res) => {
     sunday: []
   });
 
-  const del = (arr, idx, day) => {
-    let arr_output = [];
-    arr.map((v, i) => {
-      if (i != idx) {
-        arr_output.push(v);
-      }
-    });
-    setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
-  };
-  // arr.splice(arr.indexOf(item), 1)
   const [values, setValues] = useState({
     code: '',
     title: '',
@@ -71,10 +62,11 @@ const Level1TimeSheet = (req, res) => {
     level1Wbs: '',
     level2Wbs: '',
     level3Wbs: '',
-    hours: '',
+    hours: '7.5',
     type: 'Normal',
     fullWbsCode: '',
-    fullWbsTitle: ''
+    fullWbsTitle: '',
+    totalDailyHours: ''
   });
 
   const {
@@ -84,12 +76,30 @@ const Level1TimeSheet = (req, res) => {
     hours,
     type,
     fullWbsCode,
-    fullWbsTitle
+    fullWbsTitle,
+    totalDailyHours
   } = values;
 
   useEffect(() => {
     loadWbs();
+    loadTimesheet();
   }, []);
+
+  const loadTimesheet = () => {
+    const id = isAuth().employeeId;
+    axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API}/timesheet/read/${id}`
+    })
+      .then((response) => {
+        console.log('TimeSheet', response);
+        if (response.data.error) return;
+        setWeeklyWbs(response.data);
+      })
+      .catch((error) => {
+        console.log('Error Loading Timesheet', error.response);
+      });
+  };
 
   const loadWbs = () => {
     axios({
@@ -194,6 +204,79 @@ const Level1TimeSheet = (req, res) => {
     setWeeklyWbs({ ...weeklyWbs, [day]: wbs });
   };
 
+  const dailyTotal = (day) => {
+    let total = 0;
+    weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
+    return total;
+    console.log('Total:', total);
+  };
+
+  const del = (arr, idx, day) => {
+    let arr_output = [];
+    arr.map((v, i) => {
+      if (i != idx) {
+        arr_output.push(v);
+      }
+    });
+    setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
+  };
+
+  // const getDateNow = () => {
+  //   const today = new Date();
+  //   const dd = String(today.getDate()).padStart(2, '0');
+  //   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  //   const yyyy = today.getFullYear();
+  //   return dd + '/' + mm + '/' + yyyy;
+  // };
+
+  // const dayName = (num) => {
+  //   const dayName = new Array(7);
+  //   dayName[0] = 'Sunday';
+  //   dayName[1] = 'Monday';
+  //   dayName[2] = 'Tuesday';
+  //   dayName[3] = 'Wednesday';
+  //   dayName[4] = 'Thursday';
+  //   dayName[5] = 'Friday';
+  //   dayName[6] = 'Saturday';
+
+  //   return dayName[num];
+  // };
+
+  // const getDatesOfWeek = () => {
+  //   const today = new Date();
+  //   const todayNumber = today.getDay();
+  //   const startOfWeek = today.setDate(today.getDate() - todayNumber);
+
+  //   const daysOfWeek = {};
+
+  //   for (let i = 0; i < 6; i++) {
+  //     daysOfWeek[dayName(i)] = startOfWeek.setDate(startOfWeek.getDate() + i);
+  //   }
+
+  //   return startOfWeek;
+  // };
+
+  // console.log(getDateNow(), getDatesOfWeek());
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API}/timesheet`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: weeklyWbs
+    })
+      .then((response) => {
+        console.log('TimeSheet Saving Success', response);
+        toast('Timesheet Successful Saved');
+      })
+      .catch((error) => {
+        console.log('Error in Saving Timesheet', error);
+        toast('Oops error saving timesheet');
+      });
+  };
   return (
     <>
       <div
@@ -219,7 +302,7 @@ const Level1TimeSheet = (req, res) => {
                 <h3 className='title'>
                   <h6 className='description'>
                     <span>
-                      <Badge color='info'>Level1</Badge>
+                      <Badge color='info'>{isAuth().role}</Badge>
                     </span>
                   </h6>
                 </h3>
@@ -245,7 +328,8 @@ const Level1TimeSheet = (req, res) => {
                 <Button
                   className='btn-round pull-center'
                   color='info'
-                  type='submit'>
+                  type='submit'
+                  onClick={clickSubmit}>
                   Authenticate
                 </Button>
               </Col>
@@ -475,6 +559,11 @@ const Level1TimeSheet = (req, res) => {
               </Col>
             </Row>
           </Container>
+          <Container>
+            <div className='text-muted'>
+              <strong>Total Weekly Hours:</strong> {totalDailyHours}
+            </div>
+          </Container>
 
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
             <Row>
@@ -485,30 +574,53 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('sunday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='danger'
-                    onClick={() => updateWeek('sunday')}>
-                    Sunday
+                    onClick={() => {
+                      updateWeek('sunday');
+                    }}>
+                    {Moment().subtract(2, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.sunday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong> {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong> {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() => del(weeklyWbs.sunday, index, 'sunday')}>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.sunday, index, 'sunday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -520,30 +632,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('monday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('monday')}>
-                    Monday
+                    {Moment().subtract(1, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.monday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong> {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong> {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() => del(weeklyWbs.monday, index, 'monday')}>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.monday, index, 'monday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -555,32 +688,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('tuesday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('tuesday')}>
-                    Tuesday
+                    {Moment().format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.tuesday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong> {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong> {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() =>
-                          del(weeklyWbs.tuesday, index, 'tuesday')
-                        }>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.tuesday, index, 'tuesday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -592,32 +744,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('wednesday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('wednesday')}>
-                    Wednesday
+                    {Moment().add(1, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.wednesday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong>: {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong>: {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() =>
-                          del(weeklyWbs.wednesday, index, 'wednesday')
-                        }>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.wednesday, index, 'wednesday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -629,32 +800,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('thursday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('thursday')}>
-                    Thursday
+                    {Moment().add(2, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.thursday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong> {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong> {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() =>
-                          del(weeklyWbs.thursday, index, 'thursday')
-                        }>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.thursday, index, 'thursday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -666,32 +856,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('friday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('friday')}>
-                    Friday
+                    {Moment().add(3, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.friday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong>
-                        {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong>
-                        {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() => del(weeklyWbs.friday, index, 'friday')}>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.friday, index, 'friday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -703,32 +912,51 @@ const Level1TimeSheet = (req, res) => {
                   margin: '.5em',
                   backgroundColor: '#14131d'
                 }}>
+                <CardHeader>
+                  <div className='pull-right'>
+                    <i className='now-ui-icons tech_watch-time'></i>{' '}
+                    <strong>{dailyTotal('saturday')}</strong>
+                  </div>
+                </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
                   <Button
                     className='btn-link'
                     color='danger'
                     onClick={() => updateWeek('saturday')}>
-                    Saturday
+                    {Moment().add(4, 'days').format('Do MMM YYYY ddd')}
                   </Button>
                   {weeklyWbs.saturday.map((val, index) => (
                     <>
-                      <h6 className='text-muted'>
-                        <strong>Code:</strong> {val.fullWbsCode}
-                      </h6>
-                      <h6 className='text-muted'>
-                        <strong>Title:</strong> {val.fullWbsTitle}
-                      </h6>
-                      <button
-                        style={{ background: '#14131d' }}
-                        className='btn-icon btn-neutral'
-                        color='danger'
-                        size='sm'
-                        type='button'
-                        onClick={() =>
-                          del(weeklyWbs.saturday, index, 'saturday')
-                        }>
-                        x
-                      </button>
+                      <Card
+                        style={{
+                          backgroundColor: '#1E1D2D',
+                          paddingTop: '1em'
+                        }}>
+                        <h6 className='text-muted'>
+                          <strong>Code:</strong> {val.fullWbsCode}
+                        </h6>
+                        <h6 className='text-muted'>
+                          <strong>Title:</strong> {val.fullWbsTitle}
+                        </h6>
+
+                        <h6 className='text-muted'>
+                          <strong>Type:</strong> {val.type}
+                        </h6>
+                        <CardFooter>
+                          <div className='stats pull-left'>
+                            <i className='now-ui-icons tech_watch-time'></i>
+                            <strong>{val.hours}</strong>
+                          </div>
+                          <div className='stats pull-right'>
+                            <i
+                              className='now-ui-icons ui-1_simple-delete'
+                              type='button'
+                              onClick={() =>
+                                del(weeklyWbs.saturday, index, 'saturday')
+                              }></i>
+                          </div>
+                        </CardFooter>
+                      </Card>
                     </>
                   ))}
                 </CardBody>
@@ -742,4 +970,4 @@ const Level1TimeSheet = (req, res) => {
   );
 };
 
-export default Level1TimeSheet;
+export default TimeSheet;

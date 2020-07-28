@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
-import Layout from '../core/Layout';
 import Logo from '../core/Logo';
 import ImageUpload from '../core/ImageUpload';
 import axios from 'axios';
@@ -170,7 +169,7 @@ const Signup = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/level1' /> : null}
+      {isAuth() ? <Redirect to='/profile' /> : null}
 
       <div className='page-header header-filter'>
         <div

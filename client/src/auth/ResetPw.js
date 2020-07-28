@@ -3,7 +3,6 @@ import { Redirect, Link } from 'react-router-dom';
 import { isAuth } from './helpers';
 import Logo from '../core/Logo';
 import jwt from 'jsonwebtoken';
-import Layout from '../core/Layout';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -84,7 +83,7 @@ const ResetPw = ({ match }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/level1' /> : null}
+      {isAuth() ? <Redirect to='/profile' /> : null}
       <div className='page-header header-filter'>
         <div
           className='page-header-image'
