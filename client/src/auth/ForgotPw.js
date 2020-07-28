@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import Layout from '../core/Layout';
 import axios from 'axios';
 import Logo from '../core/Logo';
 import { isAuth } from './helpers';
@@ -75,7 +74,7 @@ const ForgotPw = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/level1' /> : null}
+      {isAuth() ? <Redirect to='/profile' /> : null}
       <div className='page-header header-filter'>
         <div
           className='page-header-image'

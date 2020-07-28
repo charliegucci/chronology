@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import Layout from '../core/Layout';
 import axios from 'axios';
 import Logo from '../core/Logo';
 import { authenticate, isAuth } from './helpers';
@@ -63,9 +62,7 @@ const Signin = ({ history }) => {
           });
           console.log(isAuth().role);
           toast(`Hello ${response.data.user.firstName}, Welcome back!`);
-          isAuth() && isAuth().role === 'Level2'
-            ? history.push('/level2')
-            : history.push('/level1');
+          isAuth() ? history.push('/profile') : history.push('/');
         });
       })
       .catch((error) => {
@@ -92,7 +89,7 @@ const Signin = ({ history }) => {
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/level1' /> : null}
+      {isAuth() ? <Redirect to='/profile' /> : null}
 
       <div className='page-header header-filter'>
         <div
