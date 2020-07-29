@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import Layout from '../core/Layout';
 import axios from 'axios';
 import Logo from '../core/Logo';
 import { authenticate, isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-// import '../assets/css/bootstrap.min.css';
 import '../assets/scss/now-ui-kit.scss';
-
-// reactstrap components
+import Footer from '../core/Footer';
 import {
   Button,
   Card,
@@ -23,13 +20,8 @@ import {
   InputGroup,
   Container,
   Col,
-  Row,
-  Navbar
+  Row
 } from 'reactstrap';
-
-// core components
-// import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
-import Footer from '../core/Footer';
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
@@ -63,9 +55,7 @@ const Signin = ({ history }) => {
           });
           console.log(isAuth().role);
           toast(`Hello ${response.data.user.firstName}, Welcome back!`);
-          isAuth() && isAuth().role === 'Level2'
-            ? history.push('/level2')
-            : history.push('/level1');
+          isAuth() ? history.push('/profile') : history.push('/');
         });
       })
       .catch((error) => {
@@ -77,22 +67,20 @@ const Signin = ({ history }) => {
 
   const [firstFocus, setFirstFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
-  // const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
+
   useEffect(() => {
     document.body.classList.add('login-page');
-    // document.body.classList.add('sidebar-collapse');
     document.documentElement.classList.remove('nav-open');
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     return function cleanup() {
       document.body.classList.remove('login-page');
-      // document.body.classList.remove('sidebar-collapse');
     };
   }, []);
   return (
     <>
       <ToastContainer position='bottom-right' />
-      {isAuth() ? <Redirect to='/level1' /> : null}
+      {isAuth() ? <Redirect to='/profile' /> : null}
 
       <div className='page-header header-filter'>
         <div

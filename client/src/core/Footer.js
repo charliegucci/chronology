@@ -1,19 +1,17 @@
-/*eslint-disable*/
 import React from 'react';
-
-// reactstrap components
 import { Container } from 'reactstrap';
 
-// core components
-
-function Footer() {
+const Footer = () => {
   return (
     <>
       <footer className='footer'>
         <Container>
           <div className='copyright' id='copyright'>
             © {new Date().getFullYear()} by{' '}
-            <a href='#' target='_blank'>
+            <a
+              href='https://github.com/charliegucci/chronology'
+              target='_blank'
+              rel='noopener noreferrer'>
               Chronology
             </a>
             .
@@ -22,6 +20,6 @@ function Footer() {
       </footer>
     </>
   );
-}
+};
 
 export default Footer;

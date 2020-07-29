@@ -6,7 +6,7 @@ const Level2Route = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isAuth() && isAuth().role === 'Level2' ? (
+      isAuth() && isAuth().role === 'admin' ? (
         <Component {...props} />
       ) : (
         <Redirect

@@ -53,12 +53,28 @@ export const isAuth = () => {
   }
 };
 
+//loads WBS to localstorage
+export const isWBS = () => {
+  if (window !== 'undefined') {
+    const cookieChecked = getCookie('token');
+    if (cookieChecked) {
+      if (localStorage.getItem('wbs')) {
+        return JSON.parse(localStorage.getItem('wbs'));
+      } else {
+        return false;
+      }
+    }
+  }
+};
+
+//clears cookies and localstorage
 export const signout = (next) => {
   removeCookie('token');
   removeLocalStorage('user');
   next();
 };
 
+// update user in localstorage
 export const updateUser = (response, next) => {
   console.log('UPDATE USER LOCALSTORAGE', response);
   if (typeof window !== 'undefined') {
