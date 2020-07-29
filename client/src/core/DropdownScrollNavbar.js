@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout } from '../auth/helpers';
+
+// reactstrap components
+
 import {
   Collapse,
   DropdownToggle,
@@ -60,44 +63,12 @@ const DropdownScrollNavbar = ({ history }) => {
               <span className='button-bar'></span>
               <span className='button-bar'></span>
             </DropdownToggle>
-            <DropdownMenu aria-labelledby='navbarDropdown'>
-              <DropdownItem header>Menu</DropdownItem>
-              <DropdownItem divider></DropdownItem>
-              <DropdownItem onClick={() => history.push('/profile')}>
-                Profile
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                TimeSheet
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Schedule
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Parts
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Task
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Data Register
-              </DropdownItem>
-              <DropdownItem onClick={(e) => e.preventDefault()}>
-                Charts
-              </DropdownItem>
-              <DropdownItem divider></DropdownItem>
-              <DropdownItem
-                onClick={() => {
-                  signout(() => {
-                    history.push('/');
-                  });
-                }}>
-                Log out
-              </DropdownItem>
-            </DropdownMenu>
+
           </UncontrolledDropdown>
           <div className='navbar-translate'>
             <NavbarBrand id='navbar-brand'>Chronology</NavbarBrand>
-            <button
+
+          <button
               onClick={() => {
                 document.documentElement.classList.toggle('nav-open');
                 setCollapseOpen(!collapseOpen);
@@ -113,6 +84,21 @@ const DropdownScrollNavbar = ({ history }) => {
             <Nav className='ml-auto' id='ceva' navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle
+                  color='default'
+                  data-toggle='dropdown'
+                  id='navbarDropdownMenuLink1'
+                  nav
+                  to='/profile'
+                  tag={Link}
+                  onClick={() => history.push('/profile')}>
+                  <i className='now-ui-icons emoticons_satisfied'></i>
+                  <p>Profile</p>
+                </DropdownToggle>
+              </UncontrolledDropdown>
+
+              <UncontrolledDropdown nav>
+                <DropdownToggle
+                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'

@@ -26,8 +26,10 @@ const TimeSheet = (req, res) => {
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
   const [level3Modal, setLevel3Modal] = useState(false);
+  const [dayNumber, setDayNumber] = useState([]);
   const [weeklyWbs, setWeeklyWbs] = useState({
     employeeId: isAuth().employeeId,
+    startDate: '',
     monday: [],
     tuesday: [],
     wednesday: [],
@@ -47,8 +49,7 @@ const TimeSheet = (req, res) => {
     hours: '7.5',
     type: 'Normal',
     fullWbsCode: '',
-    fullWbsTitle: '',
-    totalDailyHours: ''
+    fullWbsTitle: ''
   });
 
   const {
@@ -58,18 +59,31 @@ const TimeSheet = (req, res) => {
     hours,
     type,
     fullWbsCode,
-    fullWbsTitle,
-    totalDailyHours
+    fullWbsTitle
   } = values;
 
   useEffect(() => {
     loadWbs();
     loadTimesheet();
+    getDayNumber();
   }, []);
 
-  const loadTimesheet = () => {
+  const getDayNumber = () => {
+    let dates = [];
+    const day = new Date();
+    console.log('Day', day.getDay());
+    let sunday = 0 - day.getDay();
+    do {
+      dates.push(sunday);
+      sunday++;
+    } while (dates.length < 7);
+    console.log(dates);
+    setDayNumber(dates);
+  };
+
+  const loadTimesheet = async function () {
     const id = isAuth().employeeId;
-    axios({
+    await axios({
       method: 'GET',
       url: `${process.env.REACT_APP_API}/timesheet/read/${id}`
     })
@@ -89,7 +103,10 @@ const TimeSheet = (req, res) => {
     })
       .then((response) => {
         setLocalStorage('wbs', response.data);
-      })
+        response.data.forEach((i) => {
+          console.log(i.code, '-', i.title);
+        });
+    })
       .catch((error) => {
         toast('Error loading WBS, Please log out and log in again');
       });
@@ -185,7 +202,24 @@ const TimeSheet = (req, res) => {
     let total = 0;
     weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
     return total;
+
   };
+
+  const weeklyTotal = () => {
+    let sum = 0;
+    [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday'
+    ].forEach((day) => {
+      sum += dailyTotal(day);
+    });
+    return sum;
+};
 
   const del = (arr, idx, day) => {
     let arr_output = [];
@@ -197,6 +231,19 @@ const TimeSheet = (req, res) => {
     setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
   };
 
+
+  const renderDate = (day) => {
+    if (day < 0) {
+      return Moment()
+        .subtract(day * -1, 'days')
+        .format('Do MMM YYYY ddd');
+    } else if (day === 0) {
+      return Moment().format('Do MMM YYYY ddd');
+    } else {
+      return Moment().add(day, 'days').format('Do MMM YYYY ddd');
+    }
+  };
+
   const clickSubmit = (e) => {
     e.preventDefault();
     axios({
@@ -205,7 +252,7 @@ const TimeSheet = (req, res) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      data: weeklyWbs
+      data: { ...weeklyWbs, startDate: renderDate(dayNumber[0]) }
     })
       .then((response) => {
         toast('Timesheet Successful Saved');
@@ -488,7 +535,12 @@ const TimeSheet = (req, res) => {
           </Container>
           <Container>
             <div className='text-muted'>
-              <strong>Total Weekly Hours:</strong> {totalDailyHours}
+              <strong>
+                Total Weekly Hours:{' '}
+                <Button className='btn-link btn-lg' color='primary'>
+                  {weeklyTotal()}
+                </Button>{' '}
+              </strong>
             </div>
           </Container>
           {/* -------------------------------------------------------------------------------------- */}
@@ -503,8 +555,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('sunday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('sunday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -514,7 +567,7 @@ const TimeSheet = (req, res) => {
                     onClick={() => {
                       updateWeek('sunday');
                     }}>
-                    {Moment().subtract(2, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[0])}
                   </Button>
                   {weeklyWbs.sunday.map((val, index) => (
                     <>
@@ -536,7 +589,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -561,8 +616,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('monday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('monday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -570,7 +626,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('monday')}>
-                    {Moment().subtract(1, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[1])}
                   </Button>
                   {weeklyWbs.monday.map((val, index) => (
                     <>
@@ -592,7 +648,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -617,8 +675,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('tuesday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('tuesday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -626,7 +685,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('tuesday')}>
-                    {Moment().format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[2])}
                   </Button>
                   {weeklyWbs.tuesday.map((val, index) => (
                     <>
@@ -648,7 +707,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -673,8 +734,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('wednesday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('wednesday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -682,7 +744,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('wednesday')}>
-                    {Moment().add(1, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[3])}
                   </Button>
                   {weeklyWbs.wednesday.map((val, index) => (
                     <>
@@ -704,7 +766,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -729,8 +793,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('thursday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('thursday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -738,7 +803,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('thursday')}>
-                    {Moment().add(2, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[4])}
                   </Button>
                   {weeklyWbs.thursday.map((val, index) => (
                     <>
@@ -760,7 +825,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -785,8 +852,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('friday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('friday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -794,7 +862,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='info'
                     onClick={() => updateWeek('friday')}>
-                    {Moment().add(3, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[5])}
                   </Button>
                   {weeklyWbs.friday.map((val, index) => (
                     <>
@@ -816,7 +884,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
@@ -841,8 +911,9 @@ const TimeSheet = (req, res) => {
                 }}>
                 <CardHeader>
                   <div className='pull-right'>
-                    <i className='now-ui-icons tech_watch-time'></i>{' '}
-                    <strong>{dailyTotal('saturday')}</strong>
+                    <strong style={{ color: 'green' }}>
+                      {dailyTotal('saturday')}
+                    </strong>
                   </div>
                 </CardHeader>
                 <CardBody style={{ backgroundColor: '#14131d' }}>
@@ -850,7 +921,7 @@ const TimeSheet = (req, res) => {
                     className='btn-link'
                     color='danger'
                     onClick={() => updateWeek('saturday')}>
-                    {Moment().add(4, 'days').format('Do MMM YYYY ddd')}
+                    {renderDate(dayNumber[6])}
                   </Button>
                   {weeklyWbs.saturday.map((val, index) => (
                     <>
@@ -872,7 +943,9 @@ const TimeSheet = (req, res) => {
                         <CardFooter>
                           <div className='stats pull-left'>
                             <i className='now-ui-icons tech_watch-time'></i>
-                            <strong>{val.hours}</strong>
+                            <strong style={{ color: 'yellow' }}>
+                              {val.hours}
+                            </strong>
                           </div>
                           <div className='stats pull-right'>
                             <i
