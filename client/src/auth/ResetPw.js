@@ -19,8 +19,7 @@ import {
   InputGroup,
   Container,
   Col,
-  Row,
-  Navbar
+  Row
 } from 'reactstrap';
 
 import Footer from '../core/Footer';
@@ -36,13 +35,11 @@ const ResetPw = ({ match }) => {
   const [firstFocus, setFirstFocus] = useState(false);
   useEffect(() => {
     document.body.classList.add('login-page');
-    // document.body.classList.add('sidebar-collapse');
     document.documentElement.classList.remove('nav-open');
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     return function cleanup() {
       document.body.classList.remove('login-page');
-      // document.body.classList.remove('sidebar-collapse');
     };
   }, []);
 
@@ -69,14 +66,12 @@ const ResetPw = ({ match }) => {
       data: { newPassword, resetPasswordLink: token }
     })
       .then((response) => {
-        console.log('RESET PW SUCCESS', response);
         setValues({ ...values, success: true, loading: false });
-        toast(response.data.message);
+        toast(`Hi, ${firstName}, ${response.data.message}`);
       })
       .catch((error) => {
-        console.log('FORGOT PW ERROR', error.response.data);
         setValues({ ...values, loading: false });
-        toast(error.response.data.error);
+        toast(`Hi, ${firstName}, ${error.response.data.error}`);
       });
   };
 
