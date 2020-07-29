@@ -1,49 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Logo from '../core/Logo';
 import Moment from 'moment';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
 import { ToastContainer, toast } from 'react-toastify';
-import {
-  isAuth,
-  getCookie,
-  signout,
-  updateUser,
-  setLocalStorage,
-  isWBS
-} from '../auth/helpers';
+import { isAuth, setLocalStorage, isWBS } from '../auth/helpers';
 import {
   Button,
   Card,
   CardBody,
   CardFooter,
-  CardTitle,
   Container,
   Row,
   Col,
   Form,
   CardHeader,
-  InputGroup,
-  InputGroupAddon,
   Input,
-  InputGroupText,
   FormGroup,
   Badge,
-  Table,
-  Label,
   Modal,
-  ModalBody,
-  ModalFooter,
-  ListGroup,
-  ListGroupItem
+  ModalBody
 } from 'reactstrap';
 
 const TimeSheet = (req, res) => {
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
   const [level3Modal, setLevel3Modal] = useState(false);
-  const [weeklyHours, setWeeklyHours] = useState([]);
   const [weeklyWbs, setWeeklyWbs] = useState({
     employeeId: isAuth().employeeId,
     monday: [],
@@ -92,12 +74,11 @@ const TimeSheet = (req, res) => {
       url: `${process.env.REACT_APP_API}/timesheet/read/${id}`
     })
       .then((response) => {
-        console.log('TimeSheet', response);
-        if (response.data.error) return;
+        if (response.data.error || response.data === null) return;
         setWeeklyWbs(response.data);
       })
       .catch((error) => {
-        console.log('Error Loading Timesheet', error.response);
+        toast('Error loading timesheet, Please log out and log in again');
       });
   };
 
@@ -108,12 +89,9 @@ const TimeSheet = (req, res) => {
     })
       .then((response) => {
         setLocalStorage('wbs', response.data);
-        response.data.map((i) => {
-          console.log(i.code, '-', i.title);
-        });
       })
       .catch((error) => {
-        console.log('Error in Loading WBS', error);
+        toast('Error loading WBS, Please log out and log in again');
       });
   };
 
@@ -143,9 +121,9 @@ const TimeSheet = (req, res) => {
   const listLevel2 = (code) => {
     if (code) {
       let arr = [];
-      isWBS().map((i) => {
+      isWBS().forEach((i) => {
         if (i.code === code.split('-')[0]) {
-          i.sub.map((x) => {
+          i.sub.forEach((x) => {
             arr.push(`${x.code}-${x.title}`);
           });
         }
@@ -161,7 +139,7 @@ const TimeSheet = (req, res) => {
     let arr2 = [];
 
     if (code1) {
-      isWBS().map((i) => {
+      isWBS().forEach((i) => {
         if (i.code === code1.split('-')[0]) {
           arr1.push(i.sub);
         }
@@ -171,9 +149,9 @@ const TimeSheet = (req, res) => {
     // if code2 has a value then map array1's correct sub and push it to array 2
 
     if (code2) {
-      arr1[0].map((i) => {
+      arr1[0].forEach((i) => {
         if (i.code === code2.split('-')[0]) {
-          i.sub.map((x) => {
+          i.sub.forEach((x) => {
             arr2.push(`${x.code}-${x.title}`);
           });
         }
@@ -184,7 +162,6 @@ const TimeSheet = (req, res) => {
   };
   const getFullWBSCode = (level1, level2, level3) => {
     if (level1 && level2 && level3) {
-      console.log('am i working');
       return `${level1.split('-')[0]}.${level2.split('-')[0]}.${
         level3.split('-')[0]
       }`;
@@ -208,55 +185,17 @@ const TimeSheet = (req, res) => {
     let total = 0;
     weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
     return total;
-    console.log('Total:', total);
   };
 
   const del = (arr, idx, day) => {
     let arr_output = [];
-    arr.map((v, i) => {
-      if (i != idx) {
+    arr.forEach((v, i) => {
+      if (i !== idx) {
         arr_output.push(v);
       }
     });
     setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
   };
-
-  // const getDateNow = () => {
-  //   const today = new Date();
-  //   const dd = String(today.getDate()).padStart(2, '0');
-  //   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  //   const yyyy = today.getFullYear();
-  //   return dd + '/' + mm + '/' + yyyy;
-  // };
-
-  // const dayName = (num) => {
-  //   const dayName = new Array(7);
-  //   dayName[0] = 'Sunday';
-  //   dayName[1] = 'Monday';
-  //   dayName[2] = 'Tuesday';
-  //   dayName[3] = 'Wednesday';
-  //   dayName[4] = 'Thursday';
-  //   dayName[5] = 'Friday';
-  //   dayName[6] = 'Saturday';
-
-  //   return dayName[num];
-  // };
-
-  // const getDatesOfWeek = () => {
-  //   const today = new Date();
-  //   const todayNumber = today.getDay();
-  //   const startOfWeek = today.setDate(today.getDate() - todayNumber);
-
-  //   const daysOfWeek = {};
-
-  //   for (let i = 0; i < 6; i++) {
-  //     daysOfWeek[dayName(i)] = startOfWeek.setDate(startOfWeek.getDate() + i);
-  //   }
-
-  //   return startOfWeek;
-  // };
-
-  // console.log(getDateNow(), getDatesOfWeek());
 
   const clickSubmit = (e) => {
     e.preventDefault();
@@ -269,11 +208,9 @@ const TimeSheet = (req, res) => {
       data: weeklyWbs
     })
       .then((response) => {
-        console.log('TimeSheet Saving Success', response);
         toast('Timesheet Successful Saved');
       })
       .catch((error) => {
-        console.log('Error in Saving Timesheet', error);
         toast('Oops error saving timesheet');
       });
   };
@@ -282,7 +219,8 @@ const TimeSheet = (req, res) => {
       <div
         className='cd-section'
         id='contact-us'
-        onClick={() => console.log(weeklyWbs)}>
+        // onClick={() => console.log(weeklyWbs)}
+      >
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -351,9 +289,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={levelModal}
                     className='modal-sm '
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4
                         className='modal-title justify-content-center'
@@ -380,7 +316,6 @@ const TimeSheet = (req, res) => {
                           listLevel1().map((item, idx) => (
                             <option key={idx}>{item}</option>
                           ))}
-                        {console.log('level1wbs:', level1Wbs)}
                       </Input>
                     </ModalBody>
                   </Modal>
@@ -389,7 +324,7 @@ const TimeSheet = (req, res) => {
                     <Input
                       className='font-weight-bolder'
                       disabled
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 1'
                       type='text'
                       value={level1Wbs}></Input>
@@ -406,9 +341,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={level2Modal}
                     className='modal-sm'
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4 className='modal-title' id='mySmallModalLabel'>
                         Level 2 WBS
@@ -429,7 +362,6 @@ const TimeSheet = (req, res) => {
                         type='select'
                         onChange={handleChange('level2Wbs')}>
                         <option selected=''>Please Choose</option>
-                        {console.log('level2wbs:', level2Wbs)}
                         {level1Wbs &&
                           listLevel2(level1Wbs).map((item, idx) => (
                             <option key={idx}>{item}</option>
@@ -444,7 +376,7 @@ const TimeSheet = (req, res) => {
                       className='font-weight-bolder'
                       disabled
                       value={level2Wbs}
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 2'
                       type='text'></Input>
                   </FormGroup>
@@ -460,9 +392,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={level3Modal}
                     className='modal-sm'
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4 className='modal-title' id='mySmallModalLabel'>
                         Level 3 WBS
@@ -482,7 +412,6 @@ const TimeSheet = (req, res) => {
                         id='inputState'
                         type='select'
                         onChange={handleChange('level3Wbs')}>
-                        {console.log('level3wbs:', level3Wbs)}
                         <option selected=''>Please Choose</option>
                         {level1Wbs &&
                           level2Wbs &&
@@ -499,7 +428,7 @@ const TimeSheet = (req, res) => {
                       className='font-weight-bolder'
                       value={level3Wbs}
                       disabled
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 3'
                       type='text'></Input>
                   </FormGroup>
@@ -508,32 +437,30 @@ const TimeSheet = (req, res) => {
                 <Form style={{ paddingTop: '2rem' }}>
                   <div className='form-row'>
                     <FormGroup className='col-md-4'>
-                      {console.log('fullWbsCode:', fullWbsCode)}
                       <Input
                         className='font-weight-bolder'
                         value={fullWbsCode}
                         onChange={handleChange('fullWbsCode')}
                         disabled
                         name='fullWbsCode'
-                        id='inputEmail4'
+                        // id='inputEmail4'
                         placeholder='Full WBS Code'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-4'>
-                      {console.log('fullWbsTitle:', fullWbsTitle)}
                       <Input
                         className='font-weight-bolder'
                         value={fullWbsTitle}
                         name='fullWbsTitle'
                         disabled
-                        id='inputEmail4'
+                        // id='inputEmail4'
                         placeholder='Full WBS Title'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        id='inputPassword4'
+                        // id='inputPassword4'
                         placeholder='Hours'
                         name='hours'
                         type='number'
@@ -543,7 +470,7 @@ const TimeSheet = (req, res) => {
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        id='inputPassword4'
+                        // id='inputPassword4'
                         type='select'
                         name='type'
                         value={type}
@@ -564,7 +491,7 @@ const TimeSheet = (req, res) => {
               <strong>Total Weekly Hours:</strong> {totalDailyHours}
             </div>
           </Container>
-
+          {/* -------------------------------------------------------------------------------------- */}
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
             <Row>
               <Card
