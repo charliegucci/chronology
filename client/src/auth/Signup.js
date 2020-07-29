@@ -1,22 +1,20 @@
-import React, { useState, useEffect, createRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+
 import { Redirect, Link } from 'react-router-dom';
 import Logo from '../core/Logo';
-import ImageUpload from '../core/ImageUpload';
+
 import axios from 'axios';
 import { isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../assets/scss/now-ui-kit.scss';
-import defaultImage from '../img/image_placeholder.jpg';
-import defaultAvatar from '../img/placeholder.jpg';
+
 // reactstrap components
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Form,
   Input,
   InputGroupAddon,
@@ -24,8 +22,6 @@ import {
   InputGroup,
   Container,
   Col,
-  Row,
-  Navbar,
   FormGroup,
   FormText
 } from 'reactstrap';
@@ -153,7 +149,7 @@ const Signup = ({ history }) => {
   const [fourteenthFocus, setFourteenthFocus] = useState(false);
   const [fifteenthFocus, setFifteenthFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
-  const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
+
   useEffect(() => {
     document.body.classList.add('login-page');
     // document.body.classList.add('sidebar-collapse');

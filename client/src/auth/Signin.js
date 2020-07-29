@@ -22,8 +22,7 @@ import {
   InputGroup,
   Container,
   Col,
-  Row,
-  Navbar
+  Row
 } from 'reactstrap';
 
 // core components

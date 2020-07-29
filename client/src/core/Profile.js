@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Logo from '../core/Logo';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +8,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardTitle,
   Container,
   Row,
@@ -17,9 +15,7 @@ import {
   Form,
   CardHeader,
   InputGroup,
-  InputGroupAddon,
   Input,
-  InputGroupText,
   FormGroup,
   Badge
 } from 'reactstrap';
@@ -54,14 +50,12 @@ const Profile = ({ history }) => {
     lastName,
     password,
     workPhone,
-    workAddress,
     personalEmail,
     personalPhone,
     personalAddress,
     company,
     section,
     jobTitle,
-    authLevel,
     superiorEmployeeId,
     dob,
     success,

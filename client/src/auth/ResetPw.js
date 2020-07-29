@@ -19,8 +19,7 @@ import {
   InputGroup,
   Container,
   Col,
-  Row,
-  Navbar
+  Row
 } from 'reactstrap';
 
 import Footer from '../core/Footer';

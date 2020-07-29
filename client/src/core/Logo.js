@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { Navbar } from 'reactstrap';
+import React from 'react';
 
 const Logo = () => {
-  const [navbarColor, setnavbarColor] = useState(' navbar-transparent');
-
   return (
     <div className='text-center '>
       <span>
