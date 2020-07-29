@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { signout } from '../auth/helpers';
 
 // reactstrap components
+
 import {
   Collapse,
   DropdownToggle,
@@ -62,11 +63,12 @@ const DropdownScrollNavbar = ({ history }) => {
               <span className='button-bar'></span>
               <span className='button-bar'></span>
             </DropdownToggle>
+
           </UncontrolledDropdown>
           <div className='navbar-translate'>
             <NavbarBrand id='navbar-brand'>Chronology</NavbarBrand>
 
-            <button
+          <button
               onClick={() => {
                 document.documentElement.classList.toggle('nav-open');
                 setCollapseOpen(!collapseOpen);
@@ -82,7 +84,6 @@ const DropdownScrollNavbar = ({ history }) => {
             <Nav className='ml-auto' id='ceva' navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -111,7 +112,6 @@ const DropdownScrollNavbar = ({ history }) => {
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink'
@@ -139,7 +139,6 @@ const DropdownScrollNavbar = ({ history }) => {
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -152,7 +151,6 @@ const DropdownScrollNavbar = ({ history }) => {
               <UncontrolledDropdown nav></UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -165,7 +163,6 @@ const DropdownScrollNavbar = ({ history }) => {
               <UncontrolledDropdown nav></UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'

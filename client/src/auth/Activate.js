@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { Button, Container, Row } from 'reactstrap';
 import Footer from '../core/Footer';
 
+
 const Activate = ({ match }) => {
   const [values, setValues] = useState({
     firstName: '',
@@ -52,35 +53,39 @@ const Activate = ({ match }) => {
 
   useEffect(() => {
     document.body.classList.add('login-page');
-    // document.body.classList.add('sidebar-collapse');
     document.documentElement.classList.remove('nav-open');
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     return function cleanup() {
       document.body.classList.remove('login-page');
-      // document.body.classList.remove('sidebar-collapse');
     };
   }, []);
 
   const activationLink = () => (
     <div className='text-center'>
-      <h4>Hello {firstName} , Please activate your account</h4>
-      {show ? (
-        <Link to='/'>Back to Login</Link>
-      ) : (
-        <Button
-          block
-          className='btn-round'
-          color='info'
-          onClick={clickSubmit}
-          size='sm'>
-          {loading ? (
-            <i className='now-ui-icons loader_gear spin'> </i>
-          ) : (
-            <span>Activate Account</span>
-          )}
-        </Button>
-      )}
+      <h4>
+        Hello {firstName} , Please Click the Button Below to Activate Account
+      </h4>
+
+      <Button
+        block
+        className='btn-round'
+        color='info'
+        onClick={clickSubmit}
+        size='sm'>
+        {loading ? (
+          <i className='now-ui-icons loader_gear spin'> </i>
+        ) : (
+          <span>Click Here</span>
+        )}
+      </Button>
+    </div>
+  );
+
+  const backToLogin = () => (
+    <div className='text-center'>
+      <h4>Hello {firstName} , Please Log in and start editing your profile</h4>
+      <Link to='/'>Back to Login</Link>
     </div>
   );
 
@@ -96,7 +101,7 @@ const Activate = ({ match }) => {
 
         <div className='content-center' style={{ width: '20rem' }}>
           <Container>
-            <Row>{activationLink()}</Row>
+            {show ? <Row>{backToLogin()}</Row> : <Row>{activationLink()}</Row>}
           </Container>
         </div>
         <Footer />

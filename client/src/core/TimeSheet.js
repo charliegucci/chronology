@@ -88,12 +88,11 @@ const TimeSheet = (req, res) => {
       url: `${process.env.REACT_APP_API}/timesheet/read/${id}`
     })
       .then((response) => {
-        console.log('TimeSheet', response);
-        if (response.data.error) return;
+        if (response.data.error || response.data === null) return;
         setWeeklyWbs(response.data);
       })
       .catch((error) => {
-        console.log('Error Loading Timesheet', error.response);
+        toast('Error loading timesheet, Please log out and log in again');
       });
   };
 
@@ -107,9 +106,9 @@ const TimeSheet = (req, res) => {
         response.data.forEach((i) => {
           console.log(i.code, '-', i.title);
         });
-      })
+    })
       .catch((error) => {
-        console.log('Error in Loading WBS', error);
+        toast('Error loading WBS, Please log out and log in again');
       });
   };
 
@@ -180,7 +179,6 @@ const TimeSheet = (req, res) => {
   };
   const getFullWBSCode = (level1, level2, level3) => {
     if (level1 && level2 && level3) {
-      console.log('am i working');
       return `${level1.split('-')[0]}.${level2.split('-')[0]}.${
         level3.split('-')[0]
       }`;
@@ -204,6 +202,7 @@ const TimeSheet = (req, res) => {
     let total = 0;
     weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
     return total;
+
   };
 
   const weeklyTotal = () => {
@@ -220,7 +219,7 @@ const TimeSheet = (req, res) => {
       sum += dailyTotal(day);
     });
     return sum;
-  };
+};
 
   const del = (arr, idx, day) => {
     let arr_output = [];
@@ -231,6 +230,7 @@ const TimeSheet = (req, res) => {
     });
     setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
   };
+
 
   const renderDate = (day) => {
     if (day < 0) {
@@ -255,11 +255,9 @@ const TimeSheet = (req, res) => {
       data: { ...weeklyWbs, startDate: renderDate(dayNumber[0]) }
     })
       .then((response) => {
-        console.log('TimeSheet Saving Success', response);
         toast('Timesheet Successful Saved');
       })
       .catch((error) => {
-        console.log('Error in Saving Timesheet', error);
         toast('Oops error saving timesheet');
       });
   };
@@ -268,7 +266,8 @@ const TimeSheet = (req, res) => {
       <div
         className='cd-section'
         id='contact-us'
-        onClick={() => console.log(weeklyWbs)}>
+        // onClick={() => console.log(weeklyWbs)}
+      >
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -337,9 +336,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={levelModal}
                     className='modal-sm '
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4
                         className='modal-title justify-content-center'
@@ -366,7 +363,6 @@ const TimeSheet = (req, res) => {
                           listLevel1().map((item, idx) => (
                             <option key={idx}>{item}</option>
                           ))}
-                        {console.log('level1wbs:', level1Wbs)}
                       </Input>
                     </ModalBody>
                   </Modal>
@@ -375,7 +371,7 @@ const TimeSheet = (req, res) => {
                     <Input
                       className='font-weight-bolder'
                       disabled
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 1'
                       type='text'
                       value={level1Wbs}></Input>
@@ -392,9 +388,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={level2Modal}
                     className='modal-sm'
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4 className='modal-title' id='mySmallModalLabel'>
                         Level 2 WBS
@@ -415,7 +409,6 @@ const TimeSheet = (req, res) => {
                         type='select'
                         onChange={handleChange('level2Wbs')}>
                         <option selected=''>Please Choose</option>
-                        {console.log('level2wbs:', level2Wbs)}
                         {level1Wbs &&
                           listLevel2(level1Wbs).map((item, idx) => (
                             <option key={idx}>{item}</option>
@@ -430,7 +423,7 @@ const TimeSheet = (req, res) => {
                       className='font-weight-bolder'
                       disabled
                       value={level2Wbs}
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 2'
                       type='text'></Input>
                   </FormGroup>
@@ -446,9 +439,7 @@ const TimeSheet = (req, res) => {
                   <Modal
                     isOpen={level3Modal}
                     className='modal-sm'
-                    modalClassName='bd-example-modal-sm'
-                    // onClick={() => setLevel1Modal(false)}
-                  >
+                    modalClassName='bd-example-modal-sm'>
                     <div className='modal-header'>
                       <h4 className='modal-title' id='mySmallModalLabel'>
                         Level 3 WBS
@@ -468,7 +459,6 @@ const TimeSheet = (req, res) => {
                         id='inputState'
                         type='select'
                         onChange={handleChange('level3Wbs')}>
-                        {console.log('level3wbs:', level3Wbs)}
                         <option selected=''>Please Choose</option>
                         {level1Wbs &&
                           level2Wbs &&
@@ -485,7 +475,7 @@ const TimeSheet = (req, res) => {
                       className='font-weight-bolder'
                       value={level3Wbs}
                       disabled
-                      id='inputPassword2'
+                      // id='inputPassword2'
                       placeholder='WBS Level 3'
                       type='text'></Input>
                   </FormGroup>
@@ -494,32 +484,30 @@ const TimeSheet = (req, res) => {
                 <Form style={{ paddingTop: '2rem' }}>
                   <div className='form-row'>
                     <FormGroup className='col-md-4'>
-                      {console.log('fullWbsCode:', fullWbsCode)}
                       <Input
                         className='font-weight-bolder'
                         value={fullWbsCode}
                         onChange={handleChange('fullWbsCode')}
                         disabled
                         name='fullWbsCode'
-                        id='inputEmail4'
+                        // id='inputEmail4'
                         placeholder='Full WBS Code'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-4'>
-                      {console.log('fullWbsTitle:', fullWbsTitle)}
                       <Input
                         className='font-weight-bolder'
                         value={fullWbsTitle}
                         name='fullWbsTitle'
                         disabled
-                        id='inputEmail4'
+                        // id='inputEmail4'
                         placeholder='Full WBS Title'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        id='inputPassword4'
+                        // id='inputPassword4'
                         placeholder='Hours'
                         name='hours'
                         type='number'
@@ -529,7 +517,7 @@ const TimeSheet = (req, res) => {
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        id='inputPassword4'
+                        // id='inputPassword4'
                         type='select'
                         name='type'
                         value={type}
@@ -555,7 +543,7 @@ const TimeSheet = (req, res) => {
               </strong>
             </div>
           </Container>
-
+          {/* -------------------------------------------------------------------------------------- */}
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
             <Row>
               <Card
