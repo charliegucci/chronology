@@ -1,7 +1,10 @@
 const Timesheet = require('../models/timesheet');
 
 exports.saveTimesheet = (req, res) => {
-  Timesheet.findOne({ employeeId: req.body.employeeId }).then((item) => {
+  Timesheet.findOne({
+    employeeId: req.body.employeeId,
+    startDate: req.body.startDate
+  }).then((item) => {
     if (item) {
       Timesheet.findByIdAndUpdate(item._id, req.body, { new: true }).then(
         (response) => {
@@ -10,9 +13,9 @@ exports.saveTimesheet = (req, res) => {
       );
     } else {
       const timesheet = new Timesheet(req.body);
-
       timesheet.save((err, log) => {
         if (err) {
+          console.log(err);
           return res.status(400).json({
             error: 'Error Saving Logs'
           });

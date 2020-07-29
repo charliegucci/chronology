@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const timesheet = new mongoose.Schema({
+  startDate: {
+    type: String,
+    default: ''
+  },
   employeeId: {
     type: String
   },

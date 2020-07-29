@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
-import Footer from '../core/Footer';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { Button, Container, Row } from 'reactstrap';
+import Footer from '../core/Footer';
+
 
 const Activate = ({ match }) => {
   const [values, setValues] = useState({

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../assets/scss/now-ui-kit.scss';
 import Footer from '../core/Footer';
+// reactstrap components
 import {
   Button,
   Card,
