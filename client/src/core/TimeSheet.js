@@ -30,6 +30,7 @@ const TimeSheet = (req, res) => {
   const [weeklyWbs, setWeeklyWbs] = useState({
     employeeId: isAuth().employeeId,
     startDate: '',
+    arrangement: '',
     monday: [],
     tuesday: [],
     wednesday: [],
@@ -42,7 +43,6 @@ const TimeSheet = (req, res) => {
   const [values, setValues] = useState({
     code: '',
     title: '',
-    level: '',
     level1Wbs: '',
     level2Wbs: '',
     level3Wbs: '',
@@ -89,6 +89,7 @@ const TimeSheet = (req, res) => {
     })
       .then((response) => {
         if (response.data.error || response.data === null) return;
+        console.log(response.data);
         setWeeklyWbs(response.data);
       })
       .catch((error) => {
@@ -106,7 +107,7 @@ const TimeSheet = (req, res) => {
         response.data.forEach((i) => {
           console.log(i.code, '-', i.title);
         });
-    })
+      })
       .catch((error) => {
         toast('Error loading WBS, Please log out and log in again');
       });
@@ -202,7 +203,6 @@ const TimeSheet = (req, res) => {
     let total = 0;
     weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
     return total;
-
   };
 
   const weeklyTotal = () => {
@@ -219,7 +219,7 @@ const TimeSheet = (req, res) => {
       sum += dailyTotal(day);
     });
     return sum;
-};
+  };
 
   const del = (arr, idx, day) => {
     let arr_output = [];
@@ -230,7 +230,6 @@ const TimeSheet = (req, res) => {
     });
     setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
   };
-
 
   const renderDate = (day) => {
     if (day < 0) {
@@ -266,8 +265,7 @@ const TimeSheet = (req, res) => {
       <div
         className='cd-section'
         id='contact-us'
-        // onClick={() => console.log(weeklyWbs)}
-      >
+        onClick={() => console.log(weeklyWbs)}>
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -300,9 +298,15 @@ const TimeSheet = (req, res) => {
                 <div style={{ margin: '2rem' }}>
                   <Input
                     className='font-weight-bolder text-center'
-                    id='inputPassword4'
+                    onChange={(e) => {
+                      setWeeklyWbs({
+                        ...weeklyWbs,
+                        arrangement: e.target.value
+                      });
+                    }}
+                    value={weeklyWbs.arrangement}
                     type='select'
-                    name='type'>
+                    name='arrangement'>
                     <option selected=''>Arrangement</option>
                     <option>5/day week</option>
                     <option>4/day week</option>
@@ -523,9 +527,9 @@ const TimeSheet = (req, res) => {
                         value={type}
                         onChange={handleChange('type')}>
                         <option selected=''>Type</option>
-                        <option>Normal</option>
-                        <option>1.5x</option>
-                        <option>2.0x</option>
+                        <option>1</option>
+                        <option>1.5</option>
+                        <option>2.0</option>
                       </Input>
                     </FormGroup>
                   </div>

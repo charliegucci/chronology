@@ -8,6 +8,9 @@ const timesheet = new mongoose.Schema({
   employeeId: {
     type: String
   },
+  arrangement: {
+    type: String
+  },
   monday: [
     {
       type: Object
