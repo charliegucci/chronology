@@ -1,0 +1,296 @@
+[   
+    
+    {
+    "code":"01",
+    "title":"on",
+    "level":0,
+    "collapse": true,
+    "sub":[{ "code":"01",
+                "title":"pre",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                    {"code":"01",
+                    "title":"forward",
+                    "level":2
+                    },
+                    {"code":"02",
+                    "title":"centre",
+                    "level":2
+                    },
+                    {"code":"03",
+                    "title":"back",
+                    "level":2
+                    }
+                ]
+            }, 
+            { "code":"02",
+                "title":"remove",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"03",
+                "title":"inspect",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"04",
+                "title":"repair",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"05",
+                "title":"install",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"06",
+                "title":"test",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"07",
+                "title":"post",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"forward",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"centre",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"back",
+                        "level":2
+                        }
+                    ]
+            }
+        ]
+    },
+    {
+    "code":"02",
+    "title":"off",
+    "level":0,
+    "collapse": true,
+    "sub":[{ "code":"01",
+                "title":"management",
+                "level":1,
+                "sub":[
+                    {"code":"01",
+                    "title":"general",
+                    "level":2
+                    },
+                    {"code":"02",
+                    "title":"corporate",
+                    "level":2
+                    },
+                    {"code":"03",
+                    "title":"other",
+                    "level":2
+                    }
+                ]
+            }, 
+            { "code":"02",
+                "title":"administration",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"technical",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"non-technical",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"03",
+                "title":"housekeeping",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"section1",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"section2",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"section3",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"04",
+                "title":"data",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"clean",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"manage",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"secure",
+                        "level":2
+                        }
+                    ]
+            }
+        ]
+    },
+    {
+    "code":"03",
+    "title":"non-productive",
+    "level":0,
+    "collapse": true,
+    "sub":[{ "code":"01",
+                "title":"leave",
+                "level":1,
+                "sub":[
+                    {"code":"01",
+                    "title":"annual",
+                    "level":2
+                    },
+                    {"code":"02",
+                    "title":"sick",
+                    "level":2
+                    },
+                    {"code":"03",
+                    "title":"other",
+                    "level":2
+                    }
+                ]
+            }, 
+            { "code":"02",
+                "title":"training",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"online",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"on-site",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"03",
+                "title":"quality",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"documentation",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"product",
+                        "level":2
+                        }
+                    ]
+            },
+            { "code":"04",
+                "title":"facilities",
+                "level":1,
+                "collapse": true,
+                "sub":[
+                        {"code":"01",
+                        "title":"section1",
+                        "level":2
+                        },
+                        {"code":"02",
+                        "title":"section2",
+                        "level":2
+                        },
+                        {"code":"03",
+                        "title":"section3",
+                        "level":2
+                        }
+                    ]
+            }
+        ]
+    }
+
+]

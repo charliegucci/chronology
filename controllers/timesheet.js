@@ -31,20 +31,15 @@ exports.saveTimesheet = (req, res) => {
 exports.readTimesheet = (req, res) => {
   const id = req.params.id;
 
-  Timesheet.findOne({ employeeId: id }).then((user) => {
-    if (user) {
-      res.json(user);
-    } else {
-      const timesheet = new Timesheet({ employeeId: id });
-      timesheet.save((err, data) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Error Loading Timesheet'
-          });
-        } else {
-          res.json(data);
-        }
-      });
-    }
-  });
+  Timesheet.findOne({ employeeId: id })
+    .then((data, err) => {
+      if (data) {
+        res.status(200).json(data);
+      }
+    })
+    .catch((err) => {
+      if (err) {
+        console.log('Error Reading Timesheet', err);
+      }
+    });
 };

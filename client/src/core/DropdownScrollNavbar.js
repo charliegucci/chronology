@@ -7,12 +7,12 @@ import { signout } from '../auth/helpers';
 import {
   Collapse,
   DropdownToggle,
-  DropdownItem,
   UncontrolledDropdown,
   NavbarBrand,
   Navbar,
   Nav,
-  Container
+  Container,
+  UncontrolledTooltip
 } from 'reactstrap';
 
 const DropdownScrollNavbar = ({ history }) => {
@@ -118,7 +118,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <i
                     aria-hidden={true}
                     className='now-ui-icons ui-1_calendar-60'></i>
-                  <p>SCHEDULE</p>
+                  <p id='schedule'>SCHEDULE</p>
                 </DropdownToggle>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
@@ -132,7 +132,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   <i
                     aria-hidden={true}
                     className='now-ui-icons ui-2_settings-90'></i>
-                  <p>PARTS</p>
+                  <p id='parts'>PARTS</p>
                 </DropdownToggle>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
@@ -143,10 +143,10 @@ const DropdownScrollNavbar = ({ history }) => {
                   nav
                   onClick={(e) => e.preventDefault()}>
                   <i className='now-ui-icons design_bullet-list-67'></i>
-                  <p>TASK</p>
+                  <p id='task'>TASK</p>
                 </DropdownToggle>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav></UncontrolledDropdown>
+
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   color='default'
@@ -155,23 +155,45 @@ const DropdownScrollNavbar = ({ history }) => {
                   nav
                   onClick={(e) => e.preventDefault()}>
                   <i className='now-ui-icons files_single-copy-04'></i>
-                  <p>DATA REGISTER</p>
+                  <p id='data_register'>DATA REGISTER</p>
                 </DropdownToggle>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav></UncontrolledDropdown>
+
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
                   nav
-                  onClick={(e) => e.preventDefault()}>
+                  onClick={(e) => history.push('/user/chart')}>
                   <i className='now-ui-icons business_chart-bar-32'></i>
                   <p>CHARTS</p>
                 </DropdownToggle>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav></UncontrolledDropdown>
-              <UncontrolledDropdown nav></UncontrolledDropdown>
+              <UncontrolledTooltip placement='bottom' target='schedule'>
+                Coming Soon!{' '}
+                <span role='img' aria-labelledby='schedule'>
+                  👨🏽‍💻
+                </span>
+              </UncontrolledTooltip>
+              <UncontrolledTooltip placement='bottom' target='task'>
+                Coming Soon!{' '}
+                <span role='img' aria-labelledby='task'>
+                  👨🏽‍💻
+                </span>
+              </UncontrolledTooltip>
+              <UncontrolledTooltip placement='bottom' target='data_register'>
+                Coming Soon!{' '}
+                <span role='img' aria-labelledby='data_register'>
+                  👨🏽‍💻
+                </span>
+              </UncontrolledTooltip>
+              <UncontrolledTooltip placement='bottom' target='parts'>
+                Coming Soon!{' '}
+                <span role='img' aria-labelledby='parts'>
+                  👨🏽‍💻
+                </span>
+              </UncontrolledTooltip>
               <DropdownToggle
                 color='default'
                 data-toggle='dropdown'

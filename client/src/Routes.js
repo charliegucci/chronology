@@ -8,6 +8,7 @@ import Level1Route from './auth/Level1Route';
 import ForgotPw from './auth/ForgotPw';
 import ResetPw from './auth/ResetPw';
 import TimeSheet from './core/TimeSheet';
+import Chart from './core/Chart';
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
         <Route path='/auth/activate/:token' exact component={Activate} />
         <Level1Route path='/profile' exact component={Profile} />
         <Level1Route path='/user/timesheet' exact component={TimeSheet} />
+        <Level1Route path='/user/chart' exact component={Chart} />
       </Switch>
     </BrowserRouter>
   );

@@ -21,6 +21,7 @@
     "express-validator": "^6.6.0",
     "google-auth-library": "^6.0.3",
     "jsonwebtoken": "^8.5.1",
+    "mongo-seeding": "^3.4.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.22",
     "morgan": "^1.10.0",

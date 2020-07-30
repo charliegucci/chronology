@@ -47,7 +47,7 @@ const TimeSheet = (req, res) => {
     level2Wbs: '',
     level3Wbs: '',
     hours: '7.5',
-    type: 'Normal',
+    type: '1',
     fullWbsCode: '',
     fullWbsTitle: ''
   });
@@ -514,9 +514,30 @@ const TimeSheet = (req, res) => {
                         // id='inputPassword4'
                         placeholder='Hours'
                         name='hours'
-                        type='number'
+                        type='select'
                         value={hours}
-                        onChange={handleChange('hours')}></Input>
+                        onChange={handleChange('hours')}>
+                        <option selected=''>Hours</option>
+                        <option>3</option>
+                        <option>3.5</option>
+                        <option>4</option>
+                        <option>4.5</option>
+                        <option>5</option>
+                        <option>5.5</option>
+                        <option>6</option>
+                        <option>6.5</option>
+                        <option>7</option>
+                        <option>7.5</option>
+                        <option>8</option>
+                        <option>8.5</option>
+                        <option>9</option>
+                        <option>9.5</option>
+                        <option>10</option>
+                        <option>10.5</option>
+                        <option>11</option>
+                        <option>11.5</option>
+                        <option>12</option>
+                      </Input>
                     </FormGroup>
                     <FormGroup className='col-md-2'>
                       <Input
