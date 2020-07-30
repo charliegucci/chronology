@@ -6,7 +6,7 @@ import Footer from '../core/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import { isAuth, setLocalStorage, isWBS } from '../auth/helpers';
 import Calendar from 'react-calendar';
-
+import '../calendar.css';
 import {
   Button,
   Card,
@@ -272,7 +272,8 @@ const TimeSheet = (req, res) => {
       <div
         className='cd-section'
         id='contact-us'
-        onClick={() => console.log(weeklyWbs)}>
+        // onClick={() => console.log(value)}
+      >
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -627,7 +628,7 @@ const TimeSheet = (req, res) => {
                 </Button>{' '}
               </strong>
             </div>
-            <Calendar onChange={onChange} value={value} calendarType='US' />
+            <Calendar onChange={onChange} value={value} />
           </Container>
           {/* -------------------------------------------------------------------------------------- */}
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
