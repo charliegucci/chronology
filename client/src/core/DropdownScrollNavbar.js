@@ -7,7 +7,6 @@ import { signout } from '../auth/helpers';
 import {
   Collapse,
   DropdownToggle,
-  DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   NavbarBrand,
@@ -63,12 +62,11 @@ const DropdownScrollNavbar = ({ history }) => {
               <span className='button-bar'></span>
               <span className='button-bar'></span>
             </DropdownToggle>
-
           </UncontrolledDropdown>
           <div className='navbar-translate'>
             <NavbarBrand id='navbar-brand'>Chronology</NavbarBrand>
 
-          <button
+            <button
               onClick={() => {
                 document.documentElement.classList.toggle('nav-open');
                 setCollapseOpen(!collapseOpen);
