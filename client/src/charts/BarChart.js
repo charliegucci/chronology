@@ -3,9 +3,9 @@ import * as logData from './data/log.json';
 import * as WBSJSONData from './data/wbs.json';
 
 const MARGIN = { TOP: 10, BOTTOM: 60, LEFT: 70, RIGHT: 10 };
-const WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT;
+const WIDTH = 760 - MARGIN.LEFT - MARGIN.RIGHT;
 const HEIGHT = 600 - MARGIN.TOP - MARGIN.BOTTOM;
-let mode = 'light';
+let mode = 'dark';
 
 const getTotalLevel1 = (data, code) => {
   return data.default
@@ -150,7 +150,7 @@ export default class D3Chart {
 
     vis.yAxisGroup = vis.svg.append('g');
 
-    vis.color = d3.scaleOrdinal(d3.schemePastel2);
+    vis.color = d3.scaleOrdinal(d3.schemeDark2);
 
     vis.update('All');
   }

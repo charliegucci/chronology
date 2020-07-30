@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,7 +15,7 @@ const Charts = () => {
     <div className='App'>
       <Container>
         <Row>
-          <Col xs={12}>
+          <Col xs={4}>
             <WBSDropdown
               wbsSelected1={setWBS1}
               wbsSelected2={setWBS2}
@@ -26,9 +24,8 @@ const Charts = () => {
               set_wbs_menu2={setWBS2_menu}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
+
+          <Col xs={8}>
             <ChartWrapper wbs1={wbs1} wbs2={wbs2} />
           </Col>
         </Row>
