@@ -34,17 +34,9 @@ exports.readTimesheet = (req, res) => {
   Timesheet.findOne({ employeeId: id }).then((user) => {
     if (user) {
       res.json(user);
-    } else {
-      const timesheet = new Timesheet({ employeeId: id });
-      timesheet.save((err, data) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Error Loading Timesheet'
-          });
-        } else {
-          res.json(data);
-        }
-      });
     }
+    res.json({
+      error: 'No Timesheet found'
+    });
   });
 };

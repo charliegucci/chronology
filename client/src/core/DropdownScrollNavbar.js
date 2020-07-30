@@ -165,7 +165,7 @@ const DropdownScrollNavbar = ({ history }) => {
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
                   nav
-                  onClick={(e) => e.preventDefault()}>
+                  onClick={(e) => history.push('/user/chart')}>
                   <i className='now-ui-icons business_chart-bar-32'></i>
                   <p>CHARTS</p>
                 </DropdownToggle>
