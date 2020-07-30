@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema(
     personalEmail: {
       type: String,
       trim: true,
-      unique: true,
       required: true
     },
     personalPhone: {
