@@ -378,7 +378,7 @@ const Profile = ({ history }) => {
                                 aria-label='Personal Phone...'
                                 autoComplete='personal-phone'
                                 placeholder='Personal Phone...'
-                                type='number'
+                                type='text'
                                 onFocus={() => setPerPhoneFocus(true)}
                                 onBlur={() => setPerPhoneFocus(false)}
                                 value={personalPhone}
