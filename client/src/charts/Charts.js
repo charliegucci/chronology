@@ -10,6 +10,7 @@ const Charts = () => {
   const [wbs2, setWBS2] = useState(null);
   const [wbs1_menu] = useState(['01-On', '02-Off', '03-Non Productive', 'All']);
   const [wbs2_menu, setWBS2_menu] = useState([]);
+  const [mode, setMode] = useState("dark");
 
   return (
     <div className='App'>
@@ -22,11 +23,12 @@ const Charts = () => {
               wbs_menu1={wbs1_menu}
               wbs_menu2={wbs2_menu}
               set_wbs_menu2={setWBS2_menu}
+              setMode={setMode}
             />
           </Col>
 
           <Col xs={8}>
-            <ChartWrapper wbs1={wbs1} wbs2={wbs2} />
+            <ChartWrapper wbs1={wbs1} wbs2={wbs2} mode={mode}/>
           </Col>
         </Row>
       </Container>

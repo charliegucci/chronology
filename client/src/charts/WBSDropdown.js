@@ -1,4 +1,4 @@
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import React from 'react';
 import * as WBSJSONData from './data/wbs.json';
@@ -27,7 +27,8 @@ export default function WBSDropdown({
   wbsSelected2,
   wbs_menu1,
   wbs_menu2,
-  set_wbs_menu2
+  set_wbs_menu2,
+  setMode
 }) {
   return (
     <Container>
@@ -62,6 +63,8 @@ export default function WBSDropdown({
             </Dropdown.Menu>
           </Dropdown>
         </Col>
+        </Row>
+        <Row>
         <Col sm={{ size: 'auto' }}>
           <Dropdown>
             <Dropdown.Toggle variant='primary' id='dropdown-basic' size='sm'>
@@ -83,6 +86,14 @@ export default function WBSDropdown({
               ))}
             </Dropdown.Menu>
           </Dropdown>
+        </Col>
+        </Row>
+        <Row>
+        <Col sm={{ size: 'auto' }}>
+          <ButtonGroup>
+            <Button onClick={() => setMode("dark")}>Dark</Button>
+            <Button onClick={() => setMode("light")}>Light</Button>
+          </ButtonGroup>
         </Col>
       </Row>
     </Container>
