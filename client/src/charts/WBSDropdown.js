@@ -35,7 +35,10 @@ export default function WBSDropdown({
       <Row>
         <Col sm={{ size: 'auto' }}>
           <Dropdown>
-            <Dropdown.Toggle variant='primary' id='dropdown-basic' size='sm'>
+            <Dropdown.Toggle
+              variant='outline-primary'
+              id='dropdown-basic'
+              size='sm'>
               Level 1 WBS
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -63,11 +66,14 @@ export default function WBSDropdown({
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <Col sm={{ size: 'auto' }}>
           <Dropdown>
-            <Dropdown.Toggle variant='primary' id='dropdown-basic' size='sm'>
+            <Dropdown.Toggle
+              variant='outline-success'
+              id='dropdown-basic'
+              size='sm'>
               Level 2 WBS
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -87,12 +93,22 @@ export default function WBSDropdown({
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <Col sm={{ size: 'auto' }}>
           <ButtonGroup>
-            <Button onClick={() => setMode("dark")}>Dark</Button>
-            <Button onClick={() => setMode("light")}>Light</Button>
+            <Button
+              size='sm'
+              variant='outline-dark'
+              onClick={() => setMode('dark')}>
+              Dark
+            </Button>
+            <Button
+              size='sm'
+              variant='outline-info'
+              onClick={() => setMode('light')}>
+              Light
+            </Button>
           </ButtonGroup>
         </Col>
       </Row>
