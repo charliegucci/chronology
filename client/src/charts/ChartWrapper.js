@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import BarChart from './BarChart';
 
+
 const BarChartWrapper = ({ wbs1, wbs2, mode }) => {
   const chartArea = useRef(null);
   const [chart, setChart] = useState(null);

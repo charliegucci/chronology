@@ -11,7 +11,7 @@ const Charts = () => {
   const [wbs1_menu] = useState(['01-On', '02-Off', '03-Non Productive', 'All']);
   const [wbs2_menu, setWBS2_menu] = useState([]);
   const [mode, setMode] = useState('light');
-
+  
   return (
     <div className='App'>
       <Container>
