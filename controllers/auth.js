@@ -5,6 +5,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const _ = require('lodash');
 
+// Function for signup page
 exports.signup = (req, res) => {
   const {
     employeeId,
@@ -25,6 +26,7 @@ exports.signup = (req, res) => {
     dob
   } = req.body;
 
+  // checks if employee id already exist
   User.findOne({ employeeId }).exec((err, user) => {
     if (user) {
       return res.status(400).json({
@@ -52,9 +54,10 @@ exports.signup = (req, res) => {
         dob
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
-      { expiresIn: '10m' }
+      { expiresIn: '10m' } // expiration for the jwt token
     );
 
+    // email template for account activation
     const emailData = {
       from: process.env.EMAIL_TO,
       to: workEmail,
@@ -68,16 +71,16 @@ exports.signup = (req, res) => {
             `
     };
 
+    // sendgrid method for sending email
+
     sgMail
       .send(emailData)
       .then((sent) => {
-        // console.log('SIGNUP EMAIL SENT', sent);
         return res.json({
           message: `Email has been sent to ${workEmail}. Follow the instruction to activate your account`
         });
       })
       .catch((err) => {
-        // console.log('SIGNUP EMAIL SENT ERROR', err);
         return res.json({
           message: err.message
         });
@@ -85,6 +88,7 @@ exports.signup = (req, res) => {
   });
 };
 
+// Function for activating account using  jwt token
 exports.accountActivation = (req, res) => {
   const { token } = req.body;
 
@@ -154,6 +158,7 @@ exports.accountActivation = (req, res) => {
   }
 };
 
+// Function for Sign in
 exports.signin = (req, res) => {
   const { employeeId, password } = req.body;
 
@@ -219,11 +224,13 @@ exports.signin = (req, res) => {
   });
 };
 
+// helper function for expressJWT middleware
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
   algorithms: ['HS256']
 });
 
+// helper function to check the role of the user
 exports.level2Middleware = (req, res, next) => {
   User.findById({ _id: req.user._id }).exec((err, user) => {
     if (err || !user) {
@@ -241,6 +248,7 @@ exports.level2Middleware = (req, res, next) => {
   });
 };
 
+// Function for forgot password
 exports.forgotPassword = (req, res) => {
   const { workEmail } = req.body;
 
@@ -250,7 +258,7 @@ exports.forgotPassword = (req, res) => {
         error: 'Email does not exist'
       });
     }
-
+    // generate a token and send to client for password reset
     const token = jwt.sign(
       { _id: user._id, workEmail: user.workEmail },
       process.env.JWT_RESET_PASSWORD,
@@ -258,7 +266,7 @@ exports.forgotPassword = (req, res) => {
         expiresIn: '10m'
       }
     );
-
+    // email template for password reset
     const emailData = {
       from: process.env.EMAIL_TO,
       to: workEmail,
@@ -278,16 +286,14 @@ exports.forgotPassword = (req, res) => {
           error: 'Database error on password reset'
         });
       } else {
-        sgMail
+        sgMail // sendgrid function to send email for the password reset
           .send(emailData)
           .then((sent) => {
-            // console.log('SIGNUP EMAIL SENT', sent);
             return res.json({
               message: `Email has been sent to ${workEmail}. Follow the instruction to reset your email`
             });
           })
           .catch((err) => {
-            // console.log('SIGNUP EMAIL SENT ERROR', err);
             return res.json({
               message: err.message
             });
@@ -297,6 +303,7 @@ exports.forgotPassword = (req, res) => {
   });
 };
 
+// Function for the Resetting the password
 exports.resetPassword = (req, res) => {
   const { resetPasswordLink, newPassword } = req.body;
 
@@ -320,7 +327,7 @@ exports.resetPassword = (req, res) => {
           password: newPassword,
           resetPasswordLink: ''
         };
-
+// loadash middleware to update user model with the new password and resetPassword link
         user = _.extend(user, updatedFields);
         user.save((err, result) => {
           if (err) {

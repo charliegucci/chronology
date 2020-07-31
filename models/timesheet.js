@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Timesheet Schema
 const timesheet = new mongoose.Schema({
   startDate: {
     type: String,

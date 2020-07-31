@@ -10,6 +10,7 @@ import ResetPw from './auth/ResetPw';
 import TimeSheet from './core/TimeSheet';
 import Chart from './core/Chart';
 
+// all the Routes for the client
 const Routes = () => {
   return (
     <BrowserRouter>

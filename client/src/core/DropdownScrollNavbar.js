@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout } from '../auth/helpers';
-
-// reactstrap components
-
 import {
   Collapse,
   DropdownToggle,
@@ -14,8 +11,9 @@ import {
   Container,
   UncontrolledTooltip
 } from 'reactstrap';
-
+// Navbar
 const DropdownScrollNavbar = ({ history }) => {
+  //sets the state for Styling
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [navbarColor, setNavbarColor] = useState(' navbar-transparent');
 
@@ -96,7 +94,6 @@ const DropdownScrollNavbar = ({ history }) => {
 
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink1'
@@ -123,7 +120,6 @@ const DropdownScrollNavbar = ({ history }) => {
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
                 <DropdownToggle
-                  // caret
                   color='default'
                   data-toggle='dropdown'
                   id='navbarDropdownMenuLink'

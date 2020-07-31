@@ -7,8 +7,9 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { Button, Container, Row } from 'reactstrap';
 import Footer from '../core/Footer';
 
-
+// Activate Account Component
 const Activate = ({ match }) => {
+  // sets the state
   const [values, setValues] = useState({
     firstName: '',
     token: '',
@@ -16,6 +17,7 @@ const Activate = ({ match }) => {
     loading: false
   });
 
+  // Grabs the token from params when mount and jwt to decode and save values to state
   useEffect(() => {
     let token = match.params.token;
     let { firstName } = jwt.decode(token);
@@ -27,6 +29,7 @@ const Activate = ({ match }) => {
 
   const { firstName, token, show, loading } = values;
 
+  // Function to Post the token to the backend to be decoded by JWT
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -36,7 +39,6 @@ const Activate = ({ match }) => {
       data: { token }
     })
       .then((response) => {
-        console.log('ACCOUNT ACTIVATION SUCCESS', response);
         setValues({
           ...values,
           show: true,
@@ -45,7 +47,6 @@ const Activate = ({ match }) => {
         toast(response.data.message);
       })
       .catch((error) => {
-        console.log('ACCOUNT ACTIVATION ERROR', error.response.data.error);
         setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
