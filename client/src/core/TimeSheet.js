@@ -5,6 +5,8 @@ import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import Footer from '../core/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import { isAuth, setLocalStorage, isWBS } from '../auth/helpers';
+import Calendar from 'react-calendar';
+import '../calendar.css';
 import {
   Button,
   Card,
@@ -23,10 +25,12 @@ import {
 } from 'reactstrap';
 
 const TimeSheet = (req, res) => {
+  const [value, onChange] = useState(new Date());
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
   const [level3Modal, setLevel3Modal] = useState(false);
   const [dayNumber, setDayNumber] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [weeklyWbs, setWeeklyWbs] = useState({
     employeeId: isAuth().employeeId,
     startDate: '',
@@ -245,6 +249,7 @@ const TimeSheet = (req, res) => {
 
   const clickSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API}/timesheet`,
@@ -254,9 +259,11 @@ const TimeSheet = (req, res) => {
       data: { ...weeklyWbs, startDate: renderDate(dayNumber[0]) }
     })
       .then((response) => {
+        setLoading(false);
         toast('Timesheet Successful Saved');
       })
       .catch((error) => {
+        setLoading(false);
         toast('Oops error saving timesheet');
       });
   };
@@ -265,7 +272,8 @@ const TimeSheet = (req, res) => {
       <div
         className='cd-section'
         id='contact-us'
-        onClick={() => console.log(weeklyWbs)}>
+        // onClick={() => console.log(value)}
+      >
         <ToastContainer position='bottom-right' />
         <DropdownScrollNavbar />
         <div
@@ -314,13 +322,23 @@ const TimeSheet = (req, res) => {
                   </Input>
                 </div>
 
-                <Button
-                  className='btn-round pull-center'
-                  color='info'
-                  type='submit'
-                  onClick={clickSubmit}>
-                  Authenticate
-                </Button>
+                {loading ? (
+                  <Button
+                    className='btn-round pull-center'
+                    color='info'
+                    type='submit'
+                    onClick={clickSubmit}>
+                    <i className='now-ui-icons loader_gear spin'></i>
+                  </Button>
+                ) : (
+                  <Button
+                    className='btn-round pull-center'
+                    color='info'
+                    type='submit'
+                    onClick={clickSubmit}>
+                    Authenticate
+                  </Button>
+                )}
               </Col>
               <Col
                 className='ml-auto mr-auto'
@@ -370,16 +388,32 @@ const TimeSheet = (req, res) => {
                       </Input>
                     </ModalBody>
                   </Modal>
-                  <FormGroup className='mx-sm-auto'>
-                    <label className='sr-only' htmlFor='inputPassword2'></label>
-                    <Input
-                      className='font-weight-bolder'
-                      disabled
-                      // id='inputPassword2'
-                      placeholder='WBS Level 1'
-                      type='text'
-                      value={level1Wbs}></Input>
-                  </FormGroup>
+                  {level1Wbs ? (
+                    <FormGroup className='mx-sm-auto has-success'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        disabled
+                        placeholder='WBS Level 1'
+                        type='text'
+                        value={level1Wbs}></Input>
+                    </FormGroup>
+                  ) : (
+                    <FormGroup className='mx-sm-auto'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        disabled
+                        // id='inputPassword2'
+                        placeholder='WBS Level 1'
+                        type='text'
+                        value={level1Wbs}></Input>
+                    </FormGroup>
+                  )}
                 </Form>
                 <Form className='form-inline'>
                   <Button
@@ -420,17 +454,31 @@ const TimeSheet = (req, res) => {
                       </Input>
                     </ModalBody>
                   </Modal>
-
-                  <FormGroup className='mx-sm-auto'>
-                    <label className='sr-only' htmlFor='inputPassword2'></label>
-                    <Input
-                      className='font-weight-bolder'
-                      disabled
-                      value={level2Wbs}
-                      // id='inputPassword2'
-                      placeholder='WBS Level 2'
-                      type='text'></Input>
-                  </FormGroup>
+                  {level1Wbs && level2Wbs ? (
+                    <FormGroup className='mx-sm-auto has-success'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        disabled
+                        value={level2Wbs}
+                        placeholder='WBS Level 2'
+                        type='text'></Input>
+                    </FormGroup>
+                  ) : (
+                    <FormGroup className='mx-sm-auto'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        disabled
+                        value={level2Wbs}
+                        placeholder='WBS Level 2'
+                        type='text'></Input>
+                    </FormGroup>
+                  )}
                 </Form>
                 <Form className='form-inline'>
                   <Button
@@ -472,17 +520,31 @@ const TimeSheet = (req, res) => {
                       </Input>
                     </ModalBody>
                   </Modal>
-
-                  <FormGroup className='mx-sm-auto'>
-                    <label className='sr-only' htmlFor='inputPassword2'></label>
-                    <Input
-                      className='font-weight-bolder'
-                      value={level3Wbs}
-                      disabled
-                      // id='inputPassword2'
-                      placeholder='WBS Level 3'
-                      type='text'></Input>
-                  </FormGroup>
+                  {level1Wbs && level2Wbs && level3Wbs ? (
+                    <FormGroup className='mx-sm-auto has-success'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        value={level3Wbs}
+                        disabled
+                        placeholder='WBS Level 3'
+                        type='text'></Input>
+                    </FormGroup>
+                  ) : (
+                    <FormGroup className='mx-sm-auto'>
+                      <label
+                        className='sr-only'
+                        htmlFor='inputPassword2'></label>
+                      <Input
+                        className='font-weight-bolder'
+                        value={level3Wbs}
+                        disabled
+                        placeholder='WBS Level 3'
+                        type='text'></Input>
+                    </FormGroup>
+                  )}
                 </Form>
 
                 <Form style={{ paddingTop: '2rem' }}>
@@ -542,7 +604,6 @@ const TimeSheet = (req, res) => {
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        // id='inputPassword4'
                         type='select'
                         name='type'
                         value={type}
@@ -567,6 +628,7 @@ const TimeSheet = (req, res) => {
                 </Button>{' '}
               </strong>
             </div>
+            <Calendar onChange={onChange} value={value} />
           </Container>
           {/* -------------------------------------------------------------------------------------- */}
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>

@@ -296,7 +296,7 @@ const Signup = ({ history }) => {
                         </InputGroupAddon>
                         <Input
                           placeholder='Work Phone'
-                          type='number'
+                          type='text'
                           onFocus={() => setSixthFocus(true)}
                           onBlur={() => setSixthFocus(false)}
                           onChange={handleChange('workPhone')}
@@ -338,7 +338,7 @@ const Signup = ({ history }) => {
                         </InputGroupAddon>
                         <Input
                           placeholder='Personal Phone'
-                          type='number'
+                          type='text'
                           onFocus={() => setEightFocus(true)}
                           onBlur={() => setEightFocus(false)}
                           onChange={handleChange('personalPhone')}
@@ -482,7 +482,7 @@ const Signup = ({ history }) => {
                         </InputGroupAddon>
                         <Input
                           placeholder='Superior Employee ID'
-                          type='number'
+                          type='text'
                           onFocus={() => setFifteenthFocus(true)}
                           onBlur={() => setFifteenthFocus(false)}
                           onChange={handleChange('superiorEmployeeId')}

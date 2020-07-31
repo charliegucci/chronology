@@ -23,10 +23,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      unique: true,
       lowercase: true
     },
     workPhone: {
-      type: Number,
+      type: String,
       trim: true,
       required: true
     },
@@ -41,7 +42,7 @@ const userSchema = new mongoose.Schema(
       required: true
     },
     personalPhone: {
-      type: Number,
+      type: String,
       trim: true,
       required: true
     },
