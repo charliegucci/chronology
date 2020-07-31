@@ -9,7 +9,7 @@ import ForgotPw from './auth/ForgotPw';
 import ResetPw from './auth/ResetPw';
 import TimeSheet from './core/TimeSheet';
 import Chart from './core/Chart';
-
+import ErrorPage from './core/ErrorPage';
 // all the Routes for the client
 const Routes = () => {
   return (
@@ -24,6 +24,7 @@ const Routes = () => {
         <Level1Route path='/profile' exact component={Profile} />
         <Level1Route path='/user/timesheet' exact component={TimeSheet} />
         <Level1Route path='/user/chart' exact component={Chart} />
+        <Route component={ErrorPage} />
       </Switch>
     </BrowserRouter>
   );
