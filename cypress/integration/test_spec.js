@@ -295,7 +295,7 @@ describe('Test Timesheet', () => {
 
 
 
-describe('Test Timesheet', () => {
+describe('Test Chart', () => {
     it('Using UI', () => {
 
         cy.visit(loginURLLocal)
