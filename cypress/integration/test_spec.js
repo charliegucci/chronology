@@ -80,10 +80,10 @@ describe('Login to Chronology', () => {
         expect(user.employeeId).to.be.a('string')
         expect(user.workEmail).to.be.a('string')
         expect(user.firstName).to.be.a('string')
-        expect(user.workPhone).to.be.a('number')
+        expect(user.workPhone).to.be.a('string')
         expect(user.workAddress).to.be.a('string')
         expect(user.personalEmail).to.be.a('string')
-        expect(user.personalPhone).to.be.a('number')
+        expect(user.personalPhone).to.be.a('string')
         expect(user.personalAddress).to.be.a('string')
         expect(user.company).to.be.a('string')
         expect(user.section).to.be.a('string')
@@ -292,3 +292,41 @@ describe('Test Timesheet', () => {
 
     })
 })
+
+
+
+describe('Test Timesheet', () => {
+    it('Using UI', () => {
+
+        cy.visit(loginURLLocal)
+        
+        cy.location('pathname')
+            .should('equal', '/')
+
+        cy.get('.form-control')
+            .eq(0)
+            .type('888888')
+            .should('have.value', '888888')
+
+        cy.get('.form-control')
+            .eq(1)
+            .type('123456')
+            .should('have.value', '123456')
+
+        cy.get('.btn-round')
+            .eq(0)
+            .click()
+        
+        cy.contains('CHARTS')
+            .click()
+        
+        cy.location('pathname')
+            .should('equal', '/user/chart')
+
+
+        cy.get('.chart-area')
+            .find('svg')
+            .should('have', 'color', 'rgb(211,211,211)')
+
+        })
+    })
