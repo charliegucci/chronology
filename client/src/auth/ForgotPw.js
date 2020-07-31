@@ -21,10 +21,11 @@ import {
   Col,
   Row
 } from 'reactstrap';
-
 import Footer from '../core/Footer';
 
+// Forgot PW component
 const ForgotPw = ({ history }) => {
+  // sets the state
   const [values, setValues] = useState({
     workEmail: '',
     success: false,
@@ -33,10 +34,12 @@ const ForgotPw = ({ history }) => {
 
   const { workEmail, success, loading } = values;
 
+  // sets the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value, success: false });
   };
 
+  // Function request backend to verify if email exist to reset the password
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -46,16 +49,16 @@ const ForgotPw = ({ history }) => {
       data: { workEmail }
     })
       .then((response) => {
-        console.log('FORGOT PW REQUEST SUCCESS', response);
         toast(response.data.message);
         setValues({ ...values, success: true, workEmail: '', loading: false });
       })
       .catch((error) => {
-        console.log('FORGOT PW ERROR', error.response.data);
         toast(error.response.data.error);
         setValues({ ...values, loading: false });
       });
   };
+
+  // sets state for styling
   const [firstFocus, setFirstFocus] = useState(false);
   useEffect(() => {
     document.body.classList.add('login-page');

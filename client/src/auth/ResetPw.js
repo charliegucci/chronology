@@ -21,9 +21,9 @@ import {
   Col,
   Row
 } from 'reactstrap';
-
 import Footer from '../core/Footer';
 
+// Reset PW component
 const ResetPw = ({ match }) => {
   const [values, setValues] = useState({
     firstName: '',
@@ -43,6 +43,7 @@ const ResetPw = ({ match }) => {
     };
   }, []);
 
+  // Grabs token from param when mount and jwt decodes the token and set the states with its value
   useEffect(() => {
     let token = match.params.token;
     let { firstName } = jwt.decode(token);
@@ -53,10 +54,12 @@ const ResetPw = ({ match }) => {
 
   const { firstName, token, newPassword, success, loading } = values;
 
+  // sets the state dynamically
   const handleChange = (event) => {
     setValues({ ...values, newPassword: event.target.value });
   };
 
+  // Function that post the new password and token to the backend end
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });

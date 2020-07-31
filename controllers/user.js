@@ -1,5 +1,6 @@
 const User = require('../models/user');
 
+// Function to find user by id
 exports.read = (req, res) => {
   const userId = req.params.id;
   User.findById(userId).exec((err, user) => {
@@ -8,12 +9,13 @@ exports.read = (req, res) => {
         error: 'User not found'
       });
     }
-    user.hashed_password = undefined;
-    user.salt = undefined;
+    user.hashed_password = undefined; // so password will not be send in res.json
+    user.salt = undefined; // so salt will not be send in res.json
     res.json(user);
   });
 };
 
+// function to update the user profile
 exports.update = (req, res) => {
   const {
     firstName,
@@ -60,20 +62,7 @@ exports.update = (req, res) => {
         user.password = password;
       }
     }
-    // if (!workPhone) {
-    //   return res.status(400).json({
-    //     error: 'Work Phone is Required'
-    //   });
-    // } else {
-    //   user.workPhone = workPhone;
-    // }
-    // if (!workAddress) {
-    //   return res.status(400).json({
-    //     error: 'Work Address is Required'
-    //   });
-    // } else {
-    //   user.workAddress = workAddress;
-    // }
+
     if (!personalEmail) {
       return res.status(400).json({
         error: 'Personal Email is Required'
@@ -112,20 +101,6 @@ exports.update = (req, res) => {
       user.section = section;
     }
 
-    // if (!jobTitle) {
-    //   return res.status(400).json({
-    //     error: 'Job Title is Required'
-    //   });
-    // } else {
-    //   user.jobTitle = jobTitle;
-    // }
-    // if (!superiorEmployeeId) {
-    //   return res.status(400).json({
-    //     error: 'Superior Employee ID is Required'
-    //   });
-    // } else {
-    //   user.superiorEmployeeId = superiorEmployeeId;
-    // }
     if (!dob) {
       return res.status(400).json({
         error: 'Date of Birth is Required'
@@ -140,8 +115,8 @@ exports.update = (req, res) => {
           error: 'User update failed'
         });
       }
-      updatedUser.hashed_password = undefined;
-      updatedUser.salt = undefined;
+      updatedUser.hashed_password = undefined; // so password will not be send in res.json
+      updatedUser.salt = undefined; // so salt will not be send in res.json
       res.json(updatedUser);
     });
   });

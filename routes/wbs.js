@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-//controller
+//importing controller for wbs routes
 const { readWbs } = require('../controllers/wbs');
 
 //routes

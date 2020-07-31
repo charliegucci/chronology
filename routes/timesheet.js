@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-//controller
+// importing controller for timesheet
 const { saveTimesheet, readTimesheet } = require('../controllers/timesheet');
 
-//routes
+//routes for timesheet
 router.post('/timesheet', saveTimesheet);
 router.get('/timesheet/read/:id', readTimesheet);
 

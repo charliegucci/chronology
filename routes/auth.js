@@ -20,11 +20,12 @@ const {
 
 const { runValidation } = require('../validators');
 
+// routes for authentication
 router.post('/signup', userSignupValidator, runValidation, signup);
 router.post('/signin', userSigninValidator, runValidation, signin);
 router.post('/account-activation', accountActivation);
 
-//forgot/reset password
+//forgot/reset password routes
 router.put(
   '/forgot-password',
   forgotPasswordValidator,

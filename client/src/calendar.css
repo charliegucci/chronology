@@ -1,18 +1,25 @@
+/* Css styling for the Calendar widget */
+
 .react-calendar__month-view__weekdays {
     color: #fefefe;
     text-align: center;
     /* font-weight: bolder; */
 }
 
+.react-calendar__month-view__weekdays__weekday:nth-child(1) {
+
+    color: #FF3636;
+}
+
+.react-calendar__month-view__weekdays__weekday:nth-child(7) {
+
+    color: #FF3636;
+}
+
 .react-calendar__month-view__weekdays__weekday {
 
     color: #2CA8FF;
 }
-
-
-
-
-
 
 .react-calendar__navigation__label__labelText,
 .react-calendar__navigation__label__labelText--from {

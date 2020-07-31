@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 
+// Footer
 const Footer = () => {
   return (
     <>

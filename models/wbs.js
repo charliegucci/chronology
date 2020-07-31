@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// wbs Schema
 const wbs = new mongoose.Schema({
   code: {
     type: String

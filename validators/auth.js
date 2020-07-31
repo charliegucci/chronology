@@ -1,5 +1,6 @@
 const { check } = require('express-validator');
 
+// helper functions for express-validator middleware checking for the required field on signup page
 exports.userSignupValidator = [
   check('employeeId')
     .not()
@@ -35,6 +36,7 @@ exports.userSignupValidator = [
   check('dob').not().isEmpty().withMessage('Date of Birth is Required')
 ];
 
+// helper functions for express-validator middleware checking for the required field on signin page
 exports.userSigninValidator = [
   check('employeeId').not().isEmpty().withMessage('Employee Id is Required'),
   check('password')
@@ -42,6 +44,7 @@ exports.userSigninValidator = [
     .withMessage('Password must be at least 6 characters long')
 ];
 
+// helper functions for express-validator middleware checking for the required field on forgot password page
 exports.forgotPasswordValidator = [
   check('workEmail')
     .not()
@@ -50,6 +53,7 @@ exports.forgotPasswordValidator = [
     .withMessage('Must be a valid email address')
 ];
 
+// helper functions for express-validator middleware checking for the required field on reset password page
 exports.resetPasswordValidator = [
   check('newPassword')
     .not()

@@ -26,6 +26,7 @@ import {
   Badge
 } from 'reactstrap';
 
+// Admin Page
 const Admin = ({ history }) => {
   const [values, setValues] = useState({
     role: '',
@@ -70,12 +71,15 @@ const Admin = ({ history }) => {
     loading
   } = values;
 
+  // gets jwt token from the cookie
   const token = getCookie('token');
 
+  // Loads User Profile from db
   useEffect(() => {
     loadProfile();
   }, []);
 
+  // Function to Get the user data from the backend
   const loadProfile = () => {
     setValues({ ...values, loading: true });
     axios({
@@ -131,7 +135,6 @@ const Admin = ({ history }) => {
       })
       .catch((error) => {
         setValues({ ...values, loading: false });
-        console.log('PROFILE UPDATE ERROR', error);
         if (error.response.status === 401) {
           signout(() => {
             history.pushState('/');
@@ -139,11 +142,12 @@ const Admin = ({ history }) => {
         }
       });
   };
-
+  // Sets the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value, success: false });
   };
 
+  // Function to Post the data to save user profile
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -166,19 +170,18 @@ const Admin = ({ history }) => {
       }
     })
       .then((response) => {
-        console.log('UPDATE SUCCESS', response);
         updateUser(response, () => {
           setValues({ ...values, success: true, loading: false });
           toast('Profile Updated Successfully');
         });
       })
       .catch((error) => {
-        console.log('UPDATE ERROR', error.response.data.error);
         setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
 
+  // sets the state for styling
   const [first1Focus, setFirst1Focus] = useState(false);
   const [last1Focus, setLast1Focus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);

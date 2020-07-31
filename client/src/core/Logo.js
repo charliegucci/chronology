@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Chronology Logo
 const Logo = () => {
   return (
     <div className='text-center '>
