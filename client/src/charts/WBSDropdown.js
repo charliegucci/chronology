@@ -1,4 +1,4 @@
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import React from 'react';
 import * as WBSJSONData from './data/wbs.json';
@@ -27,14 +27,18 @@ export default function WBSDropdown({
   wbsSelected2,
   wbs_menu1,
   wbs_menu2,
-  set_wbs_menu2
+  set_wbs_menu2,
+  setMode
 }) {
   return (
     <Container>
       <Row>
         <Col sm={{ size: 'auto' }}>
           <Dropdown>
-            <Dropdown.Toggle variant='primary' id='dropdown-basic' size='sm'>
+            <Dropdown.Toggle
+              variant='outline-primary'
+              id='dropdown-basic'
+              size='sm'>
               Level 1 WBS
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -62,9 +66,14 @@ export default function WBSDropdown({
             </Dropdown.Menu>
           </Dropdown>
         </Col>
+      </Row>
+      <Row>
         <Col sm={{ size: 'auto' }}>
           <Dropdown>
-            <Dropdown.Toggle variant='primary' id='dropdown-basic' size='sm'>
+            <Dropdown.Toggle
+              variant='outline-success'
+              id='dropdown-basic'
+              size='sm'>
               Level 2 WBS
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -83,6 +92,24 @@ export default function WBSDropdown({
               ))}
             </Dropdown.Menu>
           </Dropdown>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={{ size: 'auto' }}>
+          <ButtonGroup>
+            <Button
+              size='sm'
+              variant='outline-dark'
+              onClick={() => setMode('dark')}>
+              Dark
+            </Button>
+            <Button
+              size='sm'
+              variant='outline-info'
+              onClick={() => setMode('light')}>
+              Light
+            </Button>
+          </ButtonGroup>
         </Col>
       </Row>
     </Container>

@@ -123,8 +123,6 @@ export default class D3Chart {
       .append('svg')
       .attr('width', WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
       .attr('height', HEIGHT + MARGIN.TOP + MARGIN.BOTTOM)
-      .style('background', mode === 'dark' ? '#1b1e23' : 'none')
-      .style('color', mode === 'dark' ? '#8e8e8e' : '#1b1e23')
       .append('g')
       .attr('transform', `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
 
@@ -132,17 +130,15 @@ export default class D3Chart {
       .append('text')
       .attr('x', WIDTH / 2)
       .attr('y', HEIGHT + 50)
-      .attr('text-anchor', 'middle')
-      .style('fill', mode === 'dark' ? '#8e8e8e' : '#1b1e23');
+      .attr('text-anchor', 'middle');
 
-    vis.svg
+    vis.yLabel = vis.svg
       .append('text')
       .attr('x', -(HEIGHT / 2))
       .attr('y', -50)
       .attr('text-anchor', 'middle')
       .text('Labour Hours')
-      .attr('transform', 'rotate(-90)')
-      .style('fill', mode === 'dark' ? '#8e8e8e' : '#1b1e23');
+      .attr('transform', 'rotate(-90)');
 
     vis.xAxisGroup = vis.svg
       .append('g')
@@ -155,8 +151,16 @@ export default class D3Chart {
     vis.update('All');
   }
 
-  update(wbs1, wbs2) {
+  update(wbs1, wbs2, mode) {
     const vis = this;
+
+    let svg = d3
+      .selectAll('svg')
+      .style('background', mode === 'dark' ? 'none' : '#d3d3d3')
+      .style('color', mode === 'dark' ? '#8e8e8e' : '#1b1e23');
+
+    vis.xLabel.style('fill', mode === 'dark' ? '#8e8e8e' : '#1b1e23');
+    vis.yLabel.style('fill', mode === 'dark' ? '#8e8e8e' : '#1b1e23');
 
     vis.dataLevel1 = [];
     getWBSLevel1(WBSJSONData).forEach((codeTitle) => {
