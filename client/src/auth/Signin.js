@@ -23,7 +23,9 @@ import {
   Row
 } from 'reactstrap';
 
+// Sign in component
 const Signin = ({ history }) => {
+  // set the state to be used
   const [values, setValues] = useState({
     employeeId: '',
     password: '',
@@ -31,11 +33,11 @@ const Signin = ({ history }) => {
   });
 
   const { employeeId, password, loading } = values;
-
+  // sets the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
-
+  // Function to post data in backend to check if user exist
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -45,7 +47,6 @@ const Signin = ({ history }) => {
       data: { employeeId, password }
     })
       .then((response) => {
-        console.log('SIGNIN SUCCESS', response);
         authenticate(response, () => {
           setValues({
             ...values,
@@ -53,18 +54,16 @@ const Signin = ({ history }) => {
             password: '',
             loading: false
           });
-          console.log(isAuth().role);
           toast(`Hello ${response.data.user.firstName}, Welcome back!`);
           isAuth() ? history.push('/profile') : history.push('/');
         });
       })
       .catch((error) => {
         setValues({ ...values, loading: false });
-        console.log('SIGNIN ERROR', error);
         toast(error.response.data.error);
       });
   };
-
+  // set state for styling
   const [firstFocus, setFirstFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
 

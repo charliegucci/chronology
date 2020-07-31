@@ -24,7 +24,9 @@ import {
   FormText
 } from 'reactstrap';
 
+// Sign up component
 const Signup = ({ history }) => {
+  // setting the state to be used
   const [values, setValues] = useState({
     employeeId: '',
     workEmail: '',
@@ -67,10 +69,12 @@ const Signup = ({ history }) => {
     loading
   } = values;
 
+  // Function to set the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value, success: false });
   };
 
+  // Function to Post data and save to User db
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -97,7 +101,6 @@ const Signup = ({ history }) => {
       }
     })
       .then((response) => {
-        console.log('SIGNUP SUCCESS', response);
         setValues({
           ...values,
           employeeId: '',
@@ -122,11 +125,11 @@ const Signup = ({ history }) => {
         toast(response.data.message);
       })
       .catch((error) => {
-        console.log('SIGNUP ERROR', error.response.data);
         setValues({ ...values, loading: false });
         toast(error.response.data.error);
       });
   };
+  // set the state for Styling purposes
   const [firstFocus, setFirstFocus] = useState(false);
   const [secondFocus, setSecondFocus] = useState(false);
   const [thirdFocus, setThirdFocus] = useState(false);

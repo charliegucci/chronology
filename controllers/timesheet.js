@@ -1,5 +1,6 @@
 const Timesheet = require('../models/timesheet');
 
+// Function to save timesheet in db
 exports.saveTimesheet = (req, res) => {
   Timesheet.findOne({
     employeeId: req.body.employeeId,
@@ -28,6 +29,7 @@ exports.saveTimesheet = (req, res) => {
   });
 };
 
+// Function to read timesheet in db
 exports.readTimesheet = (req, res) => {
   const id = req.params.id;
 

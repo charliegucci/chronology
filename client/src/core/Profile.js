@@ -3,6 +3,7 @@ import axios from 'axios';
 import DropdownScrollNavbar from '../core/DropdownScrollNavbar';
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers';
 import { ToastContainer, toast } from 'react-toastify';
+import Footer from '../core/Footer';
 
 import {
   Button,
@@ -21,6 +22,7 @@ import {
 } from 'reactstrap';
 
 const Profile = ({ history }) => {
+  // sets the State
   const [values, setValues] = useState({
     role: '',
     employeeId: '',
@@ -62,12 +64,15 @@ const Profile = ({ history }) => {
     loading
   } = values;
 
+  // Function to get the token from the cookies
   const token = getCookie('token');
 
+  // loads the User Profile on mount
   useEffect(() => {
     loadProfile();
   }, []);
 
+  // Function that reads the User from db and sets the state with those values
   const loadProfile = () => {
     setValues({ ...values, loading: true });
     axios({
@@ -78,7 +83,6 @@ const Profile = ({ history }) => {
       }
     })
       .then((response) => {
-        console.log('PROFILE UPDATE', response);
         const {
           role,
           employeeId,
@@ -123,7 +127,6 @@ const Profile = ({ history }) => {
       })
       .catch((error) => {
         setValues({ ...values, loading: false });
-        console.log('PROFILE UPDATE ERROR', error);
         if (error.response.status === 401) {
           signout(() => {
             history.pushState('/');
@@ -132,10 +135,12 @@ const Profile = ({ history }) => {
       });
   };
 
+  // Function that sets the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value, success: false });
   };
 
+  // Function to Post data to backend and updates User in db
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, loading: true });
@@ -158,7 +163,6 @@ const Profile = ({ history }) => {
       }
     })
       .then((response) => {
-        console.log('UPDATE SUCCESS', response);
         updateUser(response, () => {
           setValues({ ...values, success: true, loading: false });
           toast('Profile Updated Successfully');
@@ -171,6 +175,7 @@ const Profile = ({ history }) => {
       });
   };
 
+  // sets the state for Styling purposes
   const [first1Focus, setFirst1Focus] = useState(false);
   const [last1Focus, setLast1Focus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -184,7 +189,9 @@ const Profile = ({ history }) => {
   return (
     <>
       <div className='cd-section' id='contact-us'>
+        {/* ---------------------------------------Toast Notification----------------------------------------------- */}
         <ToastContainer position='bottom-right' />
+        {/* ---------------------------------------Navbar----------------------------------------------- */}
         <DropdownScrollNavbar />
         <div
           className='contactus-1 section-image'
@@ -478,6 +485,8 @@ const Profile = ({ history }) => {
                 </Card>
               </Col>
             </Row>
+            {/* ---------------------------------------Footer----------------------------------------------- */}
+            <Footer />
           </Container>
         </div>
       </div>

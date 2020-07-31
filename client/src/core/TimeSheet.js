@@ -25,6 +25,7 @@ import {
 } from 'reactstrap';
 
 const TimeSheet = (req, res) => {
+  // all the states being used
   const [value, onChange] = useState(new Date());
   const [levelModal, setLevelModal] = useState(false);
   const [level2Modal, setLevel2Modal] = useState(false);
@@ -66,12 +67,14 @@ const TimeSheet = (req, res) => {
     fullWbsTitle
   } = values;
 
+  // loads the WBS, Timesheet, Day Number for the Calendar
   useEffect(() => {
     loadWbs();
     loadTimesheet();
     getDayNumber();
   }, []);
 
+  // Function to get the Day Number for the Date() to get result eg. [-3,-2,-1,0,1,2,3]
   const getDayNumber = () => {
     let dates = [];
     const day = new Date();
@@ -85,6 +88,7 @@ const TimeSheet = (req, res) => {
     setDayNumber(dates);
   };
 
+  // Function to fetch data from Timsheeet db collection
   const loadTimesheet = async function () {
     const id = isAuth().employeeId;
     await axios({
@@ -101,6 +105,7 @@ const TimeSheet = (req, res) => {
       });
   };
 
+  // Function to fetch data from WBS db collection
   const loadWbs = () => {
     axios({
       method: 'GET',
@@ -117,6 +122,7 @@ const TimeSheet = (req, res) => {
       });
   };
 
+  // Function to set the state dynamically
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
     setLevelModal(false);
@@ -124,6 +130,7 @@ const TimeSheet = (req, res) => {
     setLevel3Modal(false);
   };
 
+  // Set the values for FullWBSCode and FullWBS title to the state when Level3 WBS is changed
   useEffect(() => {
     setValues({
       ...values,
@@ -132,6 +139,7 @@ const TimeSheet = (req, res) => {
     });
   }, [values.level3Wbs]);
 
+  // Function to return Level1 Code and Title to an array
   const listLevel1 = () => {
     let arr = [];
     if (isWBS()) {
@@ -140,6 +148,7 @@ const TimeSheet = (req, res) => {
     }
   };
 
+  // Function to return Level2 Code and Title to an array
   const listLevel2 = (code) => {
     if (code) {
       let arr = [];
@@ -154,11 +163,13 @@ const TimeSheet = (req, res) => {
       return arr.sort();
     }
   };
-  const listLevel3 = (code1, code2) => {
-    // if code1 has a value then map the correct sub and push it to array 1
 
+  // Function to return Level1 Code and Title to an array
+  const listLevel3 = (code1, code2) => {
     let arr1 = [];
     let arr2 = [];
+
+    // if code1 has a value then map the correct sub and push it to array 1
 
     if (code1) {
       isWBS().forEach((i) => {
@@ -179,9 +190,10 @@ const TimeSheet = (req, res) => {
         }
       });
     }
-
     return arr2.sort();
   };
+
+  // Function to return the FullWBSCode
   const getFullWBSCode = (level1, level2, level3) => {
     if (level1 && level2 && level3) {
       return `${level1.split('-')[0]}.${level2.split('-')[0]}.${
@@ -190,6 +202,7 @@ const TimeSheet = (req, res) => {
     }
   };
 
+  // Function to return the FullWBSTitle
   const getFullWBSTitle = (level1, level2, level3) => {
     if (level1 && level2 && level3) {
       return `${level1.split('-')[1]}-${level2.split('-')[1]}-${
@@ -197,18 +210,22 @@ const TimeSheet = (req, res) => {
       }`;
     }
   };
+
+  // Function to set the weeklyWBS state with state.values
   const updateWeek = (day) => {
     let wbs = weeklyWbs[day];
     wbs.push(values);
     setWeeklyWbs({ ...weeklyWbs, [day]: wbs });
   };
 
+  // Function to calculate the total hours for the day
   const dailyTotal = (day) => {
     let total = 0;
     weeklyWbs[day].map((shift) => (total += Number(shift.hours)));
     return total;
   };
 
+  // Function to calculate the total hours for the week
   const weeklyTotal = () => {
     let sum = 0;
     [
@@ -225,6 +242,7 @@ const TimeSheet = (req, res) => {
     return sum;
   };
 
+  // Function to delete an entry in timesheet
   const del = (arr, idx, day) => {
     let arr_output = [];
     arr.forEach((v, i) => {
@@ -235,6 +253,7 @@ const TimeSheet = (req, res) => {
     setWeeklyWbs({ ...weeklyWbs, [day]: arr_output });
   };
 
+  // Function to dynamically render the start of the day which is Sunday using Moment Calendar Function
   const renderDate = (day) => {
     if (day < 0) {
       return Moment()
@@ -247,6 +266,7 @@ const TimeSheet = (req, res) => {
     }
   };
 
+  // Function that post data to backend for saving in db
   const clickSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -269,12 +289,10 @@ const TimeSheet = (req, res) => {
   };
   return (
     <>
-      <div
-        className='cd-section'
-        id='contact-us'
-        // onClick={() => console.log(value)}
-      >
+      <div className='cd-section' id='contact-us'>
+        {/* ---------------------------------------Toast Notification Container----------------------------------------------- */}
         <ToastContainer position='bottom-right' />
+        {/* ---------------------------------------Navbar----------------------------------------------- */}
         <DropdownScrollNavbar />
         <div
           className='contactus-1 section-image'
@@ -290,6 +308,7 @@ const TimeSheet = (req, res) => {
                   padding: '1.5rem',
                   textAlign: 'center'
                 }}>
+                {/* ---------------------------------------Timesheet Upper Panel----------------------------------------------- */}
                 <h3 className='title'>
                   <h6 className='description'>
                     <span>
@@ -297,7 +316,6 @@ const TimeSheet = (req, res) => {
                     </span>
                   </h6>
                 </h3>
-
                 <img
                   alt='...'
                   className='rounded img-raised text-center'
@@ -556,7 +574,6 @@ const TimeSheet = (req, res) => {
                         onChange={handleChange('fullWbsCode')}
                         disabled
                         name='fullWbsCode'
-                        // id='inputEmail4'
                         placeholder='Full WBS Code'
                         type='text'></Input>
                     </FormGroup>
@@ -566,14 +583,12 @@ const TimeSheet = (req, res) => {
                         value={fullWbsTitle}
                         name='fullWbsTitle'
                         disabled
-                        // id='inputEmail4'
                         placeholder='Full WBS Title'
                         type='text'></Input>
                     </FormGroup>
                     <FormGroup className='col-md-2'>
                       <Input
                         className='font-weight-bolder'
-                        // id='inputPassword4'
                         placeholder='Hours'
                         name='hours'
                         type='select'
@@ -628,9 +643,10 @@ const TimeSheet = (req, res) => {
                 </Button>{' '}
               </strong>
             </div>
-            <Calendar onChange={onChange} value={value} />
+            {/* ---------------------------------------Calendar----------------------------------------------- */}
+            <Calendar onChange={onChange} value={value} calendarType={'US'} />
           </Container>
-          {/* -------------------------------------------------------------------------------------- */}
+          {/* ---------------------------------------WBS Cards----------------------------------------------- */}
           <Container style={{ paddingTop: '1.5rem', height: '100%' }}>
             <Row>
               <Card
@@ -1051,6 +1067,7 @@ const TimeSheet = (req, res) => {
             </Row>
           </Container>
         </div>
+        {/* ---------------------------------------Footer----------------------------------------------- */}
         <Footer />
       </div>
     </>

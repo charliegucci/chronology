@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuth } from './helpers';
 
+// Protected Routes for Level 2
 const Level2Route = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
